@@ -17,7 +17,7 @@
 另一个事务又在该范围内插入了新行，当用户再读取该范围的数据行时，会发现有新的“幻影” 行。
 InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题。
 <br><br>4.Serializable（可串行化）,每个读的数据行上加上共享锁。在这个级别，可能导致大量的超时现象和锁竞争。
-<br>![四种隔离级别](https://github.com/gaoyuanyuan2/notes/blob/master/img/1.jpg) 
+<br><br><br>![四种隔离级别](https://github.com/gaoyuanyuan2/notes/blob/master/img/1.jpg) 
 ### 5、CHAR
 固定长度，所以速度比VARCHAR
 （长度可变，比较节省空间，所以对磁盘I/O和数据存储总量比较好）速度要快，但是它的缺点就是浪费存储空间。
@@ -43,7 +43,7 @@ MySQL不同版本中默认存储引擎不同，MySQL允许修改默认存储引�
   <br><br>(5)当唯一性是某种数据本身的特征时，指定唯一霸引。使用唯一索引需能确保定义的列的数据完整性，以提高查询速度。
   <br><br>(6)在频繁进行排序或分组(即进行group by或order by操作)的列上建立索引，如果待排序的列有多个，可以在这些列上建立组合索引。
   
-    <br><br>MySQL的索引可以分为以下几类:
+  <br><br> MySQL的索引可以分为以下几类:
   <br><br>1.普通索引和唯一索引
   <br><br>2.单列索引和组合索引
   <br>单列索引即一个索引只包含单个列，一个表可以有多个单列索引。
