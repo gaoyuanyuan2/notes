@@ -17,4 +17,4 @@
 另一个事务又在该范围内插入了新行，当用户再读取该范围的数据行时，会发现有新的“幻影” 行。
 InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题。
 <br>4.Serializable（可串行化）,每个读的数据行上加上共享锁。在这个级别，可能导致大量的超时现象和锁竞争。
-![四种隔离级别](http://www.baidu.com/img/bdlogo.gif) 
+![四种隔离级别](https://github.com/gaoyuanyuan2/notes/blob/master/img/1.jpg) 
