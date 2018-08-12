@@ -10,7 +10,8 @@
         <insert id="addEmp" parameterType="com.bean.Employee" useGeneratedKeys="true" keyProperty="id' databaseId= "mysq1">
             insert into employee (last_ name , email , gender)values (#{lastName} ,# {email} , # {gender})
         </insert>
-         ```
+        ```
+        
       
 
       
