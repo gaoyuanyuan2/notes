@@ -1,9 +1,9 @@
 ## MQ
-[对比](https://github.com/gaoyuanyuan2/notes/blob/master/img/3.png) 
+![对比](https://github.com/gaoyuanyuan2/notes/blob/master/img/3.png) 
 ### 1、好处
 解耦、、安全可靠、异步、顺序保证、横向扩展。
 ### 2、RabbitMQ
-[fanout](https://github.com/gaoyuanyuan2/notes/blob/master/img/4.png) 
+![fanout](https://github.com/gaoyuanyuan2/notes/blob/master/img/4.png) 
 ### 3、Kafka
  1.集成Kafka
   <br>Kafka使用group.id分组消费者
