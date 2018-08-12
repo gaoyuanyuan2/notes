@@ -6,11 +6,10 @@
         mysq1支持自增主键，自增主键值的获取，mybatis 也是利用statement.getGenreatedKeys();
        <br> useGeneratedKeys="true";使用自增主键获取王键值策略
         keyProperty;指定对应的主键属性，也就是mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性 
-        ```
         <insert id="addEmp" parameterType="com.bean.Employee" useGeneratedKeys="true" keyProperty="id" databaseId= "mysq1">
             insert into employee (last_ name , email , gender)values (#{lastName} ,# {email} , # {gender})
         </insert>
-        ```
+      
         
       
 
