@@ -11,4 +11,9 @@
   配置服务器partitions参数,控制同一个group.id下的consumer数量
   小于partitions
   Kafka只保证同一个partition下的消息是有序的
+### 4、比较
+Netty：实时性好，互联（会话）。
+<br>Mq：复杂服务总线。
+<br>RabbitMQ：底层通信是netty
+
 
