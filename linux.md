@@ -14,7 +14,6 @@
 <br>cd ../..   返回上两级目录
 <br>cd或cd ~    返回home目录
 <br>cd - 目录名  返回指定目录
-
 <br><br> ps -ef|grep "hlcar-logic"
 <br>ps [选项]
 <br>-e
@@ -33,19 +32,12 @@
 以用户为主的格式来显示程序状况。
 <br>X
 显示所有程序，不以终端机来区分。
-
 <br><br>curl  http://localhost:8080
-
 <br><br>Ctrl+l ：清屏
-
 <br><br>tail -f logic.out动态更新
-
 <br><br>service network restart  
 <br><br>date查看系统日期
-
 <br><br>2.压缩
-
-
 ### 2、docker命令
 1.docker –v 查看版本
 <br><br>2.docker search 
@@ -59,7 +51,6 @@ start container-name/container id  启动容器
 <br><br>7.端口映射  -p 6379:6379  -p:主机端口(映射到)容器内部的端口
   <br>eg:docker run -d -p 6379:6379 -name myredis docker.io/redis
 <br><br>8.容器日志docker logs container name/container id
-
 ### 3、硬件设备文件名
 |硬件设备|文件名|
 |:--:|:--:|
