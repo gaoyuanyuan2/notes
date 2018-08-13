@@ -1,17 +1,20 @@
 ## Linux
-### 常用命令
-service network restart –重启网卡
-<br><br>ip addr 查看ip
+### 1、命令
+1.常用命令
+<br><br>service network restart –重启网卡
+<br><br>ip addr 查看ip ifconfig -a 
 <br><br>uname –r 查看内核版本（3.1以上）
 <br><br>yum update 升级内核
 <br><br>yum install docker 安装docker
 <br><br>systemctl start/stop docker 启动/关闭docker
 <br><br>systemctl enable docker 开机启动
 <br><br>systemctl disable docker 关闭开机启动
+<br><br>yum install curl安装
 <br><br>cd ..   返回上一级目录
-<br><br>cd ../..   返回上两级目录
-<br><br>cd或cd ~    返回home目录
-<br><br>cd - 目录名  返回指定目录
+<br>cd ../..   返回上两级目录
+<br>cd或cd ~    返回home目录
+<br>cd - 目录名  返回指定目录
+
 <br><br> ps -ef|grep "hlcar-logic"
 <br>ps [选项]
 <br>-e
@@ -31,9 +34,19 @@ service network restart –重启网卡
 <br>X
 显示所有程序，不以终端机来区分。
 
+<br><br>curl  http://localhost:8080
+
+<br><br>Ctrl+l ：清屏
+
+<br><br>tail -f logic.out动态更新
+
+<br><br>service network restart  
+<br><br>date查看系统日期
+
+<br><br>2.压缩
 
 
-### docker命令
+### 2、docker命令
 1.docker –v 查看版本
 <br><br>2.docker search 
 <br><br>3.docker pull
@@ -46,6 +59,17 @@ start container-name/container id  启动容器
 <br><br>7.端口映射  -p 6379:6379  -p:主机端口(映射到)容器内部的端口
   <br>eg:docker run -d -p 6379:6379 -name myredis docker.io/redis
 <br><br>8.容器日志docker logs container name/container id
+
+### 3、硬件设备文件名
+|硬件设备|文件名|
+|:--:|:--:|
+|IDE硬盘|/dev/hd[a-d]|
+|SCSI/SATA/USB硬盘|/dev/sd[a-p]|
+|光驱|/dev/cdrom或/dev/hdc|
+|软盘|/dev/fd[0-1]|
+|打印机(25针)|/dev/1p[0-2]|
+|打印机(USB )|/dev/usb/1p[0-15]|
+|鼠标|/dev/mouse|
 
 
 
