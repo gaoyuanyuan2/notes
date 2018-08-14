@@ -291,7 +291,17 @@ gzip -d 压缩文件
 <br>passwd  用户名
 <br>userdel  用户名
 <br><br>![例子](https://github.com/gaoyuanyuan2/notes/blob/master/img/10.png) 
-<br>
+<br><br>
+<br><br>25.修改环境变量 --vim ~/.bash_profile  --source ~/.bash_profile
+<br><br>26.关闭防火墙
+<br>当前关闭：service iptables stop
+<br>永久关闭：chkconfig iptables off
+<br>systemctl stop firewalld
+<br>27.查看端口 ss -tanl
+<br><br>28.编辑网卡的配置文件 --vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+<br>首先需要将BOOTROTO由dhcp改为static，否则配置无效，dhcp表示使用动态IP；
+<br>ONBOOT需要配置yes；
+<br><br>29改主机名：--vi /etc/sysconfig/network
 ### 2、docker命令
 1.docker –v 查看版本
 <br><br>2.docker search 
