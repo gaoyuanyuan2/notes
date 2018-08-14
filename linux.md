@@ -14,6 +14,7 @@
 <br><br>tab 可以实现命令与目录补全
 <br><br>rmdir 删除空目录
 <br>rm -rf bbb/ 强制删除
+<br>touch 创建文件
 <br><br>2.[root@localhost ~]#
 <br>其中:root :当前登录用户
 <br>localhost 主机名
@@ -124,6 +125,8 @@
 <br>*匹配任意内容
 <br>?  匹配任意一个字符
 <br>[]  匹配任意-个中括号内的字符
+<br>[-]匹配中括号中任意一个字符，-代表一个范围。例如: [a-2]代表匹配一个小写字母。
+<br>[^]逻辑非，表示匹配不是中括号内的一一个字符。例如:[^0-9]代表匹配一个不是数字的字符。
 <br>-- find /root -name "install.1og*" 
 <br>-- find /root -name "*”
 <br>-- find /root -name "ab [cd]"
@@ -242,8 +245,53 @@ gzip -d 压缩文件
 <br>tar -jxvf圧缩包名.tar.bz2
 <br>选项:
 <br>-x: 解圧缩.tar.bz2格式
-
-
+<br><br>20. tail指令
+<br>tail用于输出文件中尾部的内容，默认情况下tail指令显示文件的后10行内容。
+<br>tail文件  (功能描述，查看文件后10行内容)
+<br>tail -n5 文件  (功能描述，查看文件后5行内容，5可以是任意行数)
+<br>tail -f 文件  (功能描述，实时追踪该文档的所有更新)应用实例
+<br>21.查看与设定别名
+<br>alias 查看系统中所有的命令别名
+<br>alias别名= '原命令' 设定命令别名
+<br>vi ~/.bashrc 写入坏境変量配置文件永久生效
+<br>unalias別名 刪除別名
+<br>source .bashrc 修改文件别名后执行这个生效，或者重新登录。。
+<br><br>命令生效顺序
+<br>第一顺位执行用绝对路径或相对路径执行的命令。第二顺位执行别名。
+<br>第三顺位执行Bash的内部命令。
+<br>第四顺位执行按照$PATH环境变量定义的目录查找顺序找到的第-一个命令
+<br><br>22.history
+<br>-c :清空万史命令
+<br>-w :把緩存中的历史命令写入历史命令保存文件
+<br><br>23.less
+<br>是根据湿示需要加载内容,对于显示大型文件具有较高的效率.
+<br>空格键或者pagedown 向下翻一页
+<br>pageup 向上翻一页
+<br>/字符串 向下查找 n下一个 N上一个
+<br>?字符串 向上查找 n上一个 N下一个
+<br>q 退出
+23.<br><br>cat 査看文件
+<br>空格键 向下翻页
+<br>Enter 向下一行
+<br>q 退出
+<br>Crl+F 向下滚屏
+<br>Ctrl+B 向上滚屏
+<br><br>24.vi
+<br>:n可以下翻文件  :N是上翻文件 ：prev也能切换到前一个文件
+<br>:! 强制执行
+<br>:ls  列出所有文件 
+<br>:n  到下一个文件 
+<br>:15  定位于第15行
+<br>/xxx 往后搜索定位xxx 
+<br>?xxx 往前搜索xxx
+<br>拷贝当前行yy,拷贝当前行向下的5行5yy， 并粘贴。
+<br>删除当前行dd,删除当前行向下的5行5dd
+<br>设置文件的行号，取消文件的行号 命令行下: set nu和:set nonu
+<br><br>25.useradd用户名应用案例
+<br>passwd  用户名
+<br>userdel  用户名
+<br><br>![例子](https://github.com/gaoyuanyuan2/notes/blob/master/img/10.png) 
+<br>
 ### 2、docker命令
 1.docker –v 查看版本
 <br><br>2.docker search 
@@ -297,6 +345,7 @@ STATA 每秒500M、逻辑分区从5开始
 <br>/usr/sbin/系统命令(超级用户)
 <br>/var系统相关文档内容
 <br>root、sys、home其他目录不要动，用这三个目录。
+<br>Boot 启动分区，home分区 /跟分区，swap虚拟内存
 ### 5、系统命令
 1)shutdown命令
 <br>shutdown [选项]时间
@@ -321,6 +370,14 @@ STATA 每秒500M、逻辑分区从5开始
 <br>6 重启
 <br>runlevel查看运行级别前级别当前级别,
 <br>logout退出当前用户，也就是注销，
+### 6、常用快捷键
+ctrl+c  强制终止当前命令
+<br>ctrl+1 清屏
+<br>ctrl+a 光标移动到命令行首
+<br>ctrl+e 光标移动到命令行尾
+<br>ctrl+u 从光标所在位置删除到行首
+<br>ctrl+z 把命令放入后台
+<br>ctrl+r 在历史命令中搜索
 
 
 
