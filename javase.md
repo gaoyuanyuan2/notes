@@ -22,16 +22,14 @@
 <br> 表达式的取值，bvte short int char。JDK5以后可以是枚举. JDK7以后可以是String
 <br><br>10.集合和泛型只能为引用类型
 <br><br>11.泛型
-<br>正确方式:
-<br>
 ```Java
 public static void printCollection(Collection<?> cols) {
-for(Object obj:cols) {
-    System.outprintn(obj);
-}
-//cols. add( string");//错误，因为它不知自己未来匹配就一定是String
-cols.size();//没错，此方法与类型参数没有关系
-cols = new HashSet<Date>();
+    for(Object obj:cols) {
+        System.outprintn(obj);
+    }
+    //cols. add( string");//错误，因为它不知自己未来匹配就一定是String
+    cols.size();//没错，此方法与类型参数没有关系
+    cols = new HashSet<Date>();
 }
 ```
 <br>总结:使用?通配符可以引用其他各种参数化的类型, ?通配符定义的变量主要用作引用,可以调用与参数化无关的方法，不能调用与参数化有关的万法。

@@ -52,14 +52,16 @@ interrupt打断；建议使用“抛异常”的方法实现线程的停止。
    <br>若Executors.工厂类无法满足我们的需求，可以自己去创建自定义的线程池，
    其实Executors工厂类里面的创建线程方法其内部实现均是用了ThreadPoolExecutor这个类，这个类可以自定义线程。
    构造方法如下:
-   `public ThreadPoolExecutor(int corePoolSize,
+```Java
+public ThreadPoolExecutor(int corePoolSize,
      int maximumPoolSize,
      long keepAlive Time,
      TimeUnit unit,
      BlockingQueue<Runnable> workQueue,
      ThreadF actory threadFactory,
      RejectedExecutionHandler handler
-     ){ ..}`
+ ){ ..}
+ ```
    <br>这个构造方法对于队列是什么类型的比较关键:
    <br>1)在使用有界队列时，若有新的任务需要执行，如果线程池实际线程数小于corePoolSize,则优先创建线程，若大于corePoolSize, 
    则会将任务加入队烈，若队列已满，则在总线程数不天于maximumPoolSize的前提下，创建新的线程，若线程数大于maximumPoolSize
