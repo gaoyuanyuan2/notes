@@ -42,10 +42,31 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
 <br><br>
 ![空值](https://github.com/gaoyuanyuan2/notes/blob/master/img/6.png) 
 <br><br>
+1.提供排序的比较器,业务比较器
+<br>实现java. util. Comparator接口，
+<br>重写public  int compare(T o1,  To2);作用:
+<br>作用 解耦:独立于实体类 方便:便于应对各种排序规则
+
 ### 4、IO
 ![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/7.png) 
 1.foreach与正常for循环效率对比
 循环数组结构的数据时，建议使用普通for循环；循环链表结构的数据时，一定不要使用普通for循环。
+
+### 5、注解
+ Annotation的作用:
+ 不是程序本身,可以对程序作出解释。(这一点，跟注释没什么区别)-可以被其他程序(比如:编译器等读取。(注解信息处理流程,是注解和注释的重大区别。如果没有注解信息处理流程,则注解毫无意义。
+ <br><br>
+ ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/12.png) 
+ <br><br>
+ ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/13.png) 
+ <br><br>
+ ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/14.png) 
+ <br><br>
+ ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/15.png) 
+ <br><br>
+ ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/16.png) 
+ <br><br>
+
 
 
 
