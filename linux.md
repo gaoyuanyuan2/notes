@@ -372,7 +372,7 @@ STATA 每秒500M、逻辑分区从5开始
 <br>logout退出当前用户，也就是注销，
 ### 6、常用快捷键
 ctrl+c  强制终止当前命令
-<br>ctrl+1 清屏
+<br>ctrl+l 清屏
 <br>ctrl+a 光标移动到命令行首
 <br>ctrl+e 光标移动到命令行尾
 <br>ctrl+u 从光标所在位置删除到行首
