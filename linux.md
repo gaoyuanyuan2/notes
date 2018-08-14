@@ -1,11 +1,11 @@
 ## Linux
 ### 1、命令
 1.常用命令
-<br><br>service network restart –重启网卡
+<br>service network restart –重启网卡
 <br><br>ip addr 查看ip ifconfig -a 
 <br><br>uname –r 查看内核版本（3.1以上）
-<br><br>curl  http://localhost:8080
-<br><br>Ctrl+l ：清屏
+<br><br>curl  `http://localhost:8080`
+<br><br>ctrl+l ：清屏
 <br><br>tail -f logic.out动态更新
 <br><br>service network restart
 <br><br>date查看系统日期
@@ -23,14 +23,16 @@
 <br><br>3.复制命令:cp[选项] [原文件或目录] [目标目录]
 <br>命令英文原意: copy
 <br>选项:
-<br>-r复制目录
-<br>-p连带文件属性复制
-<br>-d若源文件是链接文件,则复制链接属性
-<br>-a相当于-pdr
-<br><br>4.yum update 升级内核
+<br>-r 复制目录
+<br>-p 连带文件属性复制
+<br>-d 若源文件是链接文件,则复制链接属性
+<br>-a 相当于-pdr
+<br><br>4.yum
+<br>yum update 升级内核
 <br>yum install docker 安装docker
 <br>yum install curl安装
-<br><br>5.systemctl start/stop docker 启动/关闭docker
+<br><br>5.systemctl
+<br>systemctl start/stop docker 启动/关闭docker
 <br>systemctl enable docker 开机启动
 <br>systemctl disable docker 关闭开机启动
 <br><br>6.查询目录中内容: ls
@@ -42,39 +44,39 @@
 <br>-h 人性化显示文件大小
 <br>-i 显示inode
 <br>![文件](https://github.com/gaoyuanyuan2/notes/blob/master/img/9.png) 
-<br><br>7.cd ..   返回上一级目录
+<br><br>7.cd
+<br>cd ..   返回上一级目录
 <br>cd ../..   返回上两级目录
 <br>cd或cd ~    返回home目录
 <br>cd - 目录名  返回指定目录
-<br><br>8.ps -ef|grep "hlcar-logic"
+<br><br>8.ps
+<br>ps -ef|grep "hlcar-logic"
 <br>ps [选项]
-<br>-e显示所有进程。
-<br>-f全格式。
-<br>-h不显示标题。长格式。
-<br>-W宽输出。
-<br>a显示终端_上的所有进程，包括其他用户的进程。
-<br>r只显示正在运行的进程。以用户为主的格式来显示程序状况。
-<br>X显示所有程序，不以终端机来区分。
-
-<br><br>9.链接命令: In
-<br>In -S [原文件] [目标文件]
+<br>-e 显示所有进程。
+<br>-f 全格式。
+<br>-h 不显示标题。长格式。
+<br>-W 宽输出。
+<br>a 显示终端_上的所有进程，包括其他用户的进程。
+<br>r 只显示正在运行的进程。以用户为主的格式来显示程序状况。
+<br>x 显示所有程序，不以终端机来区分。
+<br><br>9.链接命令: ln
+<br>ln -s [原文件] [目标文件]
 <br>命令英文原意: link
 <br>功能描述:生成链接文件
 <br>选项:
-<br>-s创建软链接
+<br>-s 创建软链接
 <br>硬链接特征:
-<br>1、拥有相同的1节点和存储block块,可以看做是同一一个文件
-<br>2、可通过节点识别
-<br>3、不能跨分区
-<br>4、不能针对目录使用      
+<br>1)拥有相同的1节点和存储block块,可以看做是同一一个文件
+<br>2)可通过节点识别
+<br>3)不能跨分区
+<br>4)不能针对目录使用      
 <br>软链接特征:
-<br>1、类似Windows快捷方式
-<br>2、软链接拥有自己的节点和Block块,但是数据块中只保存原
+<br>1)类似Windows快捷方式
+<br>2)软链接拥有自己的节点和Block块,但是数据块中只保存原
 <br>文件的文件名和节点号,并没有实际的文件数据
-<br>3、lrwxrwxrwx l 软链接软链接文件权限都为rwxrwxrwx
-<br>4、修改任意文件，另一个都改变
-<br>5、删除原文件,软链接不能使用
-
+<br>3)lrwxrwxrwx l 软链接软链接文件权限都为rwxrwxrwx
+<br>4)修改任意文件，另一个都改变
+<br>5)删除原文件,软链接不能使用
 <br><br>10.locate命令格式
 <br>locate文件名
 <br>在后台数据库中按文件名搜索,搜索速度更快
@@ -85,17 +87,15 @@
 <br>PRUNEFS = 搜索时,不搜索的文件系统
 <br>PRUNENAMES = 搜索时,不搜索的文件类型
 <br>PRUNEPATHS = 搜索时,不搜索的路径
-
 <br><br>11.搜索命令的命令whereis 搜索命令所在路径及帮助文档所在位置
 <br>选项:
 <br>-b :只查找可执行文件
 <br>-m :只查找帮助文件
 <br>--whereis ls
-
 <br><br>12.find
-1)
+<br>1)
 <br>-name<查询方式>按照指定的文件名查找模式查找文件
-<br>user<用户名>查找属于指定用户名所有文件
+<br>-user<用户名>查找属于指定用户名所有文件
 <br>-size<文件大小>按照指定的文件大小查找文件。
 <br>案例1:按拥有者:查找/opt目录下，用户名称为nobody 的文件
 <br>--find /opt user nobody
@@ -114,9 +114,9 @@
 <br>案例8:査找/etc/目彖下,大于20KB井且小于50KB的文件
 <br>--find /etc -size + 20k -a -size -50k
 <br>査找/etc/目彖下,大于20KB井且小于5OKB的文件,并显示详情
-<br>--find /etc -size +20k -a -size -50k -exec Is -h {} \
+<br>--`find /etc -size +20k -a -size -50k -exec Is -h {}\`
 <br>找到刪除.
-<br>--find /root - inum 262421 -exec rm -rf {} \;
+<br>--`find /root - inum 262421 -exec rm -rf {} \`;
 <br>避免大范围搜索,会非常耗费系统资源
 <br>find是在系统当中搜索符合条件的文件名。如果需要匹配,
 <br>使用通配符匹配,通配符是完全匹配
@@ -128,27 +128,23 @@
 <br>-- find /root -name "*”
 <br>-- find /root -name "ab [cd]"
 <br>-- find /root -iname install.log  不区分大小写
-
-
 <br><br>13.搜索命令的命令which
 <br>which 文件名
 <br>搜索命令所在路径及别名
-
 <br><br>14.搜索字符串命令grep 
 <br>grep [选项]字符串文件名
 <br>选项:
-<br>-i忽略大小写
-<br>-v排除指定字符串
-<br>-n显示匹配行及行号
+<br>-i 忽略大小写
+<br>-v 排除指定字符串
+<br>-n 显示匹配行及行号
 <br>grep指令和管道符号
 <br>grep过滤查找，管道符， "|"，表示将前一一个命令的处理结果输出传递给后面的命令处理。
 <br>基本语法
 <br>案例1:请在hello.txt文件中，查找"yes"所在行，不区分大小写，并且显示行号
 <br>-- cat hello.txt| grep -ni yes
 <br>find命令与grep命令的区别
-<br>find命令:在系统当中搜索符合条件的文件名,如果需要匹配，使用通配符匹配,通配符是完全匹配。
+<br>find命令:在系统当中搜索符合条件的文件名,如果需要匹配，使用通配符匹配,通配符是完全匹配
 <br>grep命令:在文件当中搜索符合条件的字符串,如果需要匹配,使用正则表达式进行匹配,正则表达式时包含匹配
-
 <br><br>15.man的级别
 <br>查看命令的帮助
 <br>查看可被内核调用的函数的帮助
@@ -162,41 +158,38 @@
 <br>查看命令拥有那个级别的帮助
 <br>man -f命令相当于whatis命令
 <br>举例:
-<br>-man -5 passwd
+<br>--man -5 passwd
 <br>--man -4 null
 <br>--man -8 ifconfig
 <br>查看和命令相关的所有帮助
 <br>man -k命令相当于apropos命令
 <br>例如
 <br>--apropos passwd
-
 <br><br>16.选项帮助
 <br>命令--help 获取命令选项的帮助
 <br>-- ls --help
 <br>shell内部命令帮助
 <br>help shell内部命令 获取shel内部命令的帮助
--- whereis cd 确定是否是shell内部命令
--- help cd 获取内部命令帮助
-
+<br>-- whereis cd 确定是否是shell内部命令
+<br>-- help cd 获取内部命令帮
 <br><br>17.详细命令帮助info
 <br>info命令
 <br>回车:进入子帮助页面 (带有*号标记)
-<br>-u:进入上层页面
-<br>-n:进入下一个帮助小节
-<br>-p:进入上一个帮助小节
-<br>-q:退出
-
+<br>-u: 进入上层页面
+<br>-n: 进入下一个帮助小节
+<br>-p: 进入上一个帮助小节
+<br>-q: 退出
 <br><br>18.压缩
-<br>常用压缩格式:.zip.gz .bz2
-<br>常用压缩格式:.tar.gz.tar.bz2
-<br>1).zip格式压缩
+<br>常用压缩格式: .zip.gz .bz2
+<br>常用压缩格式: .tar.gz.tar.bz2
+<br>1) .zip格式压缩
 <br>zip压缩文件名 源文件
 <br>#压缩文件
 <br>zip -r 压缩文件名源目录
 <br>#压缩目录
 <br>unzip 压缩文件
 <br>#解压缩.zip文件
-<br>2).gz格式压缩
+<br>2) .gz格式压缩
 <br>gzip源文件
 <br>压缩为.gz格式的压缩文件,源文件会消失
 <br>gzip -c 源文件>压缩文件
@@ -210,7 +203,7 @@ gzip -d 压缩文件
 <br>#解压缩文件
 <br>gunzip压缩文件
 <br>#解压缩文件
-<br>3).bz2格式压缩
+<br>3) .bz2格式压缩
 <br>bzip2源文件
 <br>#压缩为.bz2格式,不保留源文件
 <br>bzip2 -k源文件
@@ -223,13 +216,12 @@ gzip -d 压缩文件
 <br>#解圧缩, -k保留圧缩文件
 <br>常用圧缩格式: .zip .gz .bz2
 <br>常用圧缩格式: .tar.gz
-
 <br><br>19.打包命令tar
 <br>tar -cvf 打包文件名源文件
 <br>迭项:
-<br>-c :打包
-<br>-v; 显示过程
-<br>-f:指定打包后的文件名
+<br>-c: 打包
+<br>-v: 显示过程
+<br>-f: 指定打包后的文件名
 <br>-- tar -cvf longzls.tar longzls
 <br>解打包命令
 <br>tar -xvf 打包文件名
@@ -239,17 +231,17 @@ gzip -d 压缩文件
 <br>其实.tar.gz格式是先打包为.tar格式,再圧缩为.gz格式
 <br>tar -zcvf 圧缩包名.tar.gz源文件
 <br>迭项:
-<br>-z:圧缩为.tar.gz格式
+<br>-z: 圧缩为.tar.gz格式
 <br>tar -zxvf 圧缩包名tar.gz
 <br>选项:
-<br>-x ：解圧缩.tar.gz格式
+<br>-x：解圧缩.tar.gz格式
 <br>.tar.bz2圧缩格式
 <br>tar -jcvf 圧缩包名.tar.bz2源文件
 <br>选项:
-<br>-Z :圧缩为.tar.bz2格式
+<br>-z: 圧缩为.tar.bz2格式
 <br>tar -jxvf圧缩包名.tar.bz2
 <br>选项:
-<br>-X :解圧缩.tar.bz2格式
+<br>-x: 解圧缩.tar.bz2格式
 
 
 ### 2、docker命令
@@ -266,6 +258,7 @@ start container-name/container id  启动容器
 <br>eg:docker run -d -p 6379:6379 -name myredis docker.io/redis
 <br><br>8.容器日志docker logs container name/container id
 ### 3、硬件设备文件名
+STATA 每秒500M、逻辑分区从5开始
 |硬件设备|文件名|
 |:--:|:--:|
 |IDE硬盘|/dev/hd[a-d]|
@@ -275,7 +268,6 @@ start container-name/container id  启动容器
 |打印机(25针)|/dev/1p[0-2]|
 |打印机(USB )|/dev/usb/1p[0-15]|
 |鼠标|/dev/mouse|
-<br><br>STATA 每秒500M、逻辑分区从5开始
 ### 4、分区目录
  1.必须分区 / (根分区)
 <br>swap分区( 交换分区,内存2倍,不超过2GB )
@@ -309,9 +301,9 @@ start container-name/container id  启动容器
 1)shutdown命令
 <br>shutdown [选项]时间
 <br>选项:
-<br>-c:取消前一一个关机命令
-<br>-h:关机
-<br>-r:重启
+<br>-c: 取消前一一个关机命令
+<br>-h: 关机
+<br>-r: 重启
 <br>2)其他关机命令
 <br>--halt
 <br>--poweroff
@@ -320,13 +312,13 @@ start container-name/container id  启动容器
 <br>-- reboot
 <br>-- init 6
 <br>3)系统运行级别
-<br>0关机
-<br>1单用户
-<br>2不完全多用户,不含NFS服务
-<br>3完全多用户
-<br>4未分配
-<br>5图形界面
-<br>6重启
+<br>0 关机
+<br>1 单用户
+<br>2 不完全多用户,不含NFS服务
+<br>3 完全多用户
+<br>4 未分配
+<br>5 图形界面
+<br>6 重启
 <br>runlevel查看运行级别前级别当前级别,
 <br>logout退出当前用户，也就是注销，
 
