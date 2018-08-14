@@ -1,7 +1,7 @@
 ## Linux
 ### 1、命令
 1.常用命令
-<br>service network restart –重启网卡
+<br><br>service network restart –重启网卡
 <br><br>ip addr 查看ip ifconfig -a 
 <br><br>uname –r 查看内核版本（3.1以上）
 <br><br>curl  `http://localhost:8080`
@@ -14,7 +14,7 @@
 <br><br>tab 可以实现命令与目录补全
 <br><br>rmdir 删除空目录
 <br>rm -rf bbb/ 强制删除
-<br>touch 创建文件
+<br><br>touch 创建文件
 <br><br>2.[root@localhost ~]#
 <br>其中:root :当前登录用户
 <br>localhost 主机名
@@ -70,7 +70,7 @@
 <br>1)拥有相同的1节点和存储block块,可以看做是同一一个文件
 <br>2)可通过节点识别
 <br>3)不能跨分区
-<br>4)不能针对目录使用      
+<br>4)不能针对目录使用   
 <br><br>软链接特征:
 <br>1)类似Windows快捷方式
 <br>2)软链接拥有自己的节点和Block块,但是数据块中只保存原
@@ -94,7 +94,7 @@
 <br>-m :只查找帮助文件
 <br>--whereis ls
 <br><br>12.find
-<br><br>1)
+<br><br>1)基础
 <br>-name<查询方式>按照指定的文件名查找模式查找文件
 <br>-user<用户名>查找属于指定用户名所有文件
 <br>-size<文件大小>按照指定的文件大小查找文件。
@@ -144,7 +144,7 @@
 <br>grep过滤查找，管道符， "|"，表示将前一一个命令的处理结果输出传递给后面的命令处理。
 <br>基本语法
 <br>案例1:请在hello.txt文件中，查找"yes"所在行，不区分大小写，并且显示行号
-<br>-- cat hello.txt| grep -ni yes
+<br>-- cat hello.txt | grep -ni yes
 <br>find命令与grep命令的区别
 <br>find命令:在系统当中搜索符合条件的文件名,如果需要匹配，使用通配符匹配,通配符是完全匹配
 <br>grep命令:在文件当中搜索符合条件的字符串,如果需要匹配,使用正则表达式进行匹配,正则表达式时包含匹配
@@ -250,7 +250,7 @@ gzip -d 压缩文件
 <br>tail文件  (功能描述，查看文件后10行内容)
 <br>tail -n5 文件  (功能描述，查看文件后5行内容，5可以是任意行数)
 <br>tail -f 文件  (功能描述，实时追踪该文档的所有更新)应用实例
-<br>21.查看与设定别名
+<br><br>21.查看与设定别名
 <br>alias 查看系统中所有的命令别名
 <br>alias别名= '原命令' 设定命令别名
 <br>vi ~/.bashrc 写入坏境変量配置文件永久生效
