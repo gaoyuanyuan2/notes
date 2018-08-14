@@ -1,5 +1,46 @@
 ## JAVASE
-### 1、对象
+### 1、类型
+<br><br>1.10到其他进制的转化，除余法。
+<br><br>2.0正 1负，正数的补码和原码相同，负数的补码是反码基础上加1.
+<br><br>3.计算机操作的时候都是采用数据对应的二进制补码来计算的。
+<br><br>4.数据向上转型、强制转化：大到小、8位一个字节
+<br><br>
+ ![类型](https://github.com/gaoyuanyuan2/notes/blob/master/img/17.png) 
+<br><br>
+<br>5.位异或运算 ^ ：相同则为0，不相同则为1
+<br><br>6.位非运算符~：如果位为0，结果是1，如果位为1，结果是0
+<br><br>7.补码原码
+<br>        符号位 数值位
+<br>补码:     1    0000010
+<br>反码:     1    0000001
+<br>原码:     1    1111110
+<br><br>8.移位
+<br> <<:左移左边最高位丢弃，右边补齐0
+<br> >>:右移最高位是0，左边补齐0;最高为是1，左边补齐1
+<br> >>>:无符号右移无论最高位是0还是1，左边补齐0
+<br><br>9. switch 
+<br> 表达式的取值，bvte short int char。JDK5以后可以是枚举. JDK7以后可以是String
+<br><br>10.集合和泛型只能为引用类型
+<br><br>11.泛型
+<br>正确方式:
+<br>
+`public static void printCollection(Collection<? cols) {
+for(Object obj:cols) {
+System.outprintn(obj);
+//cols. add( string");/错误，因为它不知自己未来匹配就一定是String
+cols.size();没错，此方法与类型参数没有关系
+cols = new HashSet<Date>();`
+<br>总结:使用?通配符可以引用其他各种参数化的类型, ?通配符定义的变量主要用作引用,可以调用与参数化无关的方法，不能调用与参数化有关的万法。
+<br>T限定通配符的上边界:
+<br>正确: Vector<? extends Number> x = new Vector<Integer>();
+<br>错误: Vector<? extends Number> x = new Vector<String>();
+<br>?限定通配符的下边界:
+<br>正确: Vector<super Integer> x = new Vector<Number>();
+<br>错误; Vector<? super Integer> x = new Vector<Byte>();
+<br>Java中的泛型类型(或者泛型)类似于C++中的模板。但是这种相似性仅限于表面，Java 语言中的泛型基本上完全是在编译器中实现，
+用于编译器执行类型检查和类型推断，状后生成普通的非泛型的字节码，这种实现技术称为擦除(erasure) (编译器使用泛型类型信息保
+证类型安全，然后在生成字节码之首将其清除)。这是因为扩展虚拟机指令集来支持泛型被认为是无法接受的。
+### 2、对象
 1.抽象的(abstract) 方法是否可同时是静态的(static) ,是否可同时是本地方法(native) ，是否可同时被synchronized修饰?
 都不能。抽象方法需要子类重写，而静态的方法是无法被重写的，因此二者是矛盾的。
 本地方法是由本地代码(如C代码)实现的方法，而抽象方法是没有实现的，也是矛盾的。
