@@ -19,35 +19,35 @@ interrupt打断；建议使用“抛异常”的方法实现线程的停止。
 其他线程执行x对象中synchronized同步方法呈同步效果。其他线程执行x对象里面的synchronized（this）代码块也呈同步效果。
 <br><br>12.Class锁对所以对象实例起作用。对象锁和Class锁是异步的，因为是不同的锁
 <br><br>13.下面将关键字synchronized和volatile进行一下比较:
-  <br>           1)关键字volatile是线程同步的轻量级实现，所以volatile性能肯定比synchronized要好，
+<br>1)关键字volatile是线程同步的轻量级实现，所以volatile性能肯定比synchronized要好，
   并且volatile只能修饰于变量，而synchronized可以修饰方法，以及代码块。随着JDK新版本的发布，
   synchronized 关键字在执行效率上得到很大提升，在开发中使用synchronized关键字的比率还是比较大的。
-  <br>           2)多线程访问volatile不会发生阻塞，而synchronized会出现阻塞。
-    <br>         3) volatile 能保证数据的可见性，但不能保证原子性;  而synchronized可以保证原子性，
+<br>2)多线程访问volatile不会发生阻塞，而synchronized会出现阻塞。
+<br>3) volatile 能保证数据的可见性，但不能保证原子性;  而synchronized可以保证原子性，
     也可以间接保证可见性，因为它会将私有内存和公共内存中的数据做同步。此知识点在后面有实验做论证。
-     <br>        4)再次重申一下，关键字volatile解决的是变量在多个线程之间的可见性.
+<br>4)再次重申一下，关键字volatile解决的是变量在多个线程之间的可见性.
 ### 2、并发编程
 <br><br> 1.BlockingQueue接口
-  <br>      1)  ArrayBlockingQueue:基于数组的阻塞队列实现，在ArrayBlockingQueue内部， 维护了一个定长数组，
+<br>1)  ArrayBlockingQueue:基于数组的阻塞队列实现，在ArrayBlockingQueue内部， 维护了一个定长数组，
   以便缓存队列中的数据对象，其内部没实现读写分离，也就意味着生产和消费不能完全并行，
   长度是需要定义的，可以指定先进先出或者先进后出，也叫有界队列，在很多场合非常适合使用。
-  <br>       2) LinkedBlockingQueue:基于链表的阻塞队列，同ArrayBlockingQueue类似， 
+<br>2) LinkedBlockingQueue:基于链表的阻塞队列，同ArrayBlockingQueue类似， 
   其内部也维持着一个数据缓冲队列(该队列由一个链表构成)，LinkedBlockingQueue之所以能够高效的处理并发数据
   ，是因为其内部实现采用分离锁(读写分离两个锁)，从而实现生产者和消费者操作的完全并行运行。他是一个无界队列。
-   <br>    3) SynchronousQueue:一种没有缓冲的队列，生产者产生的数据直接会被消费者获取并消费。
-    <br>   4)   PriorityBlockingQueue:基于优先级的阻塞队列(优先级的判断通过构造函数传入
+<br>3) SynchronousQueue:一种没有缓冲的队列，生产者产生的数据直接会被消费者获取并消费。
+<br>4)   PriorityBlockingQueue:基于优先级的阻塞队列(优先级的判断通过构造函数传入
     的对象来决定，也就是说传入队列的对象必须实现Comparable接口)，
     在实现PriorityBlockingQueue时，内部控制线程同步的锁采用的是公平锁，他也是一一个无界的队列。
-    <br>    5)  DelayQueue:带有延迟时间的Queue,其中的元素只有当其指定的延迟时间到了，
+<br>5)  DelayQueue:带有延迟时间的Queue,其中的元素只有当其指定的延迟时间到了，
     才能够从队列中获取到该元素。DelayQueue中的元素必须实现Delayed接口，
     DelayQueue是一个没有大小限制的队列，应用场景很多，比如对缓存超时的数据进行移除、任务超时处理、空闲连接的关闭等等。
 <br><br> 2. Executors创建线程池方法:
- <br>        1) newFixedThreadPool()方法，该方法返回一个固定数量的线程池，该方法的线程数始终不变，当有一一个任务提交时，
+<br>1) newFixedThreadPool()方法，该方法返回一个固定数量的线程池，该方法的线程数始终不变，当有一一个任务提交时，
  若线程池中空闲，则立即执行，若没有，则会被暂缓在一个任务队列中等待有空闲的线程去执行。
- <br>        2) newSingle' ThreadExecutor()方法，创建-一个线程的线程池，若空闲则执行，若没有空闲线程则暂缓在任务列队中。
-   <br>      3) newCachedThreadPool()方法，返回-一个可根据实际情况调整线程个数的线程池，不限制最大线程数量，若有任务，
+<br>2) newSingle' ThreadExecutor()方法，创建-一个线程的线程池，若空闲则执行，若没有空闲线程则暂缓在任务列队中。
+<br>3) newCachedThreadPool()方法，返回-一个可根据实际情况调整线程个数的线程池，不限制最大线程数量，若有任务，
    则创建线程，若无任务则不创建线程。如果没有任务则线程在60s后自动回收(空闲时间60s )。
-   <br>       4)newScheduledThreadPool()方法，该方法返回一个SchededExecutorService对象，但该线程池可以指定线程的数量。
+<br>4)newScheduledThreadPool()方法，该方法返回一个SchededExecutorService对象，但该线程池可以指定线程的数量。
 <br><br>16.自定义线程池
    <br>若Executors.工厂类无法满足我们的需求，可以自己去创建自定义的线程池，
    其实Executors工厂类里面的创建线程方法其内部实现均是用了ThreadPoolExecutor这个类，这个类可以自定义线程。
