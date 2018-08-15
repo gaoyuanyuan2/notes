@@ -177,11 +177,6 @@ public class Java8Tester {
 |:--:|:--:|
 |collect (Collector c)|将流转换为其他形式。 接收一个Collector楼口的实现，用于给Stream中元素做汇总的方法|
 
-<br><br>Collector接口中方法的实现决定了如何对流执行收集操作(如收集到List、Set、Map)。 但是Collectors实用类提供了很多静态方法，可以方便地创建常见收集器实例，具体方法与实例如下表:
-<br>并行流与顺序流
-<br>并行流就是把一- 个内容分成多个数据块，并用不同的线程分别处理每个数据块的流。
-<br>Java8中将并行进行了优化，我们可以很容易的对数据进行并行操作。Stream API可以声明性地通过parallel() 与sequential()在并行流与顺序流之间进行切换。
-
 [Java 8 Stream](http://www.runoob.com/java/java8-streams.html) 
 <br><br>3.接口新增：默认方法与静态方法
 <br><br>4.方法引用,与Lambda表达式联合使用
