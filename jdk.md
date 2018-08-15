@@ -21,7 +21,8 @@ for(String item : set){
     int anInt1 = 0b10100001010001011010000101000101;//一些32位'int'值:
     int anInt2 = 0b101;
     int anInt3 = 0B101; // B可以是大写也可以是小写.
-    long aLong = 0b1010000101000101101000010100010110100001010001011010000101000101L;//一个64位的'long'值. 注意"L"结尾:
+    //一个64位的'long'值. 注意"L"结尾:
+    long aLong = 0b1010000101000101101000010100010110100001010001011010000101000101L;
 ```
 <br><br>2.数字字面量可以出现下划线
 <br>数字的开头和结尾
@@ -130,6 +131,7 @@ public class Java8Tester {
 <br><br>筛选与切片
 
 |方法|描述|
+|:--:|:--:|
 |filter (Predicate p)|接收Labda，从流中排除某些元求。
 |distinct()|筛选，通过流所生成元素的hashCode() 和equals()去除重复元家|
 |limit(long maxSize)|截断流，使其元素不超过给定数量。|
@@ -138,6 +140,7 @@ public class Java8Tester {
 <br><br>映射
 
 |方法|描述|
+|:--:|:--:|
 |map(Function f)|接收一个的数作为参数，该雨数会被应用到每个元素上，并将其映射成一个新的元素.|
 |mapToDouble (ToDoublePunction f)|接收一个雨 数作为参数，该的数会被应用到每个元素上，产生一个新的DoubleStream.|
 |mapToInt(TolntFunction f)|接收一个函数作为参数，该函数会歧应用到每个元素上，产生一个新的IntStream.|
@@ -147,12 +150,14 @@ public class Java8Tester {
 <br><br>排序
 
 |方法|描述|
+|:--:|:--:|
 |sorted()|产生一个新流，其中按自然顺序排序|
 |sorted (Comparator comp)|产生一个新流，其中按比较器顺序排序|
 
 <br><br>查找与匹配
 
 |方法|描述|
+|:--:|:--:|
 |allMatch|检查是否匹配所有元素anyMatch-检查是否至少匹配一 个元素|
 |noneMatch|检查是否没有匹配所有元素findFirst-返回第- - 个元素|
 |findAny|返回当前流中的任意元素count-返回流中元素的总个数max-返回流中最大值min-返回流中最小值|
@@ -160,6 +165,7 @@ public class Java8Tester {
 <br><br>归约
 
 |方法|描述|
+|:--:|:--:|
 |reduce(T iden, BinaryOperator b)|可以将流中元素反复结合起来， 得到一个值。  返回T|
 |reduce (BinaryOperator b)   |可以将流中元素反复结合起来，得到一个值。近回Optiona1<T> |
 
@@ -168,6 +174,7 @@ public class Java8Tester {
 <br><br>收集
 
 |方法|描述|
+|:--:|:--:|
 |collect (Collector c)|将流转换为其他形式。 接收一个Collector楼口的实现，用于给Stream中元素做汇总的方法|
 
 <br><br>Collector接口中方法的实现决定了如何对流执行收集操作(如收集到List、Set、Map)。 但是Collectors实用类提供了很多静态方法，可以方便地创建常见收集器实例，具体方法与实例如下表:
