@@ -36,7 +36,7 @@
 <br><br>6.跳转到下一个单词 Move Caret to Next Word (Ctrl+) 配合shift可以选中下一个单 词。 
 <br>将选中字符串全部转换为大写或小写 菜单->Edit->Toggle Case （Ctrl+Shift+U） 
 <br>找到所有，并且多光标选中 菜单->Edit->Find->Select All Occurrences
-<br><br>.alter + enter: 
+<br><br>7.alter + enter: 
 <br>1)自动创建函数 
 <br>2)List replace 
 <br>3)字符串format或者build 
@@ -66,8 +66,8 @@
 <br>复制完整文件名——对着文件shift+Ctrl+C。
 <br>批量复制——调用剪切板，shift+Ctrl+V。
 <br><br>14.Ctrl+F12，查看结构图
-<br>ctrl+alt+shift+u 查看类图 maven 
-<br>ctrl+alt+u 小窗查看类图maven 类图
+<br>Ctrl+alt+shift+u 查看类图 maven 
+<br>Ctrl+alt+u 小窗查看类图maven 类图
 <br>Ctrl+H，查看类的继承关系
 <br>Ctrl+Alt+H，查看方法的调用和被调用关系
 
