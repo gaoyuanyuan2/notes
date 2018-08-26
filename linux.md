@@ -301,7 +301,9 @@ gzip -d 压缩文件
 <br><br>28.编辑网卡的配置文件 --vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 <br>首先需要将BOOTROTO由dhcp改为static，否则配置无效，dhcp表示使用动态IP；
 <br>ONBOOT需要配置yes；
-<br><br>29改主机名：--vi /etc/sysconfig/network
+<br><br>29.改主机名：--vi /etc/sysconfig/network
+<br><br>30.kill -9 pid
+<br>kill -9 pid等于kill -s 9 pid，表示强制，尽快终止一个进程。多半admin会用这个命令。
 ### 2、docker命令
 1.docker –v 查看版本
 <br><br>2.docker search 
