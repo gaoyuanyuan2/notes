@@ -96,6 +96,7 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
 ![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/7.png) 
 1.foreach与正常for循环效率对比
 循环数组结构的数据时，建议使用普通for循环；循环链表结构的数据时，一定不要使用普通for循环。
+2.记得flush刷出，和close
 
 ### 5、注解
  Annotation的作用:
