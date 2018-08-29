@@ -221,6 +221,14 @@ return null;
 <br><br>3) 初始化
 <br>初始化阶段是执行类构造器< clinit> 0方法的过程。类构造器< clinit> ()方法是由编译器自动收集类中的所有类变量的赋值动作和静态语句块(static块)中的语句合并产生的。
 <br>当初始化-个类的时候，如果发现其父类还没有进行过初始化、则需要先出发其父类的初始化虚拟机会保证一个类的<clinit> (方法在多线程环境中被正确加锁和同步。
+<br><br>java中final的值在编译时就放入了常量池，调用的话也不会引起final所在类的初始化。
+<br><br>a. 在new、getstatic、putstatic、invokestatic一个类或其中字段时，
+若类还没有初始化，则这个类现在必须初始化。
+<br><br>b. 调用反射关于这个类的方法、字段、类本身时，
+若类还没有初始化，则这个类现在必须初始化。
+<br><br>c. 初始化一个类时，当发现其父类还没有初始化时，先初始化其父类。
+<br><br>d. JVM启动时，会初始化用户定义的main所在的类。
+<br><br>e. 涉及1.7后的动态语言支持
 <br><br>
 ![](https://github.com/gaoyuanyuan2/notes/blob/master/img/22.png) 
 <br><br><br>7.加载器
