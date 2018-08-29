@@ -1,6 +1,6 @@
 ## JAVASE
 ### 1、类型
-<br><br>1.10到其他进制的转化，除余法。
+<br>1.10到其他进制的转化，除余法。
 <br><br>2.0正 1负，正数的补码和原码相同，负数的补码是反码基础上加1.
 <br><br>3.计算机操作的时候都是采用数据对应的二进制补码来计算的。
 <br><br>4.数据向上转型、强制转化：大到小、8位一个字节
@@ -90,14 +90,13 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
 <br>重写public  int compare(T o1,  To2);作用:
 <br>作用 解耦:独立于实体类 方便:便于应对各种排序规则
 <br>
-[并发编程 Concurrent ](http://www.importnew.com/26461.html)
-<br>
 2. HashMap实现原理
 拉链法
 ![空值](https://github.com/gaoyuanyuan2/notes/blob/master/img/20.png) 
 数组+链表组成的，一个长度为16的数组中，每个元素存储的是一个链表的头结点。一般情况是通过hash(key)%len获得，也就是元素的key的哈希值对数组长度取模得到。
 O（1）时间复杂度
 HashMap底层就是一个数组结构，数组中的每一项又是一个链表。当新建一个HashMap的时候，就会初始化一个数组。
+
 ```java
 /**
 * The table, resized as necessary. Length MUST Always be a power of two.
@@ -111,7 +110,9 @@ static class Entry<K,V> implements Map.Entry<K,V> {
     ……
 }
 ```
-HashMap的存取实现
+
+<br>HashMap的存取实现
+
 ```java
 public V put(K key, V value) {
 // HashMap允许存放null键和null值。
@@ -139,7 +140,8 @@ addEntry(hash, key, value, i);
 return null;
 }
 ```
-当我们往HashMap中put元素的时候，先根据key的hashCode重新计算hash值，根据hash值得到这个元素在数组中的位置（即下标）， 
+
+<br>当我们往HashMap中put元素的时候，先根据key的hashCode重新计算hash值，根据hash值得到这个元素在数组中的位置（即下标）， 
 如果数组该位置上已经存放有其他元素了，那么在这个位置上的元素将以链表的形式存放，新加入的放在链头，最先加入的放在链尾。如果数组该位置上没有元素，就直接将该元素放到此数组中的该位置上。
 ### 4、IO
 ![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/7.png) 
@@ -163,7 +165,7 @@ return null;
  <br><br>
 
 ### 6、反射
-<br><br>1. setAccessible
+<br>1. setAccessible
 <br>启用和禁用访问安全检查的开关值为true则指示反射的对象在使用时应该取消Java语言访问检查。
 <br>值为false则指示反射的对象应该实施Java语言访问检查。并不是为true就能访问为false就不能访问。
 <br>禁止安全检查,可以提高反射的运行速度。

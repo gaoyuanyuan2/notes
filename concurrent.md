@@ -98,6 +98,8 @@ AQS实际上以双向队列的形式连接所有的Entry，比方说ReentrantLoc
 <br>AQS定义了对双向队列所有的操作，而只开放了tryLock和tryRelease方法给开发者使用，
 开发者可以根据自己的实现重写tryLock和tryRelease方法，以实现自己的并发功能。
 
+[并发编程Concurrent](http://www.importnew.com/26461.html)
+
 
 
 
