@@ -291,33 +291,19 @@ gzip -d 压缩文件
 <br>userdel  用户名
 <br><br>![例子](https://github.com/gaoyuanyuan2/notes/blob/master/img/10.png) 
 <br><br>
-<br><br>25.修改环境变量 --vim ~/.bash_profile  --source ~/.bash_profile
-<br><br>26.关闭防火墙
+<br><br>26. 修改环境变量 --vim ~/.bash_profile  --source ~/.bash_profile
+<br><br>27. 关闭防火墙
 <br>当前关闭：service iptables stop
 <br>永久关闭：chkconfig iptables off
 <br>systemctl stop firewalld
-<br>27.查看端口 ss -tanl
-<br><br>28.编辑网卡的配置文件 --vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+<br>28. 查看端口 ss -tanl
+<br><br>29. 编辑网卡的配置文件 --vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 <br>首先需要将BOOTROTO由dhcp改为static，否则配置无效，dhcp表示使用动态IP；
 <br>ONBOOT需要配置yes；
-<br><br>29改主机名：--vi /etc/sysconfig/network
-<br><br>29.改主机名：--vi /etc/sysconfig/network
-<br><br>30.kill -9 pid
+<br><br>30. 改主机名：--vi /etc/sysconfig/network
+<br><br>31. kill -9 pid
 <br>kill -9 pid等于kill -s 9 pid，表示强制，尽快终止一个进程。多半admin会用这个命令。
-### 2、docker命令
-1.docker –v 查看版本
-<br><br>2.docker search 
-<br><br>3.docker pull
-<br><br>4.运行  docker run --name container-name -d image name  --name :自定义容器名
-<br>eg:docker run -name myredis -d redis  -d:后台运行
-<br>image name:指定镜像模板
-<br><br>5.列表  docker ps (查看运行中的容器) ; <br> 加上a;可以查看所有容器停止 <br> docker stop container-name/container-id  停止当前你运行的容器启动  <br>docker 
-start container-name/container id  启动容器
-<br><br>6.删除  docker rm container-id  删除指定容器
-<br><br>7.端口映射  -p 6379:6379  -p:主机端口(映射到)容器内部的端口
-<br>eg:docker run -d -p 6379:6379 -name myredis docker.io/redis
-<br><br>8.容器日志docker logs container name/container id
-### 3、硬件设备文件名
+### 2、硬件设备文件名
 STATA 每秒500M、逻辑分区从5开始
 |硬件设备|文件名|
 |:--:|:--:|
@@ -358,7 +344,7 @@ STATA 每秒500M、逻辑分区从5开始
 <br>/var系统相关文档内容
 <br>root、sys、home其他目录不要动，用这三个目录。
 <br>Boot 启动分区，home分区 /跟分区，swap虚拟内存
-### 5、系统命令
+### 4、系统命令
 1)shutdown命令
 <br>shutdown [选项]时间
 <br>选项:
@@ -382,7 +368,7 @@ STATA 每秒500M、逻辑分区从5开始
 <br>6 重启
 <br>runlevel查看运行级别前级别当前级别,
 <br>logout退出当前用户，也就是注销，
-### 6、常用快捷键
+### 5、常用快捷键
 ctrl+c  强制终止当前命令
 <br>ctrl+l 清屏
 <br>ctrl+a 光标移动到命令行首
