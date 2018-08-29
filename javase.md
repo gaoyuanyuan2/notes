@@ -92,12 +92,15 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
 <br>
 2. HashMap实现原理
 拉链法
-<br><br>
-![空值](https://github.com/gaoyuanyuan2/notes/blob/master/img/20.png) 
-<br><br>
+<br>
+
+![](https://github.com/gaoyuanyuan2/notes/blob/master/img/20.png) 
+
+<br>
 <br>数组+链表组成的，一个长度为16的数组中，每个元素存储的是一个链表的头结点。一般情况是通过hash(key)%len获得，也就是元素的key的哈希值对数组长度取模得到。
 <br>O（1）时间复杂度
 <br>HashMap底层就是一个数组结构，数组中的每一项又是一个链表。当新建一个HashMap的时候，就会初始化一个数组。
+<br>
 
 ```java
 /**
