@@ -120,29 +120,29 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 
 ```java
 public V put(K key, V value) {
-// HashMap允许存放null键和null值。
-// 当key为null时，调用putForNullKey方法，将value放置在数组第一个位置。  
-if (key == null)
-    return putForNullKey(value);
-// 根据key的keyCode重新计算hash值。
-int hash = hash(key.hashCode());
-// 搜索指定hash值在对应table中的索引。
-int i = indexFor(hash, table.length);
-// 如果 i 索引处的 Entry 不为 null，通过循环不断遍历 e 元素的下一个元素。
-for (Entry<K,V> e = table[i]; e != null; e = e.next) {
-    Object k;
-    if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
-        V oldValue = e.value;
-        e.value = value;
-        e.recordAccess(this);
-        return oldValue;
+    // HashMap允许存放null键和null值。
+    // 当key为null时，调用putForNullKey方法，将value放置在数组第一个位置。  
+    if (key == null)
+        return putForNullKey(value);
+    // 根据key的keyCode重新计算hash值。
+    int hash = hash(key.hashCode());
+    // 搜索指定hash值在对应table中的索引。
+    int i = indexFor(hash, table.length);
+    // 如果 i 索引处的 Entry 不为 null，通过循环不断遍历 e 元素的下一个元素。
+    for (Entry<K,V> e = table[i]; e != null; e = e.next) {
+        Object k;
+        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            V oldValue = e.value;
+            e.value = value;
+            e.recordAccess(this);
+            return oldValue;
+        }
     }
-}
-// 如果i索引处的Entry为null，表明此处还没有Entry。
-modCount++;
-// 将key、value添加到i索引处。
-addEntry(hash, key, value, i);
-return null;
+    // 如果i索引处的Entry为null，表明此处还没有Entry。
+    modCount++;
+    // 将key、value添加到i索引处。
+    addEntry(hash, key, value, i);
+    return null;
 }
 ```
 
