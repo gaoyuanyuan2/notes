@@ -157,6 +157,16 @@ public V put(K key, V value) {
 
 <br>当我们往HashMap中put元素的时候，先根据key的hashCode重新计算hash值，根据hash值得到这个元素在数组中的位置（即下标）， 
 如果数组该位置上已经存放有其他元素了，那么在这个位置上的元素将以链表的形式存放，新加入的放在链头，最先加入的放在链尾。如果数组该位置上没有元素，就直接将该元素放到此数组中的该位置上。
+
+<br><br>HashMap 底层是数组+链表，默认大小16
+<br>通一个槽位过多数据，也会进行大量的equals比较降低了效率（碰撞-后进来放前面）
+<br>加载因子75%扩容。（Hash算法重排序）
+<br>无法避免同一个槽位数据过多。（效率低）
+<br>Jdk1.8 数组+链表（加在末尾）+ 红黑树（总元素大于64 单个大于8）
+<br>添加效率低，其他效率都高
+
+<br><br>Jdk1.8 ConcurrentHashMap：CAS算法（底层操作系统支持的算法） 无锁添加
+
 ### 4、IO
 ![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/7.png) 
 1.foreach与正常for循环效率对比
