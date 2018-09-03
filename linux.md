@@ -144,6 +144,9 @@
 <br>基本语法
 <br>案例1:请在hello.txt文件中，查找"yes"所在行，不区分大小写，并且显示行号
 <br>-- cat hello.txt | grep -ni yes
+<br>grep -C 5 foo file 显示file文件里匹配foo字串那行以及上下5行
+<br>grep -B 5 foo file 显示foo及前5行
+<br>grep -A 5 foo file 显示foo及后5行
 <br>find命令与grep命令的区别
 <br>find命令:在系统当中搜索符合条件的文件名,如果需要匹配，使用通配符匹配,通配符是完全匹配
 <br>grep命令:在文件当中搜索符合条件的字符串,如果需要匹配,使用正则表达式进行匹配,正则表达式时包含匹配
