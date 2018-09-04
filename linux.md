@@ -228,7 +228,7 @@ gzip -d 压缩文件
 <br>-v: 显示过程
 <br>-f: 指定打包后的文件名
 <br>-- tar -cvf longzls.tar longzls
-<br>解打包命令
+<br><br>解打包命令
 <br>tar -xvf 打包文件名
 <br>-x 解打包
 <br>tar -xvf longzls.tar
