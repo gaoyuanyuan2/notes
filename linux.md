@@ -309,6 +309,7 @@ gzip -d 压缩文件
 <br><br>27. 关闭防火墙
 <br>当前关闭：service iptables stop
 <br>永久关闭：chkconfig iptables off
+<br>systemctl disable firewalld.service  开机禁用防火墙
 <br>systemctl stop firewalld
 <br>28. 查看端口 ss -tanl
 <br><br>29. 编辑网卡的配置文件 --vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
