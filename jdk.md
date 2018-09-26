@@ -198,3 +198,33 @@ public class Java8Tester {
 <br>java.util.concurrent.atomic 程序包中新增了一些类来支持可扩展、可更新的变量。
 <br>java.util.concurrent.ForkJoinPool 类中新增了一些方法来支持通用池。
 <br>新增的 java.util.concurrent.locks.StampedLock 类提供了一个基于能力的锁，可通过三种模式来控制读/写访问。
+
+### 4、JAVA9
+<br>1.  抽象类和接口的异同?
+<br><br>1) 二者的定义:
+<br>a. 声明的方式  
+<br>b.内部的结构(jdk 7 ;jdk 8 ; jdk 9)
+<br>2) 共同点;不能实例化;以多态的方式使用不同点:单继承;  多实现
+```java
+interface MyInterface{
+    //jdk 7 :只能声明全局常量(public static final )和抽象方法(public abstract)void method1();
+    
+    // jdk 8 :声明静态方法和默认方法
+    public static void method2(){
+        System. out . println("method2");
+    }
+    default void method3( ){
+        System.out.println("method3");
+    }
+    //jdk 9 :声明私有方法
+}
+
+```
+
+<br><br>2.  String
+<br>String: jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[] (encoding flag)
+<br>StringBuffer:jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[]
+<br>StringBuilder:jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[]
+<br><br>String:不可变的字符序列;
+<br>StringBuffer:可变的字符序列;线程安全的，效率低;
+<br>StringBuilder:可变的字符序列;线程不安全的，效率高(jdk 5. 0)
