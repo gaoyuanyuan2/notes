@@ -228,3 +228,69 @@ interface MyInterface{
 <br><br>String:不可变的字符序列;
 <br>StringBuffer:可变的字符序列;线程安全的，效率低;
 <br>StringBuilder:可变的字符序列;线程不安全的，效率高(jdk 5. 0)
+#### 新特性1：jdk8和jdk9中jdk目录结构的变化
+#### 新特性2：模块化的特性
+#### 新特性3：jshell命令的使用
+#### 新特性4：多版本兼容jar包的使用说明
+#### 新特性5：接口中定义私有方法
+#### 新特性6：钻石操作符的使用升级
+#### 新特性7：异常处理try结构的使用升级
+#### 新特性8：下划线命名标识符的限制
+#### 新特性9：String底层存储结构的变化
+#### 新特性10：创建只读集合
+#### 新特性11：Optional提供的stream()
+#### 新特性12：多分辨率图像API
+#### 新特性13：全新的Http客户端API
+#### 新特性14：Deprecated的相关API
+#### 新特性15：智能java编译工具
+#### 新特性16：统一的JVM日志系统
+#### 新特性17：javadoc的HTML5支持
+#### 新特性18：Javascript的Nashorn引擎升级
+#### 新特性19：java的动态编译器
+#### Reactive Streams
+核心组件
+Publisher
+Subscriber
+Subscription
+Processor
+Reactive StreamsReactive X
+
+Reactive Streams前时代
+时代局限性(Java9之前)
+阻塞编程
+无法并行计算资源低效使用-异步编程
+CallbackFuture
+
+Reactive Streams规范Reactive编程
+一种异步编程的示范,这种示范与数据流式处理以及变化传播相关联,同时也经常被面向对象语言表示,作为一种观察者模式的扩展。
+Reactive Stream规范(Java语言)
+https://github.com/reactive-streams/reactive-streams-jvm
+
+Reactive Streams规范
+对比Iterator模式
+数据方向
+Reactive Streams : 推模式( Push )Iterator : 拉模式( Pull )编程模式
+Reactive Streams :发布-订阅模式( Publish-Subscriber )Iterator :命令式编程模式( Imperative )
+
+Reactive Streams规范
+onSubscribe() :订阅事件
+onNext() :数据达到事件
+onComplete() :订阅完成事件
+onError() :订阅异常
+request() :请求
+cancel() :取消
+http://docs.oracle.com/javase/9/whatsnew/toc.htm
+
+Flow API
+Publisher<T>
+Subscriber<T>
+Processor<T,R>
+Subscription
+
+集合工厂方法( Factory Method of Collections )进程( Process )
+
+堆栈API ( Stack-Walking API )变量处理( Variable Handles )
+
+统一日志API ( Platform Logging API )自旋等待提示( Spin-Wait Hints )压缩字符串( Compact String )
+
+GitHub资源: https://github.com/mercyblitz
