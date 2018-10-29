@@ -318,6 +318,8 @@ gzip -d 压缩文件
 <br><br>30. 改主机名：--vi /etc/sysconfig/network
 <br><br>31. kill -9 pid
 <br>kill -9 pid等于kill -s 9 pid，表示强制，尽快终止一个进程。多半admin会用这个命令。
+<br>killall命令用于杀死指定名字的进程（kill processes by name）之前使用ps等命令再配合grep来查找进程，而killall把这两个过程合二为一，是一个很好用的命令
+<br>eg：killall mongod
 ### 2、硬件设备文件名
 STATA 每秒500M、逻辑分区从5开始
 |硬件设备|文件名|
