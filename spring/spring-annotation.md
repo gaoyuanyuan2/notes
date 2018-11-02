@@ -298,3 +298,130 @@ BookService{
 * 				3）、效果：
 * 					正常执行：前置通知-》目标方法-》后置通知-》返回通知
 * 					出现异常：前置通知-》目标方法-》后置通知-》异常通知
+
+## 声明式事务：
+* 环境搭建：
+* 1、导入相关依赖
+* 		数据源、数据库驱动、Spring-jdbc模块
+* 2、配置数据源、JdbcTemplate（Spring提供的简化数据库操作的工具）操作数据
+* 3、给方法上标注 @Transactional 表示当前方法是一个事务方法；
+* 4、 @EnableTransactionManagement 开启基于注解的事务管理功能；
+* 		@EnableXXX
+* 5、配置事务管理器来控制事务;
+* 		@Bean
+* 		public PlatformTransactionManager transactionManager()
+*
+*
+* 原理：
+* 1）、@EnableTransactionManagement
+* 			利用TransactionManagementConfigurationSelector给容器中会导入组件
+* 			导入两个组件
+* 			AutoProxyRegistrar
+* 			ProxyTransactionManagementConfiguration
+* 2）、AutoProxyRegistrar：
+* 			给容器中注册一个 InfrastructureAdvisorAutoProxyCreator 组件；
+* 			InfrastructureAdvisorAutoProxyCreator：？
+* 			利用后置处理器机制在对象创建以后，包装对象，返回一个代理对象（增强器），代理对象执行方法利用拦截器链进行调用；
+*
+* 3）、ProxyTransactionManagementConfiguration 做了什么？
+* 			1、给容器中注册事务增强器；
+* 				1）、事务增强器要用事务注解的信息，AnnotationTransactionAttributeSource解析事务注解
+* 				2）、事务拦截器：
+* 					TransactionInterceptor；保存了事务属性信息，事务管理器；
+* 					他是一个 MethodInterceptor；
+* 					在目标方法执行的时候；
+* 						执行拦截器链；
+* 						事务拦截器：
+* 							1）、先获取事务相关的属性
+* 							2）、再获取PlatformTransactionManager，如果事先没有添加指定任何transactionManger
+* 								最终会从容器中按照类型获取一个PlatformTransactionManager；
+* 							3）、执行目标方法
+* 								如果异常，获取到事务管理器，利用事务管理回滚操作；
+* 								如果正常，利用事务管理器，提交事务
+
+## 扩展原理：
+* BeanPostProcessor：bean后置处理器，bean创建对象初始化前后进行拦截工作的
+*
+* 1、BeanFactoryPostProcessor：beanFactory的后置处理器；
+* 		在BeanFactory标准初始化之后调用，来定制和修改BeanFactory的内容；
+* 		所有的bean定义已经保存加载到beanFactory，但是bean的实例还未创建
+*
+* BeanFactoryPostProcessor原理:
+* 1)、ioc容器创建对象
+* 2)、invokeBeanFactoryPostProcessors(beanFactory);
+* 		如何找到所有的BeanFactoryPostProcessor并执行他们的方法；
+* 			1）、直接在BeanFactory中找到所有类型是BeanFactoryPostProcessor的组件，并执行他们的方法
+* 			2）、在初始化创建其他组件前面执行
+*
+* 2、BeanDefinitionRegistryPostProcessor extends BeanFactoryPostProcessor
+* 		postProcessBeanDefinitionRegistry();
+* 		在所有bean定义信息将要被加载，bean实例还未创建的；
+*
+* 		优先于BeanFactoryPostProcessor执行；
+* 		利用BeanDefinitionRegistryPostProcessor给容器中再额外添加一些组件；
+*
+* 	原理：
+* 		1）、ioc创建对象
+* 		2）、refresh()-》invokeBeanFactoryPostProcessors(beanFactory);
+* 		3）、从容器中获取到所有的BeanDefinitionRegistryPostProcessor组件。
+* 			1、依次触发所有的postProcessBeanDefinitionRegistry()方法
+* 			2、再来触发postProcessBeanFactory()方法BeanFactoryPostProcessor；
+*
+* 		4）、再来从容器中找到BeanFactoryPostProcessor组件；然后依次触发postProcessBeanFactory()方法
+*
+* 3、ApplicationListener：监听容器中发布的事件。事件驱动模型开发；
+* 	  public interface ApplicationListener<E extends ApplicationEvent>
+* 		监听 ApplicationEvent 及其下面的子事件；
+*
+* 	 步骤：
+* 		1）、写一个监听器（ApplicationListener实现类）来监听某个事件（ApplicationEvent及其子类）
+* 			@EventListener;
+* 			原理：使用EventListenerMethodProcessor处理器来解析方法上的@EventListener；
+*
+* 		2）、把监听器加入到容器；
+* 		3）、只要容器中有相关事件的发布，我们就能监听到这个事件；
+* 				ContextRefreshedEvent：容器刷新完成（所有bean都完全创建）会发布这个事件；
+* 				ContextClosedEvent：关闭容器会发布这个事件；
+* 		4）、发布一个事件：
+* 				applicationContext.publishEvent()；
+*
+*  原理：
+*  	ContextRefreshedEvent、IOCTest_Ext$1[source=我发布的时间]、ContextClosedEvent；
+*  1）、ContextRefreshedEvent事件：
+*  	1）、容器创建对象：refresh()；
+*  	2）、finishRefresh();容器刷新完成会发布ContextRefreshedEvent事件
+*  2）、自己发布事件；
+*  3）、容器关闭会发布ContextClosedEvent；
+*
+*  【事件发布流程】：
+*  	3）、publishEvent(new ContextRefreshedEvent(this));
+*  			1）、获取事件的多播器（派发器）：getApplicationEventMulticaster()
+*  			2）、multicastEvent派发事件：
+*  			3）、获取到所有的ApplicationListener；
+*  				for (final ApplicationListener<?> listener : getApplicationListeners(event, type)) {
+*  				1）、如果有Executor，可以支持使用Executor进行异步派发；
+*  					Executor executor = getTaskExecutor();
+*  				2）、否则，同步的方式直接执行listener方法；invokeListener(listener, event);
+*  				 拿到listener回调onApplicationEvent方法；
+*
+*  【事件多播器（派发器）】
+*  	1）、容器创建对象：refresh();
+*  	2）、initApplicationEventMulticaster();初始化ApplicationEventMulticaster；
+*  		1）、先去容器中找有没有id=“applicationEventMulticaster”的组件；
+*  		2）、如果没有this.applicationEventMulticaster = new SimpleApplicationEventMulticaster(beanFactory);
+*  			并且加入到容器中，我们就可以在其他组件要派发事件，自动注入这个applicationEventMulticaster；
+*
+*  【容器中有哪些监听器】
+*  	1）、容器创建对象：refresh();
+*  	2）、registerListeners();
+*  		从容器中拿到所有的监听器，把他们注册到applicationEventMulticaster中；
+*  		String[] listenerBeanNames = getBeanNamesForType(ApplicationListener.class, true, false);
+*  		//将listener注册到ApplicationEventMulticaster中
+*  		getApplicationEventMulticaster().addApplicationListenerBean(listenerBeanName);
+*
+*   SmartInitializingSingleton 原理：->afterSingletonsInstantiated();
+*   		1）、ioc容器创建对象并refresh()；
+*   		2）、finishBeanFactoryInitialization(beanFactory);初始化剩下的单实例bean；
+*   			1）、先创建所有的单实例bean；getBean();
+*   			2）、获取所有创建好的单实例bean，判断是否是SmartInitializingSingleton类型的；
+*   				如果是就调用afterSingletonsInstantiated();
