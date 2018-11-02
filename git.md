@@ -7,9 +7,9 @@
 <br>1.基于索引值操作
 <br>git reset --hard [局部索引值]
 <br>git reset --hard a6ace91
-<br>使用^符号:只能后退
-<br>git reset --hard HEAD~n
-<br>注:一个^表示后退一步， n个表示后退n步使用~符号:只能后退
+<br>使用`^`符号:只能后退
+<br>git reset --hard HEAD `~` n
+<br>注:一个`^`表示后退一步， n个表示后退n步使用 `~`符号:只能后退
 <br>git reset -hard HEAD~n注:表示后退n步
 <br><br>2.reset命令的三个参数对比
 <br>soft参数仅仅在本地库移动HEAD指针
