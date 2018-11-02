@@ -333,7 +333,8 @@ BookService{
 * 						执行拦截器链；
 * 						事务拦截器：
 * 							1）、先获取事务相关的属性
-* 							2）、再获取PlatformTransactionManager，如果事先没有添加指定任何transactionManger
+* 							2）、再获取PlatformTransactionManager，
+*                               如果事先没有添加指定任何transactionManger
 * 								最终会从容器中按照类型获取一个PlatformTransactionManager；
 * 							3）、执行目标方法
 * 								如果异常，获取到事务管理器，利用事务管理回滚操作；
