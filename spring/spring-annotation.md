@@ -6,7 +6,7 @@
  * 			以后每次获取就是直接从容器（map.get()）中拿，
  * request：同一次请求创建一个实例
  * session：同一个session创建一个实例
- *
+
  * 懒加载：
  * 		单实例bean：默认在容器启动的时候创建对象；
  * 		懒加载：容器启动不创建对象。第一次使用(获取)Bean创建对象，并初始化；
@@ -26,7 +26,6 @@
  * @Filter(type=FilterType.CUSTOM,classes={MyTypeFilter.class})
  ```java
 public class MyTypeFilter implements TypeFilter {
-
 	/**
 	 * metadataReader：读取到的当前正在扫描的类的信息
 	 * metadataReaderFactory:可以获取到其他任何类信息的
@@ -40,7 +39,6 @@ public class MyTypeFilter implements TypeFilter {
 		ClassMetadata classMetadata = metadataReader.getClassMetadata();
 		//获取当前类资源（类的路径）
 		Resource resource = metadataReader.getResource();
-
 		String className = classMetadata.getClassName();
 		System.out.println("--->"+className);
 		if(className.contains("er")){
@@ -62,11 +60,12 @@ public class MyTypeFilter implements TypeFilter {
 * 			可以使用@Autowired(required=false);
 * 		5）、@Primary：让Spring进行自动装配的时候，默认使用首选的bean；
 * 				也可以继续使用@Qualifier指定需要装配的bean的名字
-* 		BookService{
-* 			@Autowired
-* 			BookDao  bookDao;
-* 		}
-*
+```java
+ 		BookService{
+ 			@Autowired
+			BookDao  bookDao;
+		}
+```
 * 2）、Spring还支持使用@Resource(JSR250)和@Inject(JSR330)[java规范的注解]
 * 		@Resource:
 * 			可以和@Autowired一样实现自动装配功能；默认是按照组件名称进行装配的；
@@ -76,12 +75,12 @@ public class MyTypeFilter implements TypeFilter {
 *  @Autowired:Spring定义的； @Resource、@Inject都是java规范
 *
 * AutowiredAnnotationBeanPostProcessor:解析完成自动装配功能；
-*
+
 * 3）、 @Autowired:构造器，参数，方法，属性；都是从容器中获取参数组件的值
 * 		1）、[标注在方法位置]：@Bean+方法参数；参数从容器中获取;默认不写@Autowired效果是一样的；都能自动装配
 * 		2）、[标在构造器上]：如果组件只有一个有参构造器，这个有参构造器的@Autowired可以省略，参数位置的组件还是可以自动从容器中获取
 * 		3）、放在参数位置：
-*
+
 * 4）、自定义组件想要使用Spring容器底层的一些组件（ApplicationContext，BeanFactory，xxx）；
 * 		自定义组件实现xxxAware；在创建对象的时候，会调用接口规定的方法注入相关组件；Aware；
 * 		把Spring底层一些组件注入到自定义的Bean中；
