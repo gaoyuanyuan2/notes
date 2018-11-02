@@ -108,7 +108,7 @@ BookService{
  * applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
  * invokeInitMethods(beanName, wrappedBean, mbd);执行自定义初始化
  * applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
- *}
+ * }
 
  * 1）、指定初始化和销毁方法；
  * 		通过@Bean指定init-method和destroy-method；
