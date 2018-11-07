@@ -427,7 +427,7 @@ BookService{
 *   			2）、获取所有创建好的单实例bean，判断是否是SmartInitializingSingleton类型的；
 *   				如果是就调用afterSingletonsInstantiated();
 
-* Spring容器的refresh()【创建刷新】;
+## Spring容器的refresh()【创建刷新】;
 * 1、prepareRefresh()刷新前的预处理;
 * 	1）、initPropertySources()初始化一些属性设置;子类自定义个性化的属性设置方法；
 * 	2）、getEnvironment().validateRequiredProperties();检验属性的合法等
