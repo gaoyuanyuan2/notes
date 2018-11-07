@@ -427,7 +427,7 @@ BookService{
 *   			2）、获取所有创建好的单实例bean，判断是否是SmartInitializingSingleton类型的；
 *   				如果是就调用afterSingletonsInstantiated();
 
-## Spring容器的refresh()【创建刷新】;
+## Spring容器的refresh()【创建刷新】
 * 1、prepareRefresh()刷新前的预处理;
 * 	1）、initPropertySources()初始化一些属性设置;子类自定义个性化的属性设置方法；
 * 	2）、getEnvironment().validateRequiredProperties();检验属性的合法等
@@ -520,15 +520,18 @@ BookService{
 * 			2）、不是工厂Bean。利用getBean(beanName);创建对象
 * 				0、getBean(beanName)； ioc.getBean();
 * 				1、doGetBean(name, null, null, false);
-* 				2、先获取缓存中保存的单实例Bean。如果能获取到说明这个Bean之前被创建过（所有创建过的单实例Bean都会被缓存起来）
-* 					从private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256);获取的
+* 				2、先获取缓存中保存的单实例Bean。如果能获取到说明这个Bean之前被创建过
+*                     （所有创建过的单实例Bean都会被缓存起来）
+* 					从private final Map<String, Object> singletonObjects
+*                    = new ConcurrentHashMap<String, Object>(256);获取的
 * 				3、缓存中获取不到，开始Bean的创建对象流程；
 * 				4、标记当前bean已经被创建
 * 				5、获取Bean的定义信息；
 * 				6、【获取当前Bean依赖的其他Bean;如果有按照getBean()把依赖的Bean先创建出来；】
 * 				7、启动单实例Bean的创建流程；
 * 					1）、createBean(beanName, mbd, args);
-* 					2）、Object bean = resolveBeforeInstantiation(beanName, mbdToUse);让BeanPostProcessor先拦截返回代理对象；
+* 					2）、Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
+*                       让BeanPostProcessor先拦截返回代理对象；
 * 						【InstantiationAwareBeanPostProcessor】：提前执行；
 * 						先触发：postProcessBeforeInstantiation()；
 * 						如果有返回值：触发postProcessAfterInitialization()；
@@ -537,7 +540,8 @@ BookService{
 * 						 1）、【创建Bean实例】；createBeanInstance(beanName, mbd, args);
 * 						 	利用工厂方法或者对象的构造器创建出Bean实例；
 * 						 2）、applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
-* 						 	调用MergedBeanDefinitionPostProcessor的postProcessMergedBeanDefinition(mbd, beanType, beanName);
+* 						 	调用MergedBeanDefinitionPostProcessor的
+*                            postProcessMergedBeanDefinition(mbd, beanType, beanName);
 * 						 3）、【Bean属性赋值】populateBean(beanName, mbd, instanceWrapper);
 * 						 	赋值之前：
 * 						 	1）、拿到InstantiationAwareBeanPostProcessor后置处理器；
@@ -548,14 +552,17 @@ BookService{
 * 						 	3）、应用Bean属性的值；为属性利用setter方法等进行赋值；
 * 						 		applyPropertyValues(beanName, mbd, bw, pvs);
 * 						 4）、【Bean初始化】initializeBean(beanName, exposedObject, mbd);
-* 						 	1）、【执行Aware接口方法】invokeAwareMethods(beanName, bean);执行xxxAware接口的方法
+* 						 	1）、【执行Aware接口方法】invokeAwareMethods(beanName, bean);
+*                                执行xxxAware接口的方法
 * 						 		BeanNameAware\BeanClassLoaderAware\BeanFactoryAware
-* 						 	2）、【执行后置处理器初始化之前】applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+* 						 	2）、【执行后置处理器初始化之前】
+*                               applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
 * 						 		BeanPostProcessor.postProcessBeforeInitialization（）;
 * 						 	3）、【执行初始化方法】invokeInitMethods(beanName, wrappedBean, mbd);
 * 						 		1）、是否是InitializingBean接口的实现；执行接口规定的初始化；
 * 						 		2）、是否自定义初始化方法；
-* 						 	4）、【执行后置处理器初始化之后】applyBeanPostProcessorsAfterInitialization
+* 						 	4）、【执行后置处理器初始化之后】
+*                                 applyBeanPostProcessorsAfterInitialization
 * 						 		BeanPostProcessor.postProcessAfterInitialization()；
 * 						 5）、注册Bean的销毁方法；
 * 					5）、将创建的Bean添加到缓存中singletonObjects；
@@ -564,7 +571,8 @@ BookService{
 * 			检查所有的Bean是否是SmartInitializingSingleton接口的；如果是；就执行afterSingletonsInstantiated()；
 * 12、finishRefresh();完成BeanFactory的初始化创建工作；IOC容器就创建完成；
 * 		1）、initLifecycleProcessor();初始化和生命周期有关的后置处理器；LifecycleProcessor
-* 			默认从容器中找是否有lifecycleProcessor的组件【LifecycleProcessor】；如果没有new DefaultLifecycleProcessor();
+* 			默认从容器中找是否有lifecycleProcessor的组件【LifecycleProcessor】；
+*             如果没有new DefaultLifecycleProcessor();
 * 			加入到容器；
 
 * 			写一个LifecycleProcessor的实现类，可以在BeanFactory
