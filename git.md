@@ -30,7 +30,7 @@
 <br>哈希算法确定，输入数据确定，输出数据能够保证不变
 <br>哈希算法确定，输入数据有变化，输出数据定有变化。而且通常变化很大④哈看算法不可逆
 <br>Git底层采用的是SHA-1算法。
-
+[鲜为人知的Git命令](https://dzone.com/articles/lesser-known-git-commands)
 
 
 
