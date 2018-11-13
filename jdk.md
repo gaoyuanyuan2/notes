@@ -59,6 +59,8 @@ try (FileReader fr = new FileReader("E:\\zikao\\file\\cs.txt");
 }
 ```
 ### 3、jdk8
+[函数式编程](https://dzone.com/articles/functional-programming-in-java-8-part-0-motivation)
+[纯Java中的函数式编程](https://dzone.com/articles/functor-and-monad-examples-in-plain-java)
 <br>特点：
 <br>速度更快
 <br>代码更少(增加了新的语法Lambda表达式)
