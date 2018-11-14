@@ -1,4 +1,5 @@
 ## JDK 新特性
+[JVM架构](https://dzone.com/articles/jvm-architecture-explained)
 ### 1、jdk5
 <br>1.增强for
 ```Java
