@@ -65,15 +65,15 @@ public ThreadPoolExecutor(int corePoolSize,
    <br>这个构造方法对于队列是什么类型的比较关键:
    <br>1)在使用有界队列时，若有新的任务需要执行，如果线程池实际线程数小于corePoolSize,则优先创建线程，若大于corePoolSize, 
    则会将任务加入队烈，若队列已满，则在总线程数不天于maximumPoolSize的前提下，创建新的线程，若线程数大于maximumPoolSize
-   ,则执行拒绝策略。或其他百定义方式。
-   <br>2)无界的任务队列时:，LinkedBlockingQueue. 与有界队列相比，除非系统资源耗尽，否则无界的在务队列不存在任务入队失败的情况。
+   ,则执行拒绝策略。或其他自定义方式。
+   <br>2)无界的任务队列时:LinkedBlockingQueue. 与有界队列相比，除非系统资源耗尽，否则无界的在务队列不存在任务入队失败的情况。
    当有新任务到来，系统的线程数小于corePoolSize时，则新建线程执行任务。当达到
    corePoolSize后;就不会继续增加。若后续仍有新的在务加入，而有没有空闲的线程资源，则任务直接进入队列等待。若任务创建和处理的速度差异很大，
    无界队列会保持快速增长，直到耗尽系统内存。
    <br>3)JDK拒绝策略:
      <br>AbortPolicy:直接抛出异常组织系统正常工作
     <br> CallerRunsPolicy:只要线程池未关闭，该策略直接在调用者线程中，运行当前被丢弃的任务。
-    <br> DiscardOldestPolicy:丢弃最老的一一个请求，尝试再次提交当前任务。
+    <br> DiscardOldestPolicy:丢弃最老的一个请求，尝试再次提交当前任务。
     <br> DiscardPolicy:丢弃无法处理的任务，不给予任何处理。
    <br>如果需要自定义拒绝策略可以实现RejectedExecutionHandler接口。
 <br><br>3.什么是自旋
