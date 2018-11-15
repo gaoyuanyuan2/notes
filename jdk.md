@@ -1,21 +1,32 @@
-## JDK 新特性
+# JDK 新特性
 [JVM架构](https://dzone.com/articles/jvm-architecture-explained)
-### 1、jdk5
-<br>1.增强for
+## 1、jdk5
+
+1.增强for
 ```Java
 for(String item : set){
     System.out.println("元素："+ item);
 }
 ```
-<br><br>2.静态导入
-<br><br>3.枚举
-<br>注意事项
-<br>定义枚举类要用关键字enum所有枚举类都是Enum的子类
-<br>枚举类的第一行，上必须是枚举项， 最后一个枚举项后的分号是可以省略的，但是如果枚举类有其他的东西这个分号就不能省略。建议不要省略
-<br>枚举类可以有构造器，但必须是private的，  它默认的也是private的。枚举项的用法比较特殊:枚举("");枚举类也可以有抽象方法，但是枚举项必须重写该方法
-### 2、jdk7
-<br>1.二进制字面量
-<br>通过在数字前面加入0b或者0B来标示一个二进制的字面量
+
+<br>2.静态导入
+
+<br>3.枚举
+
+注意事项
+
+定义枚举类要用关键字enum所有枚举类都是Enum的子类
+
+枚举类的第一行，上必须是枚举项， 最后一个枚举项后的分号是可以省略的，但是如果枚举类有其他的东西这个分号就不能省略。建议不要省略
+
+枚举类可以有构造器，但必须是private的，  它默认的也是private的。枚举项的用法比较特殊:枚举("");枚举类也可以有抽象方法，但是枚举项必须重写该方法
+
+## 2、jdk7
+
+1.二进制字面量
+
+通过在数字前面加入0b或者0B来标示一个二进制的字面量
+
 ```Java
     byte aByte = (byte)0b00100001;//一个8位'byte'值：
     short aShort = (short)0b1010000101000101;//一个16位'short'值:
@@ -25,11 +36,17 @@ for(String item : set){
     //一个64位的'long'值. 注意"L"结尾:
     long aLong = 0b1010000101000101101000010100010110100001010001011010000101000101L;
 ```
-<br><br>2.数字字面量可以出现下划线
-<br>数字的开头和结尾
-<br>在浮点数中与小数点相邻
-<br>F或者L后缀之前
-<br>在预期数字串的位置
+
+<br>2.数字字面量可以出现下划线
+
+数字的开头和结尾
+
+在浮点数中与小数点相邻
+
+F或者L后缀之前
+
+在预期数字串的位置
+
 ```Java
     long creditCardNumber = 1234_5678_9012_3456L;
     long socialSecurityNumber = 999_99_9999L;
@@ -40,14 +57,21 @@ for(String item : set){
     byte nybbles = 0b0010_0101;
     long bytes = 0b11010010_01101001_10010100_10010010;
 ```
-<br><br>3.switch语句可以用字符串
-<br><br>4.泛型简化
+
+<br>3.switch语句可以用字符串
+
+<br>4.泛型简化
+
 ```Java
     Map<String, List<String>> myMap = new HashMap<>();
 ```
-<br><br>5.异常的多个catch合并
-<br><br>6.try..with...resource语句（不好用）
-<br>资源自动释放，不需要close
+
+
+<br>5.异常的多个catch合并
+
+<br>6.try..with...resource语句（不好用）
+资源自动释放，不需要close
+
 ```Java
 try (FileReader fr = new FileReader("E:\\zikao\\file\\cs.txt");
     FileWriter fw = new FileWriter("E:\\zikao\\file\\cs1.txt");) {
@@ -59,21 +83,48 @@ try (FileReader fr = new FileReader("E:\\zikao\\file\\cs.txt");
     e.printStackTrace();
 }
 ```
-### 3、jdk8
+## 3、jdk8
 
-Java 8可以透明地把输入的不相关部分拿到几个CPU内核上去分别执行你的Stream操作流水线——这是几乎免费的并行，用不着去费劲搞Thread了。
+Java 8可以透明地把输入的不相关部分拿到几个CPU内核上去分别执行你的Stream操作流水线,这是几乎免费的并行，用不着去费劲搞Thread了。
+
+* 行为参数化，就是一个方法接受多个不同的行为作为参数，并在内部使用它们， 完成不同行为的能力。
+
+* 行为参数化可让代码更好地适应不断变化的要求，减轻未来的工作量。
+
+* 传递代码，就是将新行为作为参数传递给方法。但在Java 8之前这实现起来很啰嗦。为接口声明许多只用一次的实体类而造成的啰嗦代码，在Java 8之前可以用匿名类来减少。
+
+* Java API包含很多可以用不同行为进行参数化的方法，包括排序、线程和GUI处理。
+
+* 行为参数化是一个很有用的模式,这种做法类似于策略设计模式。
 
 ![多核并行处理](img/28.png)
+![参数化传递代码](img/29.png)
 
 [函数式编程](https://dzone.com/articles/functional-programming-in-java-8-part-0-motivation)
 [纯Java中的函数式编程](https://dzone.com/articles/functor-and-monad-examples-in-plain-java)
-<br>特点：
-<br>速度更快
-<br>代码更少(增加了新的语法Lambda表达式)
-<br>强大的Stream API
-<br>便于并行
-<br>最大化减少空指针异常Optional
-<br><br>1.Lambda表达式
+
+### 特点：
+
+* 速度更快
+
+* 代码更少(增加了新的语法Lambda表达式)
+
+* 强大的Stream API
+
+* 便于并行
+
+* 最大化减少空指针异常Optional
+
+###  1.Lambda表达式
+
+* 匿名：我们说匿名，是因为它不像普通的方法那样有一个明确的名称：写得少而想得多！
+
+* 函数：我们说它是函数，是因为Lambda函数不像方法那样属于某个特定的类。但和方法一样， Lambda有参数列表、函数主体、返回类型，还可能有可以抛出的异常列表。
+
+* 传递：Lambda表达式可以作为参数传递给方法或存储在变量中。
+
+* 简洁：无需像匿名类那样写很多模板代码。
+
 ```Java
 public class Java8Tester {
    public static void main(String args[]){
@@ -113,30 +164,42 @@ public class Java8Tester {
    }
 }
 ```
-<br>Lambda 表达式，也可称为闭包，它是推动 Java 8 发布的最重要新特性。
-<br>Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。
-<br>使用 Lambda 表达式可以使代码变的更加简洁紧凑。
-<br><br>
-[Java 8 函数式接口](http://www.runoob.com/java/java8-functional-interfaces.html) 
-<br><br>2.Stream函数式操作流元素集合
-<br><br>1)流(Stream)  到底是什么呢?
-<br>是数据渠道，用于操作数据源(集合、数组等)所生成的元素序列。“集合讲的是数据，流讲的是计算!”
-<br><br>2)注意:
-<br>Stream自己不会存储元素。
-<br>Stream不会改变源对象。相反，他们会返回一个持有结果的新Stream。③Stream操作是延迟执行的。这意味着他们会等到需要结果的时候才执行。
-<br><br>Stream的操作三个步骤
-<br><br>3)创建Stream
-<br>一个数据源(如:集合、数组)，获取一个流
-<br><br>中间操作
-<br>一个中间操作链，对数据源的数据进行处理
-<br>多个中间操作可以连接起来形成一条个流水线，除非流水
-线上触发终止操作，否则中间操作不会执行任何的处理!
-而在终止操作时一次性全 部处理，称为“惰性求值”。
-<br><br>终止操作(终端操作)
-<br>一个终止操作，执行中间操作链，并产生结果
-我:
 
-<br><br>筛选与切片
+Lambda 表达式，也可称为闭包，它是推动 Java 8 发布的最重要新特性。
+
+Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。
+
+使用 Lambda 表达式可以使代码变的更加简洁紧凑。
+
+[Java 8 函数式接口](http://www.runoob.com/java/java8-functional-interfaces.html) 
+
+### 2.Stream函数式操作流元素集合
+
+* 流(Stream)  到底是什么呢?
+
+是数据渠道，用于操作数据源(集合、数组等)所生成的元素序列。“集合讲的是数据，流讲的是计算!”
+
+* 注意:
+
+Stream自己不会存储元素。
+
+Stream不会改变源对象。相反，他们会返回一个持有结果的新Stream。③Stream操作是延迟执行的。这意味着他们会等到需要结果的时候才执行。
+
+* Stream的操作三个步骤
+
+1. 创建Stream
+
+一个数据源(如:集合、数组)，获取一个流
+
+2. 中间操作
+<br>一个中间操作链，对数据源的数据进行处理，多个中间操作可以连接起来形成一条个流水线，除非流水线上触发终止操作，否则中间操作不会执行任何的处理!
+而在终止操作时一次性全 部处理，称为“惰性求值”。
+
+3. 终止操作(终端操作)
+<br>一个终止操作，执行中间操作链，并产生结果
+
+
+**筛选与切片**
 
 |方法|描述|
 |:--:|:--:|
@@ -145,7 +208,7 @@ public class Java8Tester {
 |limit(long maxSize)|截断流，使其元素不超过给定数量。|
 |skip(long n)|跳过元素，返回一个扔掉了前n个元素的流。若流中元素不足n个，则返回一个空流。与limit(n) 互补|
 
-<br><br>映射
+**映射**
 
 |方法|描述|
 |:--:|:--:|
@@ -155,14 +218,14 @@ public class Java8Tester {
 |mapToLong(TolongFunction f)|接收一个函数作为参数，该函数会被应用到每个元素上，产生一个新的LongStream|
 |flatMap(Function f)|接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流|
 
-<br><br>排序
+**排序**
 
 |方法|描述|
 |:--:|:--:|
 |sorted()|产生一个新流，其中按自然顺序排序|
 |sorted (Comparator comp)|产生一个新流，其中按比较器顺序排序|
 
-<br><br>查找与匹配
+**查找与匹配**
 
 |方法|描述|
 |:--:|:--:|
@@ -170,7 +233,7 @@ public class Java8Tester {
 |noneMatch|检查是否没有匹配所有元素findFirst-返回第- - 个元素|
 |findAny|返回当前流中的任意元素count-返回流中元素的总个数max-返回流中最大值min-返回流中最小值|
 
-<br><br>归约
+**归约**
 
 |方法|描述|
 |:--:|:--:|
@@ -179,33 +242,41 @@ public class Java8Tester {
 
 <br>备注: map和reduce的连接通常称为map-reduce模式，因Google用它来进行网络搜索而出名。
 
-<br><br>收集
+#### 收集
 
 |方法|描述|
 |:--:|:--:|
 |collect (Collector c)|将流转换为其他形式。 接收一个Collector楼口的实现，用于给Stream中元素做汇总的方法|
 
 [Java 8 Stream](http://www.runoob.com/java/java8-streams.html) 
-<br><br>3.接口新增：默认方法与静态方法
-<br><br>4.方法引用,与Lambda表达式联合使用
-<br><br>5.引入重复注解
-<br><br>6.类型注解
-<br><br>7.最新的Date/Time API (JSR 310)
-<br><br>8.新增base64加解密API
-<br><br>9.数组并行（parallel）操作
-<br><br>10.JVM的PermGen空间被移除：取代它的是Metaspace（JEP 122）元空间
-<br>使用Metaspace（JEP 122）代替持久代（PermGen space）。在JVM参数方面，使用-XX:MetaSpaceSize和-XX:MaxMetaspaceSize代替原来的-XX:PermSize和-XX:MaxPermSize。
-<br><br>
+### 3.接口新增：默认方法与静态方法
+###  4.方法引用,与Lambda表达式联合使用
+###  5.引入重复注解
+###  6.类型注解
+###  7.最新的Date/Time API (JSR 310)
+###  8.新增base64加解密API
+###  9.数组并行（parallel）操作
+### 10.JVM的PermGen空间被移除：取代它的是Metaspace（JEP 122）元空间
+
+使用Metaspace（JEP 122）代替持久代（PermGen space）。在JVM参数方面，使用-XX:MetaSpaceSize和-XX:MaxMetaspaceSize代替原来的-XX:PermSize和-XX:MaxPermSize。
+
  ![详情](https://github.com/gaoyuanyuan2/notes/blob/master/img/19.png) 
- <br><br>
-<br><br>11.并发性
-<br>Jdk8 数组+链表（加在末尾）+红黑树（均衡二叉树）（总元素大于64 单个大于8）添加效率低，其他效率都高
-<br>Jdk8 ConcurrentHashMap：CAS算法（底层操作系统支持的算法）无锁添加内存结构改变。
-<br>java.util.concurrent 程序包中新增了一些类和接口。
-<br>java.util.concurrent.ConcurrentHashMap 类中新增了一些方法，支持基于新增流工具和 lambda 表达式的聚合操作。
-<br>java.util.concurrent.atomic 程序包中新增了一些类来支持可扩展、可更新的变量。
-<br>java.util.concurrent.ForkJoinPool 类中新增了一些方法来支持通用池。
-<br>新增的 java.util.concurrent.locks.StampedLock 类提供了一个基于能力的锁，可通过三种模式来控制读/写访问。
+
+### 11.并发性
+
+* Jdk8 数组+链表（加在末尾）+红黑树（均衡二叉树）（总元素大于64 单个大于8）添加效率低，其他效率都高
+
+* Jdk8 ConcurrentHashMap：CAS算法（底层操作系统支持的算法）无锁添加内存结构改变。
+
+* ava.util.concurrent 程序包中新增了一些类和接口。
+
+* java.util.concurrent.ConcurrentHashMap 类中新增了一些方法，支持基于新增流工具和 lambda 表达式的聚合操作。
+
+* java.util.concurrent.atomic 程序包中新增了一些类来支持可扩展、可更新的变量。
+
+* java.util.concurrent.ForkJoinPool 类中新增了一些方法来支持通用池。
+
+* 新增的 java.util.concurrent.locks.StampedLock 类提供了一个基于能力的锁，可通过三种模式来控制读/写访问。
 
 <br>12.数据流定义
 <br>想象一条河。河流从哪里开始？河流在哪里？我们对河流的理解本质上是流动的概念。这条河没有开始也没有结束。流数据非常适合于没有离散开头或结尾的数据。
@@ -234,7 +305,21 @@ public class Java8Tester {
 <br>Apache Storm。Apache Storm是一个分布式实时计算系统。Storm用于分布式机器学习，实时分析以及许多其他情况，尤其是具有高数据速度的情况。
 <br>大规模管理数据并不难。了解完全免费的  开源HPCC Systems  平台如何使其更易于更
 
-### 4、JAVA9
+<br>为什么有接口默认方法？
+<br>在Java 8之前， List<T>并没有stream或parallelStream方法，它实现
+的Collection<T>接口也没有，因为当初还没有想到这些方法嘛！可没有这些方法，这些代码
+就不能编译。换作你自己的接口的话，最简单的解决方案就是让Java 8的设计者把stream方法加
+入Collection接口，并加入ArrayList类的实现。
+
+<br>可要是这样做，对用户来说就是噩梦了。有很多的替代集合框架都用Collection API实现了接
+口。但给接口加入一个新方法，意味着所有的实体类都必须为其提供一个实现。语言设计者没法
+控制Collections所有现有的实现，这下你就进退两难了：你如何改变已发布的接口而不破坏
+已有的实现呢？
+
+<br>Java 8的解决方法就是打破最后一环——接口如今可以包含实现类没有提供实现的方法签名
+了！那谁来实现它呢？缺失的方法主体随接口提供了（因此就有了默认实现），而不是由实现类
+提供
+## 4、JAVA9
 <br>1.  抽象类和接口的异同?
 <br><br>1) 二者的定义:
 <br>a. 声明的方式  
@@ -263,26 +348,26 @@ interface MyInterface{
 <br><br>String:不可变的字符序列;
 <br>StringBuffer:可变的字符序列;线程安全的，效率低;
 <br>StringBuilder:可变的字符序列;线程不安全的，效率高(jdk 5. 0)
-#### 新特性1：jdk8和jdk9中jdk目录结构的变化
-#### 新特性2：模块化的特性
-#### 新特性3：jshell命令的使用
-#### 新特性4：多版本兼容jar包的使用说明
-#### 新特性5：接口中定义私有方法
-#### 新特性6：钻石操作符的使用升级
-#### 新特性7：异常处理try结构的使用升级
-#### 新特性8：下划线命名标识符的限制
-#### 新特性9：String底层存储结构的变化
-#### 新特性10：创建只读集合
-#### 新特性11：Optional提供的stream()
-#### 新特性12：多分辨率图像API
-#### 新特性13：全新的Http客户端API
-#### 新特性14：Deprecated的相关API
-#### 新特性15：智能java编译工具
-#### 新特性16：统一的JVM日志系统
-#### 新特性17：javadoc的HTML5支持
-#### 新特性18：Javascript的Nashorn引擎升级
-#### 新特性19：java的动态编译器
-#### Reactive Streams
+### 新特性1：jdk8和jdk9中jdk目录结构的变化
+### 新特性2：模块化的特性
+### 新特性3：jshell命令的使用
+### 新特性4：多版本兼容jar包的使用说明
+### 新特性5：接口中定义私有方法
+### 新特性6：钻石操作符的使用升级
+### 新特性7：异常处理try结构的使用升级
+### 新特性8：下划线命名标识符的限制
+### 新特性9：String底层存储结构的变化
+### 新特性10：创建只读集合
+### 新特性11：Optional提供的stream()
+### 新特性12：多分辨率图像API
+### 新特性13：全新的Http客户端API
+### 新特性14：Deprecated的相关API
+### 新特性15：智能java编译工具
+### 新特性16：统一的JVM日志系统
+### 新特性17：javadoc的HTML5支持
+### 新特性18：Javascript的Nashorn引擎升级
+### 新特性19：java的动态编译器
+### Reactive Streams
 核心组件
 Publisher
 Subscriber
