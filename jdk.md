@@ -63,6 +63,8 @@ try (FileReader fr = new FileReader("E:\\zikao\\file\\cs.txt");
 
 Java 8可以透明地把输入的不相关部分拿到几个CPU内核上去分别执行你的Stream操作流水线——这是几乎免费的并行，用不着去费劲搞Thread了。
 
+![多核并行处理](img/28.png)
+
 [函数式编程](https://dzone.com/articles/functional-programming-in-java-8-part-0-motivation)
 [纯Java中的函数式编程](https://dzone.com/articles/functor-and-monad-examples-in-plain-java)
 <br>特点：
