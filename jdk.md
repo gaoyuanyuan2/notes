@@ -183,7 +183,9 @@ Lambda 允许把函数作为一个方法的参数（函数作为参数传递进�
 
 Stream自己不会存储元素。
 
-Stream不会改变源对象。相反，他们会返回一个持有结果的新Stream。③Stream操作是延迟执行的。这意味着他们会等到需要结果的时候才执行。
+Stream不会改变源对象。相反，他们会返回一个持有结果的新Stream。
+
+Stream操作是延迟执行的。这意味着他们会等到需要结果的时候才执行。
 
 * Stream的操作三个步骤
 
@@ -198,6 +200,19 @@ Stream不会改变源对象。相反，他们会返回一个持有结果的新St
 3. 终止操作(终端操作)
 <br>一个终止操作，执行中间操作链，并产生结果
 
+
+### 函数式接口就是只定义一个抽象方法的接口
+
+**Lambdas及函数式接口的例子**
+
+|使用案例 |Lambda 的例子 |对应的函数式接口|
+|:--:|:--:|:--:|
+|布尔表达式 |(List<String> list) -> list.isEmpty()| Predicate<List<String>>|
+|创建对象 |() -> new Apple(10) |Supplier<Apple>|
+|消费一个对象| (Apple a) -> System.out.println(a.getWeight()) |Consumer<Apple>|
+|从一个对象中 选择/提取|(String s) -> s.length()| Function<String, Integer>或 ToIntFunction<String>|
+|合并两个值 |(int a, int b) -> a * b |IntBinaryOperator|
+|比较两个对象 |(Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight())|Comparator<Apple>或BiFunction<Apple, Apple, Integer>或 ToIntBiFunction<Apple, Apple>|
 
 **筛选与切片**
 
@@ -278,7 +293,7 @@ Stream不会改变源对象。相反，他们会返回一个持有结果的新St
 
 * 新增的 java.util.concurrent.locks.StampedLock 类提供了一个基于能力的锁，可通过三种模式来控制读/写访问。
 
-<br>12.数据流定义
+### 12.数据流定义
 <br>想象一条河。河流从哪里开始？河流在哪里？我们对河流的理解本质上是流动的概念。这条河没有开始也没有结束。流数据非常适合于没有离散开头或结尾的数据。
 <br>例如，交通灯的数据是连续的，没有“开始”或“完成”。数据流是连续而不是分批发送数据记录的过程。通常，数据流对于在生成数据时在连续流中以小尺寸（通常以千字节为单位）发送数据的数据源类型是有用的。这可能包括各种各样的数据源，例如来自连接设备的遥测，客户使用您的Web应用程序生成的日志文件，电子商务交易或来自社交网络或地理空间服务的信息。
 传统上，数据是分批移动的。批处理通常同时处理大量数据，具有长时间的延迟。例如，该过程每24小时运行一次。虽然这可以是处理大量数据的有效方法，但它不适用于要流式传输的数据，因为数据在处理时可能是陈旧的。
@@ -305,20 +320,30 @@ Stream不会改变源对象。相反，他们会返回一个持有结果的新St
 <br>Apache Storm。Apache Storm是一个分布式实时计算系统。Storm用于分布式机器学习，实时分析以及许多其他情况，尤其是具有高数据速度的情况。
 <br>大规模管理数据并不难。了解完全免费的  开源HPCC Systems  平台如何使其更易于更
 
+### 问答
+
+
 <br>为什么有接口默认方法？
 <br>在Java 8之前， List<T>并没有stream或parallelStream方法，它实现
 的Collection<T>接口也没有，因为当初还没有想到这些方法嘛！可没有这些方法，这些代码
 就不能编译。换作你自己的接口的话，最简单的解决方案就是让Java 8的设计者把stream方法加
 入Collection接口，并加入ArrayList类的实现。
 
-<br>可要是这样做，对用户来说就是噩梦了。有很多的替代集合框架都用Collection API实现了接
+可要是这样做，对用户来说就是噩梦了。有很多的替代集合框架都用Collection API实现了接
 口。但给接口加入一个新方法，意味着所有的实体类都必须为其提供一个实现。语言设计者没法
 控制Collections所有现有的实现，这下你就进退两难了：你如何改变已发布的接口而不破坏
 已有的实现呢？
 
-<br>Java 8的解决方法就是打破最后一环——接口如今可以包含实现类没有提供实现的方法签名
+Java 8的解决方法就是打破最后一环：接口如今可以包含实现类没有提供实现的方法签名
 了！那谁来实现它呢？缺失的方法主体随接口提供了（因此就有了默认实现），而不是由实现类
 提供
+
+<br>@FunctionalInterface又是怎么回事？
+<br>如果你去看看新的Java API，会发现函数式接口带有@FunctionalInterface的标注（3.4节中会深入研究函数式接口，并会给出一个长长的列表）。 这个标注用于表示该接口会设计成
+一个函数式接口。如果你用@FunctionalInterface定义了一个接口，而它却不是函数式接口的话，编译器将返回一个提示原因的错误。例如，错误消息可能是“Multiple non-overriding
+abstract methods found in interface Foo”，表明存在多个抽象方法。请注意，@FunctionalInterface不是必需的，但对于为此设计的接口而言，使用它是比较好的做法。 它就像是@Override
+标注表示方法被重写了
+
 ## 4、JAVA9
 <br>1.  抽象类和接口的异同?
 <br><br>1) 二者的定义:
