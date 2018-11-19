@@ -117,6 +117,10 @@ Java 8可以透明地把输入的不相关部分拿到几个CPU内核上去分�
 
 ###  1.Lambda表达式
 
+**集合和流的另一个关键区别在于它们遍历数据的方式**
+
+**Streams库的内部迭代可以自动选择一种适合你硬件的数据表示和并行实现。**
+
 * 匿名：我们说匿名，是因为它不像普通的方法那样有一个明确的名称：写得少而想得多！
 
 * 函数：我们说它是函数，是因为Lambda函数不像方法那样属于某个特定的类。但和方法一样， Lambda有参数列表、函数主体、返回类型，还可能有可以抛出的异常列表。
@@ -124,6 +128,30 @@ Java 8可以透明地把输入的不相关部分拿到几个CPU内核上去分�
 * 传递：Lambda表达式可以作为参数传递给方法或存储在变量中。
 
 * 简洁：无需像匿名类那样写很多模板代码。
+
+**关键概念**
+
+* Lambda表达式可以理解为一种匿名函数：它没有名称，但有参数列表、函数主体、返回类型，可能还有一个可以抛出的异常的列表。
+
+* Lambda表达式让你可以简洁地传递代码。
+
+* 函数式接口就是仅仅声明了一个抽象方法的接口。
+
+* 只有在接受函数式接口的地方才可以使用Lambda表达式。
+
+* Lambda表达式允许你直接内联，为函数式接口的抽象方法提供实现，并且将整个表达式作为函数式接口的一个实例。
+
+* Java 8自带一些常用的函数式接口，放在java.util.function包里，包括Predicate<T>、 Function<T,R>、 Supplier<T>、 Consumer<T>和BinaryOperator<T>。
+
+* 为了避免装箱操作，对Predicate<T>和Function<T, R>等通用函数式接口的原始类型特化： IntPredicate、 IntToLongFunction等
+
+* 环绕执行模式（即在方法所必需的代码中间，你需要执行点儿什么操作，比如资源分配和清理）可以配合Lambda提高灵活性和可重用性。
+
+* Lambda表达式所需要代表的类型称为目标类型。
+
+* 方法引用让你重复使用现有的方法实现并直接传递它们。
+
+* Comparator、 Predicate和Function等函数式接口都有几个可以用来结合Lambda表达式的默认方法
 
 ```Java
 public class Java8Tester {
@@ -213,6 +241,15 @@ Stream操作是延迟执行的。这意味着他们会等到需要结果的时�
 |从一个对象中 选择/提取|(String s) -> s.length()| Function<String, Integer>或 ToIntFunction<String>|
 |合并两个值 |(int a, int b) -> a * b |IntBinaryOperator|
 |比较两个对象 |(Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight())|Comparator<Apple>或BiFunction<Apple, Apple, Integer>或 ToIntBiFunction<Apple, Apple>|
+
+**Lambda及其等效方法引用的例子**
+
+|Lambda |等效的方法引用|
+|:--:|:--:|
+|(Apple a) -> a.getWeight()| Apple::getWeight|
+|() -> Thread.currentThread().dumpStack()| Thread.currentThread()::dumpStack|
+|(str, i) -> str.substring(i)| String::substring|
+|(String s) -> System.out.println(s) |System.out::println|
 
 **筛选与切片**
 
