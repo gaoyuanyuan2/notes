@@ -228,7 +228,34 @@ Stream操作是延迟执行的。这意味着他们会等到需要结果的时�
 3. 终止操作(终端操作)
 <br>一个终止操作，执行中间操作链，并产生结果
 
+* 流的使用一般包括三件事：
 
+1. 一个数据源（如集合）来执行一个查询；
+
+2. 一个中间操作链，形成一条流的流水线；
+
+3. 一个终端操作，执行流水线，并能生成结果
+
+**中间操作**
+
+|操作 |返回类型| 操作参数 |函数描述符|
+|:--:|:--:|:--:|:--:|
+|filter  | Stream<T> |Predicate<T>| T -> boolean|
+|map |  Stream<R> |Function<T, R> |T -> R|
+|limit  | Stream<T>|||
+|sorted  | Stream<T> |Comparator<T> |(T, T) -> int|
+|distinct|   Stream<T>|||
+
+**终端操作**
+
+|操作 | 目的|
+|:--:|:--:|
+|forEach |消费流中的每个元素并对其应用 Lambda。这一操作返回 void|
+|count | 返回流中元素的个数。这一操作返回 long|
+|collect|把流归约成一个集合，比如 List、 Map 甚至是 Integer。|
+
+ ![中间操作和终端操作](https://github.com/gaoyuanyuan2/notes/blob/master/img/30.png) 
+ 
 ### 函数式接口就是只定义一个抽象方法的接口
 
 **Lambdas及函数式接口的例子**
@@ -301,14 +328,34 @@ Stream操作是延迟执行的。这意味着他们会等到需要结果的时�
 |collect (Collector c)|将流转换为其他形式。 接收一个Collector楼口的实现，用于给Stream中元素做汇总的方法|
 
 [Java 8 Stream](http://www.runoob.com/java/java8-streams.html) 
-### 3.接口新增：默认方法与静态方法
+
+###  3.接口新增：默认方法与静态方法
+
 ###  4.方法引用,与Lambda表达式联合使用
+
 ###  5.引入重复注解
+
 ###  6.类型注解
+
 ###  7.最新的Date/Time API (JSR 310)
+
 ###  8.新增base64加解密API
+
 ###  9.数组并行（parallel）操作
+
 ### 10.JVM的PermGen空间被移除：取代它的是Metaspace（JEP 122）元空间
+
+### 11. Optional
+
+Optional里面几种可以迫使你显式地检查值是否存在或处理值不存在的情形的方法也不错。
+
+* isPresent()将在Optional包含值的时候返回true, 否则返回false。
+
+* ifPresent(Consumer<T> block)会在值存在的时候执行给定的代码块。Consumer函数式接口；它让你传递一个接收T类型参数，并返回void的Lambda表达式。
+
+* T get()会在值存在时返回值，否则抛出一个NoSuchElement异常。
+
+* T orElse(T other)会在值存在时返回值，否则返回一个默认值。
 
 使用Metaspace（JEP 122）代替持久代（PermGen space）。在JVM参数方面，使用-XX:MetaSpaceSize和-XX:MaxMetaspaceSize代替原来的-XX:PermSize和-XX:MaxPermSize。
 
