@@ -15,7 +15,10 @@
 <br><br>rmdir 删除空目录
 <br>rm -rf bbb/ 强制删除
 <br><br>touch 创建文件
-<br><br>2.[root@localhost ~]#
+
+<br>netstat -anp |grep 8253 查看端口情况
+
+<br>2.[root@localhost ~]#
 <br>其中:root :当前登录用户
 <br>localhost 主机名
 <br>~当前所在目录(家目录)
