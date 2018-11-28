@@ -602,6 +602,8 @@ BookService{
 * 		ApplicationListener；事件监听；
 * 		ApplicationEventMulticaster；事件派发：
 
+![链](/img/31.png)
+
 
 
 
