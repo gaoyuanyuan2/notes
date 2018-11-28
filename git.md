@@ -11,7 +11,16 @@
 <br>git reset --hard HEAD `~` n
 <br>注:一个`^`表示后退一步， n个表示后退n步使用 `~`符号:只能后退
 <br>git reset -hard HEAD~n注:表示后退n步
-<br><br>2.reset命令的三个参数对比
+
+强制回退到以前的版本
+
+第一步: git log 查看之前的commit的id，找到想要还原的版本
+
+第二步: git reset --hard 44bd896b   还原到之前的某个版本
+
+第三步: git push -f origin master  强制push到远程
+
+<br>2.reset命令的三个参数对比
 <br>soft参数仅仅在本地库移动HEAD指针
 <br>mixed参数在本地库移动HEAD指针、重置暂存
 <br>hard参数在本地库移动HEAD指针、重置暂存区、重置工作区
