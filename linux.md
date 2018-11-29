@@ -237,10 +237,10 @@ gzip -d 压缩文件
 <br>tar -xvf longzls.tar
 <br>.tar.gz圧缩格式
 <br>其实.tar.gz格式是先打包为.tar格式,再圧缩为.gz格式
-<br>tar -zcvf 圧缩包名.tar.gz源文件
+<br>tar -zcvf **被圧缩包名.tar.gz**源文件
 <br>迭项:
 <br>-z: 圧缩为.tar.gz格式
-<br>tar -zxvf 圧缩包名tar.gz
+<br>tar -zxvf **圧缩包名tar.gz**
 <br>选项:
 <br>-x：解圧缩.tar.gz格式
 <br>.tar.bz2圧缩格式
