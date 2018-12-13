@@ -76,6 +76,10 @@
 
 * git tab 版本
 
+9.忽略.gitignore
+
+* git rm --cached **/BaseTest.java
+
 ## 哈希
 
 * 哈希是一个系列的加密算法，各个不同的哈希算法虽然加密强度不同。但是有以下几个共同点:
