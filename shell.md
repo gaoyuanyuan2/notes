@@ -8,3 +8,4 @@ Shell还是一个功能相当强大的编程语言,易编写,易调试，灵活�
 
 Shell的两种主要语法类型有Bourne和C ,这两种语法彼此不兼容。Bourne家族主要包括sh、ksh、Bash, psh、zsh ; C家族主要包括: csh、tcsh
 
+
