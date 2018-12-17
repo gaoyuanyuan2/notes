@@ -53,6 +53,9 @@
 4.git checkout 分支名称
 
 * checkout -b dev 创建新分支
+
+* git push origin dev_area -u 建立连接
+
 * checkout . 撤销所有更改
 
 5.邀请：Settings-Collaborators
