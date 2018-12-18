@@ -54,6 +54,8 @@
 
 * checkout -b dev 创建新分支
 
+* git push origin dev_area -u 建立连接
+
 * checkout . 撤销所有更改
 
 * git push origin :dev_area 删除分支
