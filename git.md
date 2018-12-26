@@ -64,6 +64,8 @@
 
 * git branch -d <BranchName> 删除本地分支 
 
+* git checkout -b 本地分支名x origin/远程分支名x
+
 5.邀请：Settings-Collaborators
 
 
