@@ -58,6 +58,14 @@
 
 * checkout . 撤销所有更改
 
+* git push origin :dev_area 删除分支
+
+* git branch -a     查看项目的分支们(包括本地和远程) 
+
+* git branch -d <BranchName> 删除本地分支 
+
+* git checkout -b 本地分支名x origin/远程分支名x
+
 5.邀请：Settings-Collaborators
 
 
