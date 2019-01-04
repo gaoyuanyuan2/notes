@@ -238,7 +238,7 @@ gzip -d 压缩文件
 
 <br>.tar.gz圧缩格式
 <br>其实.tar.gz格式是先打包为.tar格式,再圧缩为.gz格式
-<br>tar -zcvf **被圧缩包名.tar.gz**源文件
+<br>tar -zcvf **被圧缩包名.tar.gz** 源文件
 <br>迭项:
 <br>-z: 圧缩为.tar.gz格式
 
