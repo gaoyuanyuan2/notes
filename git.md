@@ -58,7 +58,7 @@
 
 * checkout . 撤销所有更改
 
-* git push origin :dev_area 删除分支
+* git push origin :dev_area 删除分支 **注意空格**
 
 * git branch -a     查看项目的分支们(包括本地和远程) 
 
