@@ -22,6 +22,15 @@
 <br> 表达式的取值，bvte short int char。JDK5以后可以是枚举. JDK7以后可以是String
 <br><br>10.集合和泛型只能为引用类型
 <br><br>11.泛型
+
+final： 如果你有Java性能调优方面的经验，你或许会觉得惊奇，因为整章关于编译的讨论中都没有提及final关键字。final 总被认为是影响性能的重要因素，因为大家相信在进行内联和其他优化时，final 
+可以使JIT编译器作出更好的选择。
+
+这种想法在落伍的过去或许有一些价值，但已经很多年很多年不是这样了(即便曾经:是)。而其实它是流传甚广的谣言。准确地说，只要有必要时，
+
+你就应该使用final:比如你不打算改变的不可变对象或原生值、内部类引用的外部参数等等。但无论有没有final关键字，都不会影响应用的性能。
+
+
 ```Java
 public static void printCollection(Collection<?> cols) {
     for(Object obj:cols) {
