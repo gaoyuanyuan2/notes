@@ -37,6 +37,8 @@
 
 ## Maven阶段
 
+![生命周期](https://github.com/gaoyuanyuan2/notes/blob/master/img/32.png) 
+
 * validate：验证项目是否正确并且所有必要信息都可用
 
 * compile 
@@ -65,4 +67,109 @@
 Release:该版本表示最终版，不能被强制覆盖。
 
 ## archetype 项目模板
+
+
+
+eg:
+```xml
+<dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat-servlet-api</artifactId>
+    <version>9.0.19</version>
+    <scope>provided</scppe>
+</dependency>
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.15</version>
+    <scope>runtime</scope>
+</dependency>
+
+<dependency>
+    <groupId>com.gaoyuanyaun.yan</groupId>
+    <artifactId>common-lib</artifactId>
+    <version>1.0</version>
+    <scope>system</scope>
+    <systemPath>D:\common-lib.jar</systemPath>
+</dependency>
+
+```
+## 常用镜像
+
+```xml
+<mirrors>
+    <mirror>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      <mirrorOf>central</mirrorOf>        
+    </mirror>
+    <mirror>
+      <id>ui</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Human Readable Name for this Mirror.</name>
+     <url>http://uk.maven.org/maven2/</url>
+    </mirror>
+    <mirror>
+		<id>osc</id>
+		<mirrorOf>central</mirrorOf>
+		<url>http://maven.oschina.net/content/groups/public/</url>
+	</mirror>
+	 <mirror>
+        <id>osc_thirdparty</id>
+        <mirrorOf>thirdparty</mirrorOf>
+        <url>http://maven.oschina.net/content/repositories/thirdparty/</url>
+    </mirror>
+</mirrors>
+
+```
+
+## maven统一修改项目版本号
+
+使用插件完成版本号的修改，不需要一个个去修改
+
+在父级pom文件中，加入versions插件配置，然后在linux或IntelliJ IDEA中执行修改版本号的命令
+
+### versions插件配置
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>2.7</version>
+        </plugin>
+    </plugins>
+</build>
+```
+### 修改版本号命令
+
+*mvn versions:set -DnewVersion=1.1-SANPSHOT*
+
+## Plugin
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>2.10</version>
+    <executions>
+        <execution>
+            <id>copy-dependencies</id> 
+            <phase>package</phase>  //执行时机
+            <goals>
+                <goal>copy-dependencies</goal> //执行目标
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+
 
