@@ -1,10 +1,14 @@
-# Maven
+# Maven （Java 写的）
+
+*约定优于配置*
 
 ## 命令
 
 * mvn dependency:tree >d.txt  输出依赖树
 
 * mvn clean package -U 强制拉一次
+
+* mvn -P test
 
 ## scope
 
@@ -67,6 +71,23 @@
 Release:该版本表示最终版，不能被强制覆盖。
 
 ## archetype 项目模板
+
+## 优先级 ~/.m2/setting.xml  -> conf/setting.xml
+
+## dependencyManagement 只出现在父pom，统一版本号，声明
+
+## type 默认java
+
+## score 默认 compile;test 测试期间用到；provided 编译 不会打包 eg：tomcat 有servlet 相关包；
+
+##  runtime 运行时，打包，接口编程，JDBC接口；system 本地包
+
+## 传递依赖 
+
+## 父pom （公司级别、部门级别）
+
+## 依赖就近原则 ，加载先后原则（书写顺序）
+
 
 
 
