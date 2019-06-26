@@ -21,6 +21,10 @@
 
 vi /etc/sysconfig/network-scripts/ifcfg-eth0 修改ip
 
+
+hostnamectl set-hostname  master 设置主机名称
+
+
 <br>2.[root@localhost ~]#
 <br>其中:root :当前登录用户
 <br>localhost 主机名
