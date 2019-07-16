@@ -1,5 +1,6 @@
 # MySql
-## sql优化
+
+## SQL优化
 
 1.业务拆分，相关字段冗余或者合并成临时表；
 
@@ -106,7 +107,7 @@ MySQL 5.6 以前的版本，只有 MyISAM 存储引擎支持全文索引；MySQL
 
 空间索引是对空间数据类型的字段建立的索引，MySQL中的空间数据类型有4种，分别是:GEOMETRY. POINT、LINESTRING 和POLYGON。MySQL使用SPATIAL关键字进行扩展，使得能够用于创建正规索引类似的语法创建空间索引。创建空间索引的列，必须将其声明为NOTNULL，空间索引只能在存储引擎为My1SAM的表中创建。
 
-5. mysql联合索引
+5.mysql联合索引
 
 命名规则：表名_字段名
 
