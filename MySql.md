@@ -129,7 +129,7 @@ MySQL 5.6 以前的版本，只有 MyISAM 存储引擎支持全文索引；MySQL
 
 联合索引又叫复合索引。对于复合索引:Mysql从左到右的使用索引中的字段，一个查询可以只使用索引中的一部份，但只能是最左侧部分。例如索引是key index (a,b,c). 可以支持a | a,b| a,b,c 3种组合进行查找，但不支持 b,c进行查找 .当最左侧字段是常量引用时，索引就十分有效。
 
-![EXPLAIN](https://github.com/gaoyuanyuan2/notes/blob/master/img/40.jpg) 
+![EXPLAIN](https://github.com/gaoyuanyuan2/notes/blob/master/img/40.png) 
 
 ## 索引创建规则
 
@@ -191,7 +191,7 @@ Com_(CRUD) 操作的次数
 
 ## 查询优化 EXPLAIN
 
-![EXPLAIN](https://github.com/gaoyuanyuan2/notes/blob/master/img/33.jpg) 
+![EXPLAIN](https://github.com/gaoyuanyuan2/notes/blob/master/img/33.png) 
 
 ### 1.id
 
@@ -211,13 +211,13 @@ SELECT识别符。这是SELECT查询序列号。
 
 查询中若包含任何复杂的子部分，最外层查询则被标记为：PRIMARY。
 
-![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/34.jpg) 
+![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/34.png) 
 
 3、UNION
 
 表示连接查询的第2个或后面的查询语句。
 
-![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/35.jpg) 
+![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/35.png) 
 
 4、DEPENDENT UNION
 
@@ -231,7 +231,7 @@ UNION中的第二个或后面的SELECT语句，取决于外面的查询。
 
 子查询中的第1个SELECT语句。
 
-![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/36.jpg) 
+![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/36.png) 
 
 7、DEPENDENT SUBQUERY
 
@@ -262,7 +262,7 @@ SELECT(FROM 子句的子查询)。
 3、eq_ref
 mysql手册是这样说的:"对于每个来自于前面的表的行组合，从该表中读取一行。这可能是最好的联接类型，除了const类型。它用在一个索引的所有部分被联接使用并且索引是UNIQUE或PRIMARY KEY"。eq_ref可以用于使用=比较带索引的列。
 
-![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/37.jpg) 
+![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/37.png) 
 
 
 4、ref
@@ -292,7 +292,7 @@ unique_subquery是一个索引查找函数,可以完全替换子查询,效率更
 
 只检索给定范围的行,使用一个索引来选择行。
 
-![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/38.jpg) 
+![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/38.png) 
 
 10、index
 
@@ -318,7 +318,7 @@ unique_subquery是一个索引查找函数,可以完全替换子查询,效率更
        
        忽略使用索引：IGNORE INDEX(列名)
  
-![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/39.jpg) 
+![PRIMARY](https://github.com/gaoyuanyuan2/notes/blob/master/img/39.png) 
 
 ### 7.key_len
 
@@ -431,4 +431,4 @@ ALTER TABLE table_name ENABLE KEYS
 
 MySQL的配置参数都在my.conf或者my.ini文件的[mysqld]组中，常用的参数如下：
 
-![参数](https://github.com/gaoyuanyuan2/notes/blob/master/img/41.jpg) 
+![参数](https://github.com/gaoyuanyuan2/notes/blob/master/img/41.png) 
