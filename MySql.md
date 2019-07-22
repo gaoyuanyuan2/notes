@@ -454,7 +454,7 @@ Handler_read_rnd_next的值高则意味着查询运行效率低，并且应该�
 
 ![参数](https://github.com/gaoyuanyuan2/notes/blob/master/img/42.png) 
 
-这里就要结合咱们的慢查询 和DSC去建立索引啊
+这里就要结合咱们的慢查询 和DSC去建立索引
 
 ## 索引的存储分类
 
