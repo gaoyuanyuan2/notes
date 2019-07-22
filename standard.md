@@ -1,4 +1,5 @@
 ## 代码规范
+
 ### 1、函数内容
 
 方法调用render(true)对于可怜的读者来说仍然摸不着头脑。卷动屏幕，看到render(Boolean isSuite), 稍许有点帮助，不过仍然不够。应该把该函数一分为二: renderForSuite( )
@@ -44,4 +45,6 @@ Circle makeCircle (Point center, double radius);
 
 在方法中返回null值是糟糕的做法，但将null值传递给其他方法就更糟糕了。除非API要求你向它传递null值，否则就要尽可能避免传递null值。
 
+
+使用Apache Commons StringUtils.Replace而不是String.replace
 
