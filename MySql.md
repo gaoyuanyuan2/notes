@@ -432,3 +432,37 @@ ALTER TABLE table_name ENABLE KEYS
 MySQL的配置参数都在my.conf或者my.ini文件的[mysqld]组中，常用的参数如下：
 
 ![参数](https://github.com/gaoyuanyuan2/notes/blob/master/img/41.png) 
+
+## 慢查询日志查看：
+
+`show variables like '%quer%';`
+
+其中红框标注的选项是：
+
+-slow_query_log是否记录慢查询。用long_query_time变量的值来确定“慢查询”。
+
+-slow_query_log_file慢日志文件路径
+
+-long_query_time慢日志执行时长（秒），超过设定的时间才会记日志
+
+
+查看索引参数使用情况 ：SHOW STATUS LIKE 'Handler_read%'
+
+如果索引正在工作，Handler_read_key的值将很高，这个值代表一行被索引读到的次数
+
+Handler_read_rnd_next的值高则意味着查询运行效率低，并且应该建立索引补救
+
+![参数](https://github.com/gaoyuanyuan2/notes/blob/master/img/42.png) 
+
+这里就要结合咱们的慢查询 和DSC去建立索引啊
+
+## 索引的存储分类
+
+MyISAM存储引擎的表的数据和索引是自动分开存储的，各自是一个独一的一个文件;
+
+InnoDB存储引擎的表的数据和索引是存储在同一个表空间里面的，但可以有多个文件组成。
+
+MySQl目前不支持函数索引，但是能对列的面前某一部分进行索引，这个特性可以大大的缩小索引文件的大小，用户在设计表结构的时候也可以对文本列根据此特性经行灵活设计。
+
+create index ind_company_name on company(name(4))
+
