@@ -35,6 +35,7 @@ IsInterrupted（）：测试线程Thread对象是否已经中断状态，但不�
 10.锁非this对象有一定的优势：如果一个类有多个同步方法，同步（非this）代码块中的程序与同步方法是异步的，不与其他锁this同步方法争抢this锁，可大大提高运行效率。
 
 11.Synchronized（非this对象X）：多个线程同时执行synchronized（x）{}同步代码块是呈同步效果；
+
 其他线程执行x对象中synchronized同步方法呈同步效果。其他线程执行x对象里面的synchronized（this）代码块也呈同步效果。
 
 12.Class锁对所以对象实例起作用。对象锁和Class锁是异步的，因为是不同的锁
