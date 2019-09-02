@@ -192,5 +192,21 @@ eg:
 </plugin>
 ```
 
+指定版本，就不用设置项目结构了
+
+```xml
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+```
+
 
 
