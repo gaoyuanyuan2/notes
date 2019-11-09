@@ -60,7 +60,9 @@
 
 * git push origin :dev_area 删除分支 **注意空格**
 
-* git branch -a     查看项目的分支们(包括本地和远程) 
+* git branch -a     查看项目的分支(包括本地和远程) 
+
+* git branch -r  查看远程分支
 
 * git branch -d <BranchName> 删除本地分支 
 

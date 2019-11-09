@@ -18,6 +18,17 @@
 
 <br>netstat -anp |grep 8253 查看端口情况
 
+
+vi /etc/sysconfig/network-scripts/ifcfg-eth0 修改ip
+
+
+hostnamectl set-hostname  master 设置主机名称
+
+
+
+https://blog.51cto.com/4837471/2140674 免密登录
+
+
 <br>2.[root@localhost ~]#
 <br>其中:root :当前登录用户
 <br>localhost 主机名
