@@ -1,5 +1,9 @@
 # Mybatis
 
+MyBatis是一个一流的持久性框架，支持自定义SQL、存储过程和高级映射。
+MyBatis消除了几乎所有的JDBC代码和手动设置参数和检索结果。
+MyBatis可以使用简单的XML或注释进行配置，并将原语、映射接口和Java pojo(普通的旧Java对象)映射到数据库记录。
+
 ## 1、 SqlSession
 
  SqlSession的实例不是线程安全的,因此是不能被共享的。
