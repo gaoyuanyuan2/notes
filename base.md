@@ -75,3 +75,34 @@ boolean/~
 
 boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。
 
+
+## String
+
+在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，
+String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+
+## Object 通用方法
+
+概览
+
+public native int hashCode()
+
+public boolean equals(Object obj)
+
+protected native Object clone() throws CloneNotSupportedException
+
+public String toString()
+
+public final native Class<?> getClass()
+
+protected void finalize() throws Throwable {}
+
+public final native void notify()
+
+public final native void notifyAll()
+
+public final native void wait(long timeout) throws InterruptedException
+
+public final void wait(long timeout, int nanos) throws InterruptedException
+
+public final void wait() throws InterruptedException
