@@ -106,3 +106,44 @@ public final native void wait(long timeout) throws InterruptedException
 public final void wait(long timeout, int nanos) throws InterruptedException
 
 public final void wait() throws InterruptedException
+
+1. cloneable
+
+clone() 是 Object 的 protected 方法，它不是 public，一个类不显式去重写 clone()，其它类就不能直接去调用该类实例的 clone() 方法。
+
+使用 clone() 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，
+最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+
+## 锁
+
+1. 锁的实现
+
+synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
+
+2. 性能
+
+新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
+
+3. 等待可中断
+
+当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
+
+ReentrantLock 可中断，而 synchronized 不行。
+
+4. 公平锁
+
+公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
+
+synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+
+5. 锁绑定多个条件
+
+一个 ReentrantLock 可以同时绑定多个 Condition 对象。
+
+## wait
+
+wait() 和 sleep() 的区别
+
+wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
+
+wait() 会释放锁，sleep() 不会。
