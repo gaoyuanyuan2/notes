@@ -147,3 +147,28 @@ wait() 和 sleep() 的区别
 wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
 
 wait() 会释放锁，sleep() 不会。
+
+## BlockingQueue
+
+java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
+
+* FIFO 队列 ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）
+
+* 优先级队列 ：PriorityBlockingQueue
+
+提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
+
+使用 BlockingQueue 实现生产者消费者问题
+
+## ThreadLocal 
+
+从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。
+   
+
+ 在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove
+ ()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
+ 
+## 自旋锁
+
+自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。
+
