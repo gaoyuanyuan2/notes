@@ -40,11 +40,12 @@
 
 3.Repeatable Read（可重读）,MySQL的默认事务隔离级别,幻读 （Phantom Read）。简单的说，幻读指当用户读取某一范围的数据行时，另一个事务又在该范围内插入了新行，当用户再读取该范围的数据行时，会发现有新的“幻影” 行。
 
-InnoDB和Falcon存储引擎通过多版本并发控制（MVCC，Multiversion Concurrency Control）机制解决了该问题。
-
 4.Serializable（可串行化）,每个读的数据行上加上共享锁。在这个级别，可能导致大量的超时现象和锁竞争。
 
 串行化由于是会对所涉及到的表加锁，并非行锁，自然也就不存在行的版本控制问题。
+
+
+* 多版本并发控制（Multi-Version Concurrency Control, MVCC）是 MySQL 的 InnoDB 存储引擎实现隔离级别的一种具体方式，用于实现提交读和可重复读这两种隔离级别。而未提交读隔离级别总是读取最新的数据行，无需使用 MVCC。可串行化隔离级别需要对所有读取的行都加锁，单纯使用 MVCC 无法实现。
 
 ![四种隔离级别](https://github.com/gaoyuanyuan2/notes/blob/master/img/1.jpg) 
 
