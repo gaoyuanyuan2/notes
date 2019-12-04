@@ -1,6 +1,6 @@
-## JAVASE
+# JAVA基础
 
-### 1、类型
+## 类型
 
 1.10到其他进制的转化，除余法。
 
@@ -76,7 +76,7 @@ Java中的泛型类型(或者泛型)类似于C++中的模板。但是这种相�
 用于编译器执行类型检查和类型推断，状后生成普通的非泛型的字节码，这种实现技术称为擦除(erasure) (编译器使用泛型类型信息保
 证类型安全，然后在生成字节码之首将其清除)。这是因为扩展虚拟机指令集来支持泛型被认为是无法接受的。
 
-### 2、对象
+## 对象
 
 1.抽象的(abstract) 方法是否可同时是静态的(static) ,是否可同时是本地方法(native) ，是否可同时被synchronized修饰?
 
@@ -162,7 +162,7 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
     int[] array = new int[3](4, 2, 1};
 ```
 
-### 3、集合框架体
+## 集合框架体
 
 ![集合](https://github.com/gaoyuanyuan2/notes/blob/master/img/5.png) 
 
@@ -209,11 +209,24 @@ Jdk1.8 数组+链表（加在末尾）+ 红黑树（总元素大于64 单个大�
 
 添加效率低，其他效率都高
 
-Jdk1.8 ConcurrentHashMap：CAS算法（底层操作系统支持的算法） 无锁添加
+ConcurrentHashMap： 
 
-### 4、IO
+Jdk1.7 是由 Segment 数组、HashEntry 数组组成，和 HashMap 一样，仍然是数组加链表组成。
+每个 Segment 都有一个 volatile 修饰的全局变量 count ,求整个 ConcurrentHashMap 的 size 时很明显就是将所有的 count 累加即可
+
+Jdk1.8 其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchronized 来保证并发安全性
+
+
+LinkedHashMap：基于 HashMap 但具有顺序的 LinkedHashMap 来解决有排序需求的场景。
+              
+它的底层是继承于 HashMap 实现的，由一个双向链表所构成。
+
+
+## IO
 
 ![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/7.png) 
+
+![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/47.png) 
 
 1.foreach与正常for循环效率对比
 
@@ -221,7 +234,7 @@ Jdk1.8 ConcurrentHashMap：CAS算法（底层操作系统支持的算法） 无�
 
 2.记得flush刷出，和close
 
-### 5、注解
+## 注解
 
  Annotation的作用:
  
@@ -238,7 +251,7 @@ Jdk1.8 ConcurrentHashMap：CAS算法（底层操作系统支持的算法） 无�
  ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/16.png) 
  
 
-### 6、反射
+## 反射
 
 1. setAccessible
 
@@ -440,6 +453,10 @@ TOMCAT不能使用系统默认的类加载器。
 我可以限制你只能把类写在指定的地方，否则我不给你加载!
 
 ![](https://github.com/gaoyuanyuan2/notes/blob/master/img/23.png) 
+
+## Java 中的异常处理
+
+![](https://github.com/gaoyuanyuan2/notes/blob/master/img/45.png) 
 
 
 
