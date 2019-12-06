@@ -68,3 +68,15 @@ IOC容器：装java bean （Web容器：装servlet）
 |模板模式 Template|1、执行流程固定，但中间有些步骤有细微差别。<br>2、可实现批量生产。|流程标准化，原料自己加|
 
 
+## 事务
+
+通过解析配置文件，得到TransactionDefinition代理 (实际上就是AOP中的MethodInterceptor 方法)
+
+就可以在满足条件的方法调用之前和调用之后加一些东西
+
+PlatformTransactionManger中的方法getTransaction()  调用了TransactionSynchronizationManager类的getResource()
+
+从ThreadLocal里面取值，Map<Key:DataSource ,Value:ConnectionHolder> (相当于获取一个连接对象Connection);
+
+
+
