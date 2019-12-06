@@ -112,8 +112,9 @@ ConcurrentLinkedQueue 适合在对性能要求相对较高，同时对队列的�
 16.自定义线程池
 
 若Executors.工厂类无法满足我们的需求，可以自己去创建自定义的线程池，
-   其实Executors工厂类里面的创建线程方法其内部实现均是用了ThreadPoolExecutor这个类，这个类可以自定义线程。
-   构造方法如下:
+其实Executors工厂类里面的创建线程方法其内部实现均是用了ThreadPoolExecutor这个类，这个类可以自定义线程。
+
+构造方法如下:
    
 ```Java
 public ThreadPoolExecutor(int corePoolSize,
