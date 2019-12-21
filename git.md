@@ -93,6 +93,14 @@
 
 * git rm --cached **/BaseTest.java
 
+10.清除账号
+
+git credential-manager uninstall  清除掉缓存在git中的用户名和密码 同时删除用户目录下git 配置.
+
+git config --global credential.helper store 再保存
+
+
+
 ## 哈希
 
 * 哈希是一个系列的加密算法，各个不同的哈希算法虽然加密强度不同。但是有以下几个共同点:
