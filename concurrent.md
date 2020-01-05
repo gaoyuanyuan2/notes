@@ -198,6 +198,66 @@ AQS定义了对双向队列所有的操作，而只开放了tryLock和tryRelease
 [并发编程Concurrent](http://www.importnew.com/26461.html)
 
 
+## 锁
+
+1. 锁的实现
+
+synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
+
+2. 性能
+
+新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
+
+3. 等待可中断
+
+当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。
+
+ReentrantLock 可中断，而 synchronized 不行。
+
+4. 公平锁
+
+公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。
+
+synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+
+5. 锁绑定多个条件
+
+一个 ReentrantLock 可以同时绑定多个 Condition 对象。
+
+## wait
+
+wait() 和 sleep() 的区别
+
+wait() 是 Object 的方法，而 sleep() 是 Thread 的静态方法；
+
+wait() 会释放锁，sleep() 不会。
+
+## BlockingQueue
+
+java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
+
+* FIFO 队列 ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度）
+
+* 优先级队列 ：PriorityBlockingQueue
+
+提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
+
+使用 BlockingQueue 实现生产者消费者问题
+
+## ThreadLocal 
+
+从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。
+   
+
+ 在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove
+ ()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
+ 
+## 自旋锁
+
+自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。
+
+
+
 
 
 
