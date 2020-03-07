@@ -1,3 +1,99 @@
+## Java编程模型
+
+* OOP
+
+* AOP
+
+1.Java静态接口
+
+`java.util.logging.Filter`
+
+`java.util.EventListener`
+
+2、字节码提升
+
+ASM(ObjectWeb)
+
+CGLIB
+
+Javassist(JBoss)
+
+BCEL(Apache)
+
+3、Java动态代理
+
+`java.lang.reflect.Proxy`
+
+`java.lang.reflect.InvocationHandler`
+
+
+* 面向元信息编程（MDOP）
+
+泛型
+
+反射
+
+注解
+
+* 面向函数编程（FOP）
+
+函数式接口
+
+默认方法
+
+方法应引用
+
+* 面向模块编程（MOP）
+
+## Java 编程思想
+
+* 契约编程
+
+* 设计模式
+
+1.面向对象设计模式
+
+构造模式
+
+结构模式
+
+行为模式
+
+并发模式
+
+2.面向元数据设计模式
+
+泛型接口设计
+
+注解驱动设计
+
+3.面向切面设计模式
+
+判断模式
+
+拦截模式
+
+4.面向函数设计模式
+
+函数式接口设计（SCFP）
+
+Fluent API 设计
+
+Reactive/Stream API设计
+
+* 模式驱动
+
+接口驱动
+
+函数驱动
+
+配置驱动
+
+模块驱动
+
+注解驱动
+
+
 ## JSP有9个内置对象：
 
 * request：封装客户端的请求，其中包含来自GET或POST请求的参数；
