@@ -91,5 +91,39 @@ PlatformTransactionManger中的方法getTransaction()  调用了TransactionSynch
 
 从ThreadLocal里面取值，Map<Key:DataSource ,Value:ConnectionHolder> (相当于获取一个连接对象Connection);
 
+##  延迟查找
+
+```java
+public class VelocityLayoutAutoConfiguration{
+    
+    private VelocityConfigurer velocityConfigurer;
+    
+    private ObjectProvider<VelocityConfigurer> velocityConfigurerObjectProvider; //延迟依赖查找
+    
+    @Lazy
+    private VeloeityConfigurer laziedVelocityConfigurer; // Lazy（代理）对象会被字节码提升延迟依赖注入
+    
+    public VelocityLayoutAutoConfiguration(VelocityConfiguree velocityConfigurer) { //可能过早初始化VelocityConfigurer
+      this .velocityConfigurer = velocityConfigurer;
+     }
+    
+    public VelocityLayoutAutoConfiguration(ObjectProvider<VelocityConfigurer> velocityConfigurer) {
+        this.velocityConfigurerobjectProvider = velocityConfigurer;
+    
+    }
+    
+    @PostConstruct
+    public void process() {
+        velocityConfigurerobjectProvider.getIfAvailable(); //才发生Bean初始化
+    }
+}
+```
+
+## 底层是BeanFactory?
+
+Spring Bean的维护和生命周期管理均在BeanFactory实现类中，绝多大数是指DefaultLlistableBeanFactory
+
+
+
 
 
