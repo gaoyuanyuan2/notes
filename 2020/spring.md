@@ -12,7 +12,7 @@ BeanFactory和FactoryBean,其中BeanFactory指的是I0C容器的编程抽象，�
 
 ApplicationContext, XmlBeanFactory 等，这些都是IOC容器的具体表现，需要使用什么样的容器由客户决定,但Spring为我们提供了丰富的选择。
 FactoryBean 只是一个可以在I0C而容器中被管理的一个bean,是对各种处理过程和资源使用的抽象,FactoryBean在需要时产生另一个对象，而不返回
-FactoryBean本身,我们可以把它看成是一个抽象工厂，对它的调用返回的是工厂“生产的产品。所有的FactoryBean都实现特殊的
+FactoryBean本身,我们可以把它看成是一个抽象工厂，对它的调用返回的是工厂“生产的产品”。所有的FactoryBean都实现特殊的
 org.springframework.beans.factory.FactoryBean接口，当使用容器中FactoryBean的时候，
 该容器不会返回FactoryBean本身,而是返回其生成的对象。Spring 包括了大部分的通用资源和服务访问抽象的FactoryBean的实现，
 其中包括:对JNDI查询的处理，对代理对象的处理，对事务性代理的处理，对RMI代理的处理等，这些我们都可以看成是具体的工厂，
@@ -24,14 +24,8 @@ org.springframework.beans.factory.FactoryBean接口，当使用容器中FactoryB
 1. ApplicationContext和BeanFactory之间的关系, 也知道了DefaultListableBeanFactory被组合到了
 
 2. AnnotationConfigApplicationContext继承了GenericApplicationContext它的refreshBeanFactory()只是在无参构造函数中new 
-DefaultListableBeanFactory(),并没有注册bean定义相关的步骤,不是此类ApplicationContext不要注册bean定义?
+DefaultListableBeanFactory
       
-AnnotationConfigApplicationContext不需要加载外部配置化的BeanDefinition,比如
-   
-ClassPathXmlApplicationContext继承了AbstractRefreshableConfigApplicationContext 在
-   
-refreshBeanFactory()方法会调用loadBeanDefinitions()方法，在AbstractXmlApplicationContext的实现作用下，加载XML配置元素。
-
 ## ApplicationContext除了IoC容器角色，还提供了哪些特性
 
 我们常说spring的核心就是IOC和AOP,但是BeanFactory和ApplicationContext才是真正的IOC容器，
