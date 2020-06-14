@@ -167,6 +167,11 @@ beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 jpa 默认实现是hibernate
 
 
+## 其他
+
+
+
+
 
 
 
