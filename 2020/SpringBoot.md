@@ -99,6 +99,17 @@ sun.net.www.protocol.ftp.Handler
 如需扩展择则需继续URLStreamHandler类
 
 
+org.springframework.boot.loader.Launcher
+
+ExecutableArchiveLauncher extends Launcher 
+
+WarLauncher extends ExecutableArchiveLauncher
+
+JarLauncher extends ExecutableArchiveLauncher
+
+总而言之，打包WAR文件是一种兼容措施，既能被WarLauncher启动，又能兼容 Servlet容器环境。
+换言之，WarLauncher与JarLauncher并无本质差别，所以建议Spring Boot应用使用非传统Weh部署时尽可能地使用JAR归档方式。
+
 
 ### 启动器
 
