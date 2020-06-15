@@ -220,16 +220,24 @@ MetaDataReader接口，包含了类和注解的元信息读取方法
 Spring Framework从4.0版本开始支持多层次@Component“派生性”。由于Spring Boot 1.x最低依赖Spring Framework 4.0,
 因此多层次@Component“派生性”被Spring Boot继承。
 
+在Java反射编程模型中，注解之间无法继承，也不能实现接口
+
+Annotation所有的注解都实现了该接口，基于Java反射API获取元（嵌套）注解及属性信息的实现是颇为复杂的，
+需要递归的获取元注解信息
+
 ### 组合注解
 
-Spring Framework并没有考迪使用Java反射的手段来解析元注解信息，而是抽家出AnnotationMetadata接口，
+Spring Framework并没有考迪使用Java反射的手段来解析元注解信息，而是抽象出AnnotationMetadata接口，
 其实现类为AnnotationMetadataReadingVisitor.并且从Spring Framework 4.0开始，
 AnnotationMetadataReadingVisitor所关联的AnnotationMetadataReadingVisitor
 采用递归查找元注解，使得多层次元注解信息保存在AnnotationMetadataReadingVisitor的metaAnnotationMap字段中。
 
 SpringFramework的类加教则通过ASM实现如ClassReader. 相对于ClassLoader体系。
-SprigASM更为账展，读取的是类资源，直接操作其中的字节码，获取相关元信息，
+Spring ASM更为底层，读取的是类资源，直接操作其中的字节码，获取相关元信息，
 同时便于Spring相关的字节码提升、在读取元信息方面，Spring 抽象出MetadataReader接口。
+
+
+
 
 
 
