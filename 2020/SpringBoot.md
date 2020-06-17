@@ -225,6 +225,8 @@ Spring Framework从4.0版本开始支持多层次@Component“派生性”。由
 Annotation所有的注解都实现了该接口，基于Java反射API获取元（嵌套）注解及属性信息的实现是颇为复杂的，
 需要递归的获取元注解信息
 
+较低层注解能够覆盖其元注解的同名属性
+
 ### 组合注解
 
 Spring Framework并没有考迪使用Java反射的手段来解析元注解信息，而是抽象出AnnotationMetadata接口，
@@ -235,6 +237,39 @@ AnnotationMetadataReadingVisitor所关联的AnnotationMetadataReadingVisitor
 SpringFramework的类加教则通过ASM实现如ClassReader. 相对于ClassLoader体系。
 Spring ASM更为底层，读取的是类资源，直接操作其中的字节码，获取相关元信息，
 同时便于Spring相关的字节码提升、在读取元信息方面，Spring 抽象出MetadataReader接口。
+
+
+
+## Spring 注解驱动设计模式
+
+|框架实现 | @Enable注解模块 |激活模块|
+|---|---|---|
+|Spring Framework|@EnableWebMvc|Web MVC模块|
+||@EnableTransactionManagement|事务管理模块|
+||@EnableCaching|Caching模块|
+||@EnableMBeanExport|JMX模块|
+||@EnableAsync|异步处理模块|
+||@EnableWebFlux|Web Flux模块|
+||@EnableAspectJAutoProxy|AspectJ代理模块|
+|Spring Boot|@EnableAutoConfiguration|自动装配模块|
+||@EnableManagementContext|Actuator管理榄块|
+||@EnableConfigurationProperties|配置属性绑定模块|
+||@EnableOAuth2Sso|OAuth2单点登录模块|
+|Spring Cloud|@EnableEurekaServer|Eureka 服务器模块|
+||@EnableConfigServer|配置服务器模块|
+||@EnableFeignClients|Feign客户端模块|
+||@EnableZuulProxy|服务网关Zuul模块|
+||@EnableCircuitBreaker|服务熔断模块|
+
+
+引入“@Enable模块驱动”的意义在能够简化装配步骤， 实现了“按需装配”， 同时屏蔽组件集合装配的细节。
+
+然而在Spring Framework 3.1中，@Import的职责范围有所扩大、还可以用于声明至少一个@Bean方法的类，
+以及ImportSelector或ImportBeanDefinitionRegistrar的实现类。
+
+将@Configuration 类和@Bean方法声明类归类为“注解驱动”，而ImportSelector 或ImportBeanDefinitionRegistrar
+的实现类则归于“接口编程”。
+
 
 
 
