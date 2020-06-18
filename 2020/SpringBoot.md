@@ -270,6 +270,11 @@ Spring ASM更为底层，读取的是类资源，直接操作其中的字节码�
 将@Configuration 类和@Bean方法声明类归类为“注解驱动”，而ImportSelector 或ImportBeanDefinitionRegistrar
 的实现类则归于“接口编程”。
 
+ImportBeanDefinitionRegistrar相对于ImportSelector 而言，
+其编程复杂度更高，除注解元信息AnnotationMetadata作为入参外，接口将Bean定文(BeanDefinition)的注册交给开发人员决定。
+故在ImportBeanDefinitionRegistrar JavaDoc中有如下描述:
+
+
 
 
 
