@@ -1,4 +1,5 @@
 # JDK 新特性
+
 [JVM架构](https://dzone.com/articles/jvm-architecture-explained)
 ## 1、jdk5
 
@@ -9,9 +10,9 @@ for(String item : set){
 }
 ```
 
-<br>2.静态导入
+2.静态导入
 
-<br>3.枚举
+3.枚举
 
 注意事项
 
@@ -45,7 +46,7 @@ Future的限制-无法手动完成
     long aLong = 0b1010000101000101101000010100010110100001010001011010000101000101L;
 ```
 
-<br>2.数字字面量可以出现下划线
+2.数字字面量可以出现下划线
 
 数字的开头和结尾
 
@@ -66,18 +67,18 @@ F或者L后缀之前
     long bytes = 0b11010010_01101001_10010100_10010010;
 ```
 
-<br>3.switch语句可以用字符串
+3.switch语句可以用字符串
 
-<br>4.泛型简化
+4.泛型简化
 
 ```Java
     Map<String, List<String>> myMap = new HashMap<>();
 ```
 
+5.异常的多个catch合并
 
-<br>5.异常的多个catch合并
+6.try..with...resource语句（不好用）
 
-<br>6.try..with...resource语句（不好用）
 资源自动释放，不需要close
 
 ```Java
@@ -230,11 +231,13 @@ Stream操作是延迟执行的。这意味着他们会等到需要结果的时�
 一个数据源(如:集合、数组)，获取一个流
 
 2. 中间操作
-<br>一个中间操作链，对数据源的数据进行处理，多个中间操作可以连接起来形成一条个流水线，除非流水线上触发终止操作，否则中间操作不会执行任何的处理!
+
+一个中间操作链，对数据源的数据进行处理，多个中间操作可以连接起来形成一条个流水线，除非流水线上触发终止操作，否则中间操作不会执行任何的处理!
 而在终止操作时一次性全 部处理，称为“惰性求值”。
 
 3. 终止操作(终端操作)
-<br>一个终止操作，执行中间操作链，并产生结果
+
+一个终止操作，执行中间操作链，并产生结果
 
 * 流的使用一般包括三件事：
 
@@ -327,7 +330,7 @@ Stream操作是延迟执行的。这意味着他们会等到需要结果的时�
 |reduce(T iden, BinaryOperator b)|可以将流中元素反复结合起来， 得到一个值。  返回T|
 |reduce (BinaryOperator b)   |可以将流中元素反复结合起来，得到一个值。近回Optiona1<T> |
 
-<br>备注: map和reduce的连接通常称为map-reduce模式，因Google用它来进行网络搜索而出名。
+备注: map和reduce的连接通常称为map-reduce模式，因Google用它来进行网络搜索而出名。
 
 #### 收集
 
@@ -386,37 +389,53 @@ Optional里面几种可以迫使你显式地检查值是否存在或处理值不
 * 新增的 java.util.concurrent.locks.StampedLock 类提供了一个基于能力的锁，可通过三种模式来控制读/写访问。
 
 ### 12.数据流定义
-<br>想象一条河。河流从哪里开始？河流在哪里？我们对河流的理解本质上是流动的概念。这条河没有开始也没有结束。流数据非常适合于没有离散开头或结尾的数据。
-<br>例如，交通灯的数据是连续的，没有“开始”或“完成”。数据流是连续而不是分批发送数据记录的过程。通常，数据流对于在生成数据时在连续流中以小尺寸（通常以千字节为单位）发送数据的数据源类型是有用的。这可能包括各种各样的数据源，例如来自连接设备的遥测，客户使用您的Web应用程序生成的日志文件，电子商务交易或来自社交网络或地理空间服务的信息。
+
+想象一条河。河流从哪里开始？河流在哪里？我们对河流的理解本质上是流动的概念。这条河没有开始也没有结束。流数据非常适合于没有离散开头或结尾的数据。
+
+例如，交通灯的数据是连续的，没有“开始”或“完成”。数据流是连续而不是分批发送数据记录的过程。通常，数据流对于在生成数据时在连续流中以小尺寸（通常以千字节为单位）发送数据的数据源类型是有用的。这可能包括各种各样的数据源，例如来自连接设备的遥测，客户使用您的Web应用程序生成的日志文件，电子商务交易或来自社交网络或地理空间服务的信息。
 传统上，数据是分批移动的。批处理通常同时处理大量数据，具有长时间的延迟。例如，该过程每24小时运行一次。虽然这可以是处理大量数据的有效方法，但它不适用于要流式传输的数据，因为数据在处理时可能是陈旧的。
 数据流是时间序列和随时间检测模式的最佳选择。例如，跟踪Web会话的长度。大多数物联网数据非常适合数据流。交通传感器，健康传感器，交易日志和活动日志等都是数据流的理想选择。
 此流数据通常用于实时聚合和关联，过滤或采样。通过数据流，您可以实时分析数据，并深入了解各种活动，例如计量，服务器活动，设备地理位置或网站点击。
 
-<br>请考虑以下方案：
-<br>金融机构跟踪市场变化并根据配置的约束（例如达到特定股票价值时的卖出）调整客户组合的设置。
-<br>电网监控吞吐量并在达到某些阈值时生成警报。
-<br>新闻源从各种平台流式传输点击流记录，并使用人口统计信息丰富数据，以便它可以提供与受众人口相关的文章。
-<br>电子商务站点流式传输点击流记录以查找数据流中的异常行为，并在点击流显示异常行为时生成安全警报。
+请考虑以下方案：
 
-<br>数据流挑战
-<br>数据流是一种功能强大的工具，但在使用流数据源时，有一些常见的挑战。以下列表显示了数据流时要规划的一些事项：
-<br>规划可扩展性。
-<br>规划数据持久性。
-<br>在存储层和处理层中加入容错。
+金融机构跟踪市场变化并根据配置的约束（例如达到特定股票价值时的卖出）调整客户组合的设置。
 
-<br>数据流工具
-<br>随着流数据的增长，出现了许多适合与之合作的解决方案。以下列表显示了一些用于处理流数据的常用工具：
-<br>Amazon Kinesis Firehose。Amazon Kinesis是一种托管，可扩展，基于云的服务，允许实时处理大型数据流。
-<br>Apache Kafka。Apache Kafka是一个分布式发布 - 订阅消息传递系统，它集成了应用程序和数据流。
-<br>Apache Flink。Apache Flink是一种流数据流引擎，为数据流上的分布式计算提供了便利。
-<br>Apache Storm。Apache Storm是一个分布式实时计算系统。Storm用于分布式机器学习，实时分析以及许多其他情况，尤其是具有高数据速度的情况。
-<br>大规模管理数据并不难。了解完全免费的  开源HPCC Systems  平台如何使其更易于更
+电网监控吞吐量并在达到某些阈值时生成警报。
+
+新闻源从各种平台流式传输点击流记录，并使用人口统计信息丰富数据，以便它可以提供与受众人口相关的文章。
+
+电子商务站点流式传输点击流记录以查找数据流中的异常行为，并在点击流显示异常行为时生成安全警报。
+
+数据流挑战
+
+数据流是一种功能强大的工具，但在使用流数据源时，有一些常见的挑战。以下列表显示了数据流时要规划的一些事项：
+
+规划可扩展性。
+
+规划数据持久性。
+
+在存储层和处理层中加入容错。
+
+数据流工具
+
+随着流数据的增长，出现了许多适合与之合作的解决方案。以下列表显示了一些用于处理流数据的常用工具：
+
+Amazon Kinesis Firehose。Amazon Kinesis是一种托管，可扩展，基于云的服务，允许实时处理大型数据流。
+
+Apache Kafka。Apache Kafka是一个分布式发布 - 订阅消息传递系统，它集成了应用程序和数据流。
+
+Apache Flink。Apache Flink是一种流数据流引擎，为数据流上的分布式计算提供了便利。
+
+Apache Storm。Apache Storm是一个分布式实时计算系统。Storm用于分布式机器学习，实时分析以及许多其他情况，尤其是具有高数据速度的情况。
+
+大规模管理数据并不难。了解完全免费的  开源HPCC Systems  平台如何使其更易于更
 
 ### 问答
 
+为什么有接口默认方法？
 
-<br>为什么有接口默认方法？
-<br>在Java 8之前， List<T>并没有stream或parallelStream方法，它实现
+在Java 8之前， List<T>并没有stream或parallelStream方法，它实现
 的Collection<T>接口也没有，因为当初还没有想到这些方法嘛！可没有这些方法，这些代码
 就不能编译。换作你自己的接口的话，最简单的解决方案就是让Java 8的设计者把stream方法加
 入Collection接口，并加入ArrayList类的实现。
@@ -430,18 +449,25 @@ Java 8的解决方法就是打破最后一环：接口如今可以包含实现�
 了！那谁来实现它呢？缺失的方法主体随接口提供了（因此就有了默认实现），而不是由实现类
 提供
 
-<br>@FunctionalInterface又是怎么回事？
-<br>如果你去看看新的Java API，会发现函数式接口带有@FunctionalInterface的标注（3.4节中会深入研究函数式接口，并会给出一个长长的列表）。 这个标注用于表示该接口会设计成
+@FunctionalInterface又是怎么回事？
+
+如果你去看看新的Java API，会发现函数式接口带有@FunctionalInterface的标注（3.4节中会深入研究函数式接口，并会给出一个长长的列表）。 这个标注用于表示该接口会设计成
 一个函数式接口。如果你用@FunctionalInterface定义了一个接口，而它却不是函数式接口的话，编译器将返回一个提示原因的错误。例如，错误消息可能是“Multiple non-overriding
 abstract methods found in interface Foo”，表明存在多个抽象方法。请注意，@FunctionalInterface不是必需的，但对于为此设计的接口而言，使用它是比较好的做法。 它就像是@Override
 标注表示方法被重写了
 
 ## 4、JAVA9
-<br>1.  抽象类和接口的异同?
-<br><br>1) 二者的定义:
-<br>a. 声明的方式  
-<br>b.内部的结构(jdk 7 ;jdk 8 ; jdk 9)
-<br>2) 共同点;不能实例化;以多态的方式使用不同点:单继承;  多实现
+
+1.  抽象类和接口的异同?
+
+1) 二者的定义:
+
+a. 声明的方式  
+
+b.内部的结构(jdk 7 ;jdk 8 ; jdk 9)
+
+2) 共同点;不能实例化;以多态的方式使用不同点:单继承;  多实现
+
 ```java
 interface MyInterface{
     //jdk 7 :只能声明全局常量(public static final )和抽象方法(public abstract)void method1();
@@ -458,16 +484,24 @@ interface MyInterface{
 
 ```
 
-<br><br>2.  String
-<br>String: jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[] (encoding flag)
-<br>StringBuffer:jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[]
-<br>StringBuilder:jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[]
-<br><br>String:不可变的字符序列;
-<br>StringBuffer:可变的字符序列;线程安全的，效率低;
-<br>StringBuilder:可变的字符序列;线程不安全的，效率高(jdk 5. 0)
+
+2.  String
+
+String: jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[] (encoding flag)
+
+StringBuffer:jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[]
+
+StringBuilder:jdk 8及之前:底层使用char[]存储; jdk 9 :底层使用byte[]
+
+String:不可变的字符序列;
+
+StringBuffer:可变的字符序列;线程安全的，效率低;
+
+StringBuilder:可变的字符序列;线程不安全的，效率高(jdk 5. 0)
+
 ### 新特性1：jdk8和jdk9中jdk目录结构的变化
 ### 新特性2：模块化的特性
-### 新特性3：jshell命令的使用
+### 新特性3：jShell命令的使用
 ### 新特性4：多版本兼容jar包的使用说明
 ### 新特性5：接口中定义私有方法
 ### 新特性6：钻石操作符的使用升级
@@ -485,43 +519,71 @@ interface MyInterface{
 ### 新特性18：Javascript的Nashorn引擎升级
 ### 新特性19：java的动态编译器
 ### Reactive Streams
+
 核心组件
+
 Publisher
+
 Subscriber
+
 Subscription
+
 Processor
+
 Reactive StreamsReactive X
 
 Reactive Streams前时代
+
 时代局限性(Java9之前)
+
 阻塞编程
-无法并行计算资源低效使用-异步编程
+
+无法并行计算资源低效使用异步编程
+
 CallbackFuture
 
 Reactive Streams规范Reactive编程
+
 一种异步编程的示范,这种示范与数据流式处理以及变化传播相关联,同时也经常被面向对象语言表示,作为一种观察者模式的扩展。
+
 Reactive Stream规范(Java语言)
+
 https://github.com/reactive-streams/reactive-streams-jvm
 
 Reactive Streams规范
+
 对比Iterator模式
+
 数据方向
+
 Reactive Streams : 推模式( Push )Iterator : 拉模式( Pull )编程模式
+
 Reactive Streams :发布-订阅模式( Publish-Subscriber )Iterator :命令式编程模式( Imperative )
 
 Reactive Streams规范
+
 onSubscribe() :订阅事件
+
 onNext() :数据达到事件
+
 onComplete() :订阅完成事件
+
 onError() :订阅异常
+
 request() :请求
+
 cancel() :取消
+
 http://docs.oracle.com/javase/9/whatsnew/toc.htm
 
 Flow API
+
 Publisher<T>
+
 Subscriber<T>
+
 Processor<T,R>
+
 Subscription
 
 集合工厂方法( Factory Method of Collections )进程( Process )
