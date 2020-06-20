@@ -43,13 +43,13 @@ IsInterrupted（）：测试线程Thread对象是否已经中断状态，但不�
 13.下面将关键字synchronized和volatile进行一下比较:
 
 1)关键字volatile是线程同步的轻量级实现，所以volatile性能肯定比synchronized要好，
-  并且volatile只能修饰于变量，而synchronized可以修饰方法，以及代码块。随着JDK新版本的发布，
-  synchronized 关键字在执行效率上得到很大提升，在开发中使用synchronized关键字的比率还是比较大的。
+并且volatile只能修饰于变量，而synchronized可以修饰方法，以及代码块。随着JDK新版本的发布，
+synchronized 关键字在执行效率上得到很大提升，在开发中使用synchronized关键字的比率还是比较大的。
 
 2)多线程访问volatile不会发生阻塞，而synchronized会出现阻塞。
 
 3) volatile 能保证数据的可见性，但不能保证原子性;  而synchronized可以保证原子性，
-    也可以间接保证可见性，因为它会将私有内存和公共内存中的数据做同步。此知识点在后面有实验做论证。
+也可以间接保证可见性，因为它会将私有内存和公共内存中的数据做同步。此知识点在后面有实验做论证。
 
 4)再次重申一下，关键字volatile解决的是变量在多个线程之间的可见性.
 
@@ -80,32 +80,32 @@ ConcurrentLinkedQueue 适合在对性能要求相对较高，同时对队列的�
 1.BlockingQueue接口
 
 1)  ArrayBlockingQueue:基于数组的阻塞队列实现，在ArrayBlockingQueue内部， 维护了一个定长数组，
-  以便缓存队列中的数据对象，其内部没实现读写分离，也就意味着生产和消费不能完全并行，
-  长度是需要定义的，可以指定先进先出或者先进后出，也叫有界队列，在很多场合非常适合使用。
+以便缓存队列中的数据对象，其内部没实现读写分离，也就意味着生产和消费不能完全并行，
+长度是需要定义的，可以指定先进先出或者先进后出，也叫有界队列，在很多场合非常适合使用。
 
 2) LinkedBlockingQueue:基于链表的阻塞队列，同ArrayBlockingQueue类似， 
-  其内部也维持着一个数据缓冲队列(该队列由一个链表构成)，LinkedBlockingQueue之所以能够高效的处理并发数据
-  ，是因为其内部实现采用分离锁(读写分离两个锁)，从而实现生产者和消费者操作的完全并行运行。他是一个无界队列。
+其内部也维持着一个数据缓冲队列(该队列由一个链表构成)，LinkedBlockingQueue之所以能够高效的处理并发数据
+，是因为其内部实现采用分离锁(读写分离两个锁)，从而实现生产者和消费者操作的完全并行运行。他是一个无界队列。
 
 3) SynchronousQueue:一种没有缓冲的队列，生产者产生的数据直接会被消费者获取并消费。
 
 4)  PriorityBlockingQueue:基于优先级的阻塞队列(优先级的判断通过构造函数传入
-    的对象来决定，也就是说传入队列的对象必须实现Comparable接口)，
-    在实现PriorityBlockingQueue时，内部控制线程同步的锁采用的是公平锁，他也是一一个无界的队列。
+的对象来决定，也就是说传入队列的对象必须实现Comparable接口)，
+在实现PriorityBlockingQueue时，内部控制线程同步的锁采用的是公平锁，他也是一一个无界的队列。
 
 5)  DelayQueue:带有延迟时间的Queue,其中的元素只有当其指定的延迟时间到了，
-    才能够从队列中获取到该元素。DelayQueue中的元素必须实现Delayed接口，
-    DelayQueue是一个没有大小限制的队列，应用场景很多，比如对缓存超时的数据进行移除、任务超时处理、空闲连接的关闭等等。
+才能够从队列中获取到该元素。DelayQueue中的元素必须实现Delayed接口，
+DelayQueue是一个没有大小限制的队列，应用场景很多，比如对缓存超时的数据进行移除、任务超时处理、空闲连接的关闭等等。
 
 2. Executors创建线程池方法:
 
 1) newFixedThreadPool()方法，该方法返回一个固定数量的线程池，该方法的线程数始终不变，当有一一个任务提交时，
- 若线程池中空闲，则立即执行，若没有，则会被暂缓在一个任务队列中等待有空闲的线程去执行。
+若线程池中空闲，则立即执行，若没有，则会被暂缓在一个任务队列中等待有空闲的线程去执行。
 
 2) newSingle' ThreadExecutor()方法，创建-一个线程的线程池，若空闲则执行，若没有空闲线程则暂缓在任务列队中。
 
 3) newCachedThreadPool()方法，返回-一个可根据实际情况调整线程个数的线程池，不限制最大线程数量，若有任务，
-   则创建线程，若无任务则不创建线程。如果没有任务则线程在60s后自动回收(空闲时间60s )。
+则创建线程，若无任务则不创建线程。如果没有任务则线程在60s后自动回收(空闲时间60s )。
 
 4)newScheduledThreadPool()方法，该方法返回一个SchededExecutorService对象，但该线程池可以指定线程的数量。
 
@@ -115,38 +115,38 @@ ConcurrentLinkedQueue 适合在对性能要求相对较高，同时对队列的�
 其实Executors工厂类里面的创建线程方法其内部实现均是用了ThreadPoolExecutor这个类，这个类可以自定义线程。
 
 构造方法如下:
-   
+
 ```Java
 public ThreadPoolExecutor(int corePoolSize,
-     int maximumPoolSize,
-     long keepAlive Time,
-     TimeUnit unit,
-     BlockingQueue<Runnable> workQueue,
-     ThreadF actory threadFactory,
-     RejectedExecutionHandler handler
- ){ ..}
- ```
- 
+    int maximumPoolSize,
+    long keepAlive Time,
+    TimeUnit unit,
+    BlockingQueue<Runnable> workQueue,
+    ThreadF actory threadFactory,
+    RejectedExecutionHandler handler
+){ ..}
+```
+
 这个构造方法对于队列是什么类型的比较关键:
 
 1)在使用有界队列时，若有新的任务需要执行，如果线程池实际线程数小于corePoolSize,则优先创建线程，若大于corePoolSize, 
-   则会将任务加入队烈，若队列已满，则在总线程数不天于maximumPoolSize的前提下，创建新的线程，若线程数大于maximumPoolSize
-   ,则执行拒绝策略。或其他自定义方式。
+则会将任务加入队烈，若队列已满，则在总线程数不天于maximumPoolSize的前提下，创建新的线程，若线程数大于maximumPoolSize
+,则执行拒绝策略。或其他自定义方式。
 
 2)无界的任务队列时:LinkedBlockingQueue. 与有界队列相比，除非系统资源耗尽，否则无界的在务队列不存在任务入队失败的情况。
-   当有新任务到来，系统的线程数小于corePoolSize时，则新建线程执行任务。当达到
-   corePoolSize后;就不会继续增加。若后续仍有新的在务加入，而有没有空闲的线程资源，则任务直接进入队列等待。若任务创建和处理的速度差异很大，
-   无界队列会保持快速增长，直到耗尽系统内存。
+当有新任务到来，系统的线程数小于corePoolSize时，则新建线程执行任务。当达到
+corePoolSize后;就不会继续增加。若后续仍有新的在务加入，而有没有空闲的线程资源，则任务直接进入队列等待。若任务创建和处理的速度差异很大，
+无界队列会保持快速增长，直到耗尽系统内存。
 
 3)JDK拒绝策略:
 
 AbortPolicy:直接抛出异常组织系统正常工作
 
- CallerRunsPolicy:只要线程池未关闭，该策略直接在调用者线程中，运行当前被丢弃的任务。
+CallerRunsPolicy:只要线程池未关闭，该策略直接在调用者线程中，运行当前被丢弃的任务。
 
- DiscardOldestPolicy:丢弃最老的一个请求，尝试再次提交当前任务。
+DiscardOldestPolicy:丢弃最老的一个请求，尝试再次提交当前任务。
 
- DiscardPolicy:丢弃无法处理的任务，不给予任何处理。
+DiscardPolicy:丢弃无法处理的任务，不给予任何处理。
 
 如果需要自定义拒绝策略可以实现RejectedExecutionHandler接口。
 
@@ -247,11 +247,11 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 ## ThreadLocal 
 
 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。
-   
 
- 在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove
- ()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
- 
+
+在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove
+()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。
+
 ## 自旋锁
 
 自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。
@@ -261,9 +261,9 @@ java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：
 
 
 
-        
 
-        
+
+
 
 
 
