@@ -23,7 +23,7 @@ ServletContainerInitializer；
 
 ## Servlet
 
-![Servlet](https://github.com/gaoyuanyuan2/notes/blob/master/img/44.png) 
+![Servlet](/img/44.png) 
 
 Servlet是一种基于Java技术的Web组件，用于生成动态内容，由容器管理。类似于其他Java技术组件，Servlet 是平台无关的Java类组成，并且由JavaWeb服务器加载执行。
 通常情况，由Servlet容器提供运行时环境。Servlet 容器，有时候也称作为Servlet引擎，作为Web服务器或应用服务器的一部分。

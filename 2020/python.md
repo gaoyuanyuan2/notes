@@ -1,6 +1,6 @@
 # Python
 
-![比较](https://github.com/gaoyuanyuan2/notes/blob/master/img/11.png) 
+![比较](../img/11.png) 
 
 ## 1、简介
 

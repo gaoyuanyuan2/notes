@@ -32,7 +32,7 @@
 
 ## 3、搜索
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/25.png) 
+![](/img/25.png) 
 
 ## 4、加密算法
 
@@ -96,7 +96,7 @@ push、pop
 
 ##  8、树
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/26.png) 
+![](/img/26.png) 
 
 1.  平衡二叉树
 
@@ -114,7 +114,7 @@ push、pop
 
 6.  定长编码，变长编码，前缀码
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/27.png) 
+![](/img/27.png) 
 
 B树是一种特殊的二叉树，数据库常用它来存储数据。
 

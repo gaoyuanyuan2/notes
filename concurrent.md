@@ -1,6 +1,6 @@
 # 并发编程
 
-![线程](https://github.com/gaoyuanyuan2/notes/blob/master/img/45.png) 
+![线程](/img/45.png) 
 
 ## 多线程
 

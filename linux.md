@@ -97,7 +97,7 @@ systemctl disable docker 关闭开机启动
 -i 显示inode
 
 
-![文件](https://github.com/gaoyuanyuan2/notes/blob/master/img/9.png) 
+![文件](/img/9.png) 
 
 * 7.cd
 
@@ -607,7 +607,7 @@ passwd  用户名
 
 userdel  用户名
 
-![例子](https://github.com/gaoyuanyuan2/notes/blob/master/img/10.png) 
+![例子](/img/10.png) 
 
 
 * 26. 修改环境变量 --vim ~/.bash_profile  --source ~/.bash_profile
@@ -680,7 +680,7 @@ swap分区( 交换分区,内存2倍,不超过2GB )
 
 * 4.独立空间，互不影响，方便管理
 
-![文件系统结构](https://github.com/gaoyuanyuan2/notes/blob/master/img/8.png) 
+![文件系统结构](/img/8.png) 
 
 * 5.常用目录的作用
 

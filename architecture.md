@@ -120,7 +120,7 @@ Reliable模式：为保证通信可靠，将借助于消息中心来实现消息
 流数据:实时(realtime)+无界(unbounded)
 
 
- ![实时流计算架构](https://github.com/gaoyuanyuan2/notes/blob/master/img/18.png) 
+ ![实时流计算架构](/img/18.png) 
 
 
 

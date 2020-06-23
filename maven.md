@@ -41,7 +41,7 @@
 
 ## Maven阶段
 
-![生命周期](https://github.com/gaoyuanyuan2/notes/blob/master/img/32.png) 
+![生命周期](/img/32.png) 
 
 * validate：验证项目是否正确并且所有必要信息都可用
 

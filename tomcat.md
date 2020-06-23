@@ -9,4 +9,4 @@ Connector->initInternal();  protocolHandler.init() ->AbstractHttp11Protocol  sup
 AprEndpoint  Nio2Endpoint NioEndpoint 三种实现
 
 
-![四种隔离级别](https://github.com/gaoyuanyuan2/notes/blob/master/img/43.jpg) 
+![四种隔离级别](/img/43.jpg) 

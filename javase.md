@@ -12,7 +12,7 @@
 
 4.数据向上转型、强制转化：大到小、8位一个字节
 
- ![类型](https://github.com/gaoyuanyuan2/notes/blob/master/img/17.png) 
+ ![类型](/img/17.png) 
 
 5.位异或运算 ^ ：相同则为0，不相同则为1
 
@@ -166,9 +166,9 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
 
 ## 集合框架体
 
-![集合](https://github.com/gaoyuanyuan2/notes/blob/master/img/5.png) 
+![集合](/img/5.png) 
 
-![空值](https://github.com/gaoyuanyuan2/notes/blob/master/img/6.png) 
+![空值](/img/6.png) 
 
 ### List
 
@@ -190,7 +190,7 @@ synchronized和方法的实现细节有关，抽象方法不涉及实现细节�
 
 拉链法
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/20.png) 
+![](/img/20.png) 
 
 
 数组+链表组成的，一个长度为16的数组中，每个元素存储的是一个链表的头结点。一般情况是通过hash(key)%len获得，也就是元素的key的哈希值对数组长度取模得到。
@@ -233,9 +233,9 @@ Jdk1.8 其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchroni
 
 ## IO
 
-![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/7.png) 
+![IO流](/img/7.png) 
 
-![IO流](https://github.com/gaoyuanyuan2/notes/blob/master/img/47.png) 
+![IO流](/img/47.png) 
 
 1.foreach与正常for循环效率对比
 
@@ -249,15 +249,15 @@ Jdk1.8 其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchroni
  
  不是程序本身,可以对程序作出解释。(这一点，跟注释没什么区别)-可以被其他程序(比如:编译器等读取。(注解信息处理流程,是注解和注释的重大区别。如果没有注解信息处理流程,则注解毫无意义。
  
- ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/12.png) 
+ ![注解](/img/12.png) 
  
- ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/13.png) 
+ ![注解](/img/13.png) 
  
- ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/14.png) 
+ ![注解](/img/14.png) 
  
- ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/15.png) 
+ ![注解](/img/15.png) 
  
- ![注解](https://github.com/gaoyuanyuan2/notes/blob/master/img/16.png) 
+ ![注解](/img/16.png) 
  
 
 ## 反射
@@ -337,7 +337,7 @@ Javassist性能高于反射,低于ASM
 
 Javassist是一个开源的分析、编辑和创建Java李节码的关库。性能较ASM差,跟cglib差不多,但是使用简单。很多开源框架都在使用它。
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/21.png) 
+![](/img/21.png) 
 
 6. 类加载
 
@@ -375,7 +375,7 @@ d. JVM启动时，会初始化用户定义的main所在的类。
 
 e. 涉及1.7后的动态语言支持
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/22.png) 
+![](/img/22.png) 
 
 7.加载器
 
@@ -461,11 +461,11 @@ TOMCAT不能使用系统默认的类加载器。
 
 我可以限制你只能把类写在指定的地方，否则我不给你加载!
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/23.png) 
+![](/img/23.png) 
 
 ## Java 中的异常处理
 
-![](https://github.com/gaoyuanyuan2/notes/blob/master/img/45.png) 
+![](/img/45.png) 
 
 
 
