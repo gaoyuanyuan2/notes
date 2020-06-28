@@ -92,6 +92,11 @@ try (FileReader fr = new FileReader("E:\\zikao\\file\\cs.txt");
     e.printStackTrace();
 }
 ```
+
+7.foreach与正常for循环效率对比
+
+循环数组结构的数据时，建议使用普通for循环；循环链表结构的数据时，一定不要使用普通for循环。
+ 
 ## 3、jdk8
 
 Java 8可以透明地把输入的不相关部分拿到几个CPU内核上去分别执行你的Stream操作流水线,这是几乎免费的并行，用不着去费劲搞Thread了。

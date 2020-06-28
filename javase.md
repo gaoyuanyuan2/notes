@@ -237,11 +237,9 @@ Jdk1.8 其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchroni
 
 ![IO流](/img/47.png) 
 
-1.foreach与正常for循环效率对比
 
-循环数组结构的数据时，建议使用普通for循环；循环链表结构的数据时，一定不要使用普通for循环。
 
-2.记得flush刷出，和close
+记得flush刷出，和close
 
 
 RandomAccessFile类
