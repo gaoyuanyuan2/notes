@@ -70,23 +70,25 @@
 
 Release:该版本表示最终版，不能被强制覆盖。
 
-## archetype 项目模板
 
-## 优先级 ~/.m2/setting.xml  -> conf/setting.xml
 
-## dependencyManagement 只出现在父pom，统一版本号，声明
+* archetype 项目模板
 
-## type 默认java
+* 优先级 ~/.m2/setting.xml  -> conf/setting.xml
 
-## score 默认 compile;test 测试期间用到；provided 编译 不会打包 eg：tomcat 有servlet 相关包；
+* dependencyManagement 只出现在父pom，统一版本号，声明
 
-##  runtime 运行时，打包，接口编程，JDBC接口；system 本地包
+* type 默认java
 
-## 传递依赖 
+* score 默认 compile;test 测试期间用到；provided 编译 不会打包 eg：tomcat 有servlet 相关包；
 
-## 父pom （公司级别、部门级别）
+* runtime 运行时，打包，接口编程，JDBC接口；system 本地包
 
-## 依赖就近原则 ，加载先后原则（书写顺序）
+* 传递依赖 
+
+* 父pom （公司级别、部门级别）
+
+* 依赖就近原则 ，加载先后原则（书写顺序）
 
 
 
