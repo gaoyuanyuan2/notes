@@ -243,6 +243,20 @@ Jdk1.8 其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchroni
 
 2.记得flush刷出，和close
 
+
+RandomAccessFile类
+
+我们可以用RandomAccessFile这个类，来实现一个多线程断点下载的功能，用过下载工具的朋友们都知道，
+下载前都会建立两个临时文件,一个是与被下载文件大小相同的空文件，另一个是记录文件指针的位置文件，
+每次。暂停的时候，都会保存上一次的指针，然后断点下载的时候，会继续从上一次的地方下载，
+从而实现断点下载或上传的功能。
+
+RandomAccessFile对象包含一个记录指针，用以标示当前读写处的位置。RandomAccessFile类对象可以自由移动记录指针:
+
+long getFilePointer():获取文件记录指针的当前位置
+
+void seek(long pplS):将文件记录指针定位到pos位置
+
 ## 注解
 
  Annotation的作用:
