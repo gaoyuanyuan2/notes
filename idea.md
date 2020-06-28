@@ -38,7 +38,7 @@ Ctrl + E 最近修改的文件
 
 Ctrl + Shift + E 
 
-* 4. 查找(搜索)类 Ctrl + N 
+* 4.查找(搜索)类 Ctrl + N 
 
 查找(搜索)文件 Ctrl + Shift + N 
 
