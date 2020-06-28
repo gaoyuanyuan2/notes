@@ -242,7 +242,7 @@ Jdk1.8 其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchroni
 记得flush刷出，和close
 
 
-RandomAccessFile类
+### RandomAccessFile类
 
 我们可以用RandomAccessFile这个类，来实现一个多线程断点下载的功能，用过下载工具的朋友们都知道，
 下载前都会建立两个临时文件,一个是与被下载文件大小相同的空文件，另一个是记录文件指针的位置文件，
@@ -254,6 +254,33 @@ RandomAccessFile对象包含一个记录指针，用以标示当前读写处的�
 long getFilePointer():获取文件记录指针的当前位置
 
 void seek(long pplS):将文件记录指针定位到pos位置
+
+### Path、Paths和Files核 心API
+
+* 早期的Java只提供了一个File类来访问文件系统，但File类的功能比较有限，所提供的方法性能也不高。而且，大多数方法在出错时仅返回失败，并不会提供异常信息。
+
+* NIO. 2为了弥补这种不足，引入了Path接口，代表一个平台无关的平台路径，描述了目录结构中文件的位置。Path可 以看成是File类的升级版本，实际引用的资源也可以不存在。
+
+
+
+```java
+// 在以前I0操作都是这样写的:
+
+import java.io.File;
+
+File file = new File("index.html");
+
+// 但在Java7中，我们可以这样写:
+
+import java.nio.file.Path;
+
+import java.nio.file.Paths;
+
+Path path = Paths.get("index.html");
+
+```
+
+
 
 ## 注解
 
