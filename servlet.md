@@ -76,6 +76,9 @@ Filter
 
 Listener
 
+Servlet监听器: Servlet规范中定义的一种特殊类,它用于监听web应用程序中的ServletContext, HttpSession和ServletRequest等
+域对象的创建与销毁事件,以及监听这些域对象中的属性发生修改的事件。
+
 ## Filter
 
 Authentication filters 
@@ -97,6 +100,10 @@ XSL/T filters that transform XML content
 MIME-type chain filters
  
 Caching filters
+
+Filter程序是一个实现了Filter接口的Java类，与Servlet程序相似,它由Servlet容器进行调用和执行
+
+Filter程序需要在web.xml文件中进行注册和设置它所能拦截的资源: Filter程序可以拦截Jsp, Servlet,静态图片文件和静态html文件
 
 ## JSP
 
