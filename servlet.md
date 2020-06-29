@@ -98,7 +98,16 @@ MIME-type chain filters
  
 Caching filters
 
+## JSP
 
-jsp 在SpringBoot 只能war包执行
+为了弥补Servlet的缺陷, SUN公司在Servlet的基础上推出了JSP( Java Server Pages )技术作为解决方案。
+   
+JSP是简化Servlet编写的一种技术,它将Java代码和HTML语句混合在同一个文件中编写,只对网页中的要动态产生的内容采用Java代码来编写，
+而对固定不变的静态内容采用普通静态HTML页面的方式编写。
+
+
+JSP 在SpringBoot 只能war包执行
+
+
 
 
