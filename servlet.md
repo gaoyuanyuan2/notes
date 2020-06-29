@@ -100,14 +100,25 @@ Caching filters
 
 ## JSP
 
+### 简介
+
 为了弥补Servlet的缺陷, SUN公司在Servlet的基础上推出了JSP( Java Server Pages )技术作为解决方案。
    
 JSP是简化Servlet编写的一种技术,它将Java代码和HTML语句混合在同一个文件中编写,只对网页中的要动态产生的内容采用Java代码来编写，
 而对固定不变的静态内容采用普通静态HTML页面的方式编写。
 
+### 导入方式
+
+include指令: <%@ include file="b.jsp" %>
+
+静态引入当前JSP页面与静态引入的页面紧密结合为一个Servlet。
+
+<jsp:include page= "b.jsp"> </jsp:include>
+
+动态引入:并不是像include指令生成一个 Servlet源文件,而是生成两个Servlet 源文件,然后通过一个方法的方式把目标页面包含进来。
+
+### 其他
 
 JSP 在SpringBoot 只能war包执行
-
-
 
 
