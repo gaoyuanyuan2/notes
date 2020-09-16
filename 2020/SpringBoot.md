@@ -274,7 +274,24 @@ ImportBeanDefinitionRegistrar相对于ImportSelector 而言，
 其编程复杂度更高，除注解元信息AnnotationMetadata作为入参外，接口将Bean定文(BeanDefinition)的注册交给开发人员决定。
 
 
+@Enable 模块驱动模块无论来自Spring 内建，还是自定义，均使用@Import实现，并且@Import的职责在于装载导入类(Importing Class)，
+将其定义为Spring Bean。结合当前场景，导入类主要为@Configuration Class、 ImportSelector实现及ImportBeanDefinitionRegistrar实现。
 
+### 装载ImportSelector和ImportBeanDefinitionRegistrar实现
+    
+由于ImportSelector和ImportBeanDefinitionRegistrar从Spring Framework 3.1才开始引入，所以3.0版本中不会出现两者的实现。
+由于BeanDefinitionRegistryPostProcessor从Spring Framework 3.0.1开始引入，
+ConfigurationClassPostProcessor的实现也随之发生变化，其实现接口从BeanFactoryPostProcessor替换为BeanDefinitionRegistryPostProcessor,
+且BeanDefinitionRegistryPostProcessor扩展了BeanFactoryPostProcessor接口，
+所以ConfigurationClassPostProcessor存在两阶段实现。
+
+通过AssignableTypeFilter判断当前候选Class元注解@Import是否赋值ImportSelector或ImportBeanDefinitionRegistrar实现，
+从而决定是否执行ImportSelector或ImportBeanDefinitionRegistrar的处理，
+其中importingClassMetadata 就是当前元注解@Import的AnnotationMetadata对象。
+
+综上所述，ConfigurationClassPostProcessor 负责筛选@Component Class 、@Configuration Class 及@Bean方法的Bean 定义(BeanDefinition)
+, ConfigurationClassParser则从候选的Bean定义中解析出ConfigurationClass集合，
+随后被ConfigurationClassBeanDefinitionReader转化并注册BeanDefinition.
 
 
 
