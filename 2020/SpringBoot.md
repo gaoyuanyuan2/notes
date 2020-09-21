@@ -293,6 +293,40 @@ ConfigurationClassPostProcessor的实现也随之发生变化，其实现接口�
 , ConfigurationClassParser则从候选的Bean定义中解析出ConfigurationClass集合，
 随后被ConfigurationClassBeanDefinitionReader转化并注册BeanDefinition.
 
+### Web 自动装配原理
+
+正是Servlet3.0技术，其中“ServletContext配置方法”和“运行时插拔”大特性是"Web自动化装配的技术保障。
+
+在传统的Java Web应用中，Servlet 技术的运用占比绝对领先。(基于Servlet 编程习惯，当装配Servlet. Filter 及各种Listener时，
+离不开web.xml文件(Deployment Descriptor) 的配置，如<servlet>、<fllter>和<listener>元素。 而web.xml
+文件一旦配置，运行时就无法调整，显然这种方式的灵话度不够，既不支持占位符，也无法支持条件、循环等逻辑。
+servlet 3.0开始，这种限制被打破，其中ServletContext配置方法是Servlet 3.0 API的新特性。
+
+
+* 运行时插拔
+
+ServletContext 配置方法， 它们仅能在ServletContextListener#contexInitallzed或ServletContexInitializer#onStartup
+方法中被调用。规范也定义了ServletContextListener的职责，它用于监听Servlet 上下文(ServletContext
+)的生命周期事件，包括“初始化”和“销毁”两个事件。
+其中“初始化”事件由ServletContextListener#contextTnitialized方法监听。
+不难理解，Servlet和Filter对外提供服务前，必然经过Servlet上下文(ServletContext)初始化事件。
+
+ContextLoaderListener是标准的ServletContextListener实现，监听ServletContext生命周期。当Web应用启动时，首先，Servlet
+ 容器调用ServletContextListener实现类的默认构造器，随后ContextInitialized(ServletContextEvent)方法被调用。
+ 反之，当Web应用关闭时，Servlet容器调用其contextDestroyed(ServletContextEvent)方法。
+ 
+SpringServletContainerInitializer 通过实现Servlet 3.0 SPI接口ServletContainerInitializer,与@HandlesTypes
+ 配合过滤出WebApplicationInitializer具体实现类集合，随后顺序迭代地执行该集合元素，
+ 进而利用Servlet 3.0配置AP1实现Web自动装配的目的。同时，结合Spring Framework 3.2
+  抽象实现AbstractAnnotationConfigDispatcherServletInitializer。极大地简化了注解驱动开发的成本。
+  以上就是Spring Framework基于Servlet3.0特性而构建的Web自动装配的原理。
+  
+
+### Spring 条件装配
+
+Java系统属性或者操作系统环境变量作为Spring外部化配置，贯穿Spring Framework和Spring Boot 时代。
+
+
 
 
 
