@@ -12,15 +12,17 @@
 
 ## scope
 
-* compile编译例 如spring-core
-
-* test测试
-
-* provided编译例如servlet
-
-* runtime运行时例如JDBC驱动实现
-
 * system本地一些jar例如短信jar
+
+* test范围是指测试范围有效,在编译和打包时都不会使用这个依赖
+
+* compile范围是指编译范围内有效,在编译和打包时都会将依赖存储进去
+
+* provided依赖,在编译和测试过程中有效,最后生成的war包时不会加入 
+
+例如:servlet-api,因为servlet-api  tomcat服务器已经存在了,如果再打包会冲突
+
+* runtime在运行时候依赖,在编译时候不依赖 默认依赖范围是compile
 
 
 ## exclusion 解决冲突
