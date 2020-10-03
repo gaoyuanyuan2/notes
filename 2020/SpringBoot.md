@@ -327,6 +327,28 @@ SpringServletContainerInitializer 通过实现Servlet 3.0 SPI接口ServletContai
 Java系统属性或者操作系统环境变量作为Spring外部化配置，贯穿Spring Framework和Spring Boot 时代。
 
 
+### 自动装配
+
+常规的@ConditionalOnClass 判断需要依赖自动装配Class必须被CassLoader提前装载，然后解析其注解元信息，从而根据依赖类是否存在来判断装配与否，
+同时，Spring应用上下文处理@Conditional的时机较晚。然而通过读取META-INF/spring-autoconfigure-metadata.properties资源的
+“ConditionalOnClass"配置元信息，并判断其依赖类的存在性，不但实现的逻辑直接，而且减少了自动装配的计算时间。
+
+总而言之，AutoConfigurationImportSelector 读取自动装配Class的流程为:
+
+(1)通过SpringFactoriesLoader#loadFactoryNames(Class ,ClassLoader)方法读取所有META-INF/spring.factories
+资源中@EnableAutoConfiguration所关联的自动装配Class集合。
+
+(2)读取当前配置类所标注的@EnableAutoConfiguration属性exclude和excludeName,与spring autoconfigure exclude配置属性合井为自动装配
+Class排除集合。
+
+(3)检查自动装配Class排除集合是否合法。
+
+(4)排除候选自动装配Class集合中的排除名单。
+
+(5)再次过滤候选自动装配Class集合中Class不存在的成员。
+
+当自动装配Class读取完毕后，fireAutoConfigurationImportEvents(List,Set)方法执行，可能触发了一个自动装配的导入事件。
+
 
 
 
