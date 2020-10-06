@@ -349,6 +349,15 @@ Class排除集合。
 
 当自动装配Class读取完毕后，fireAutoConfigurationImportEvents(List,Set)方法执行，可能触发了一个自动装配的导入事件。
 
+@EnableAutoConfiguration除了利用AutoConfigurationImportSelector自动装配Class，他还将标注类所在的package添加至BasePackages中，
+为后续扫描提供BasePackages数据来源。
+
+AutoConfigurationPackages.Registrar是自动装配BasePackages的核心实现。
+
+
+@ConditionalOnBean 和 @ConditionalOnMissingBean 的JavaDoc强烈建议开发人员仅在自动装配中使用该条件注解。基于BeanDefinition进行名称或
+类型的匹配。
+
 
 
 
