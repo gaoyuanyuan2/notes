@@ -1,7 +1,7 @@
 # Spring Framework （小马哥）
 
 ## 第一章：Spring Framework总览 (12讲)
-
+
 01 | 课程介绍
 
 02 | 内容综述
@@ -77,7 +77,7 @@ Reactive
 
 
 ## 第二章：重新认识IoC (9讲)
-
+
 13 | IoC发展简介：你可能对IoC有些误会？
 
 控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，可以用来降低程序代码之间的耦合度。其中最常见的方式叫做依赖注入（Dependency Injection，简称DI），还有一种方式叫“依赖查找”（Dependency Lookup）。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象的外界实体将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。
@@ -126,7 +126,7 @@ IoC是一个过程，即对象定义及其依赖关系，其他与之配合的�
 21 | 面试题精选
 
 ## 第三章：Spring IoC容器概述 (9讲)
-
+
 22 | Spring IoC依赖查找：依赖注入还不够吗？依赖查找存在的价值几何？
 
 23 | Spring IoC依赖注入：Spring提供了哪些依赖注入模式和类型呢？
@@ -148,9 +148,9 @@ IoC是一个过程，即对象定义及其依赖关系，其他与之配合的�
 ## 第四章：Spring Bean基础 (11讲)
 
 1. 如何注册一个Spring Bean?
-   
+  
 通过BeanDefinition和外部单体对象来注册
-
+
 31 | 定义Bean：什么是BeanDefinition？
 
 32 | BeanDefinition元信息：除了Bean名称和类名，还有哪些Bean元信息值得关注？
@@ -174,7 +174,7 @@ IoC是一个过程，即对象定义及其依赖关系，其他与之配合的�
 41 | 面试题精选
 
 ## 第五章：Spring IoC依赖查找（Dependency Lookup） (9讲)
-
+
 42 | 依赖查找的今世前生：Spring IoC容器从Java标准中学到了什么？
 
 43 | 单一类型依赖查找：如何查找已知名称或类型的Bean对象？
@@ -214,9 +214,9 @@ autowire-candidate属性是设置当前Bean是否为其他Bean autowiring候选�
 通常通过实例方法注入，然后再通过该方法注入到静态资源，还有一种比较常见， 通过ApplicationContextAware或BeanFactorIyAware来操作
 
 5. 方法注入和Setter注入有什么不同?
-   
+  
 Setter 注入是通过Java Beans来实现的，而方法注入则是直接通过Java反射来做的。当然底层都是Java反射~ 
- 
+
 6. 当任意Spring Bean实现类实现了BeanFactoryAware 接口时，在Bean生命周期回调时，会被容器调用setBeanFactory方法~
 
 7. @Bean的方式通常属于半自动方式，许多关联Bean需要手动关联
@@ -242,7 +242,7 @@ public class T{
 }
 
 ```
-
+
 51 | 依赖注入的模式和类型：Spring提供了哪些依赖注入的模式和类型？
 
 52 | 自动绑定（Autowiring）：为什么Spring会引入Autowiring？
@@ -286,7 +286,7 @@ public class T{
 70 | 面试题精选
 
 ## 第七章：Spring IoC依赖来源（Dependency Sources） (8讲)
-
+
 71 | 依赖查找的来源：除容器内建和自定义Spring Bean之外，还有其他来源提供依赖查找吗？
 
 72 | 依赖注入的来源：难道依赖注入的来源与依赖查找的不同吗？
@@ -304,7 +304,7 @@ public class T{
 78 | 面试题精选
 
 ## 第八章：Spring Bean作用域（Scopes） (9讲)
-
+
 79 | Spring Bean作用域：为什么Spring Bean需要多种作用域？
 
 80 | "singleton" Bean作用域：单例Bean在当前Spring应用真是唯一的吗？
@@ -328,7 +328,7 @@ public class T{
 87 | 面试题精选
 
 ## 第九章：Spring Bean生命周期（Bean Lifecycle） (18讲)
-
+
 88 | Spring Bean 元信息配置阶段：BeanDefinition配置与扩展
 
 89 | Spring Bean 元信息解析阶段：BeanDefinition的解析
@@ -376,7 +376,7 @@ public abstract class InstantiationAwareBeanPostProcessorAdapter implements Smar
 105 | 面试题精选
 
 ## 第十章：Spring配置元信息（Configuration Metadata） (17讲)
-
+
 106 | Spring配置元信息：Spring存在哪些配置元信息？它们分别用在什么场景？
 
 107 | Spring Bean配置元信息：BeanDefinition
@@ -412,7 +412,7 @@ public abstract class InstantiationAwareBeanPostProcessorAdapter implements Smar
 122 | 面试题
 
 第十一章：Spring资源管理（Resources） (11讲)
-
+
 123 | 引入动机：为什么Spring不使用Java标准资源管理，而选择重新发明轮子？
 
 124 | Java标准资源管理：Java URL资源管理存在哪些潜规则？
@@ -436,7 +436,7 @@ public abstract class InstantiationAwareBeanPostProcessorAdapter implements Smar
 133 | 面试题精选
 
 ## 第十二章：Spring国际化（i18n） (5讲)
-
+
 134 | Spring国际化使用场景
 
 135 | Spring国际化接口：MessageSource不是技术的创造者，只是技术的搬运工？
