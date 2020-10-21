@@ -882,25 +882,90 @@ byType：如果出现多个类型相同的Bean，一种解法就把其他的不�
 * 精确依赖项property和constructor-arg设置始终会覆盖Autowiring
 * 不能绑定简单类型和原生类型（绑定bean和对象，可以通过@Value方式绑定）
 * 容器内的多个bean定义，绑定不够精确
-55 | Setter方法依赖注入：Setter注入的原理是什么？
 
-56 | 构造器依赖注入：官方为什么推荐使用构造器注入？
+### 55 | Setter方法依赖注入：Setter注入的原理是什么？
+实现方法
+* 手动模式
+  * XML 资源配置元信息
+  * Java 注解配置元信息
+  * API 配置元信息
+* 自动模式
+  * byName
+  * byType
 
-57 | 字段注入：为什么Spring官方文档没有单独列举这种注入方式？
+缺点：顺序不确定
 
-58 | 方法注入：方法注入是@Autowired专利吗？
+### 56 | 构造器依赖注入：官方为什么推荐使用构造器注入？
+实现方法
+* 手动模式
+  * XML 资源配置元信息
+  * Java 注解配置元信息
+  * API 配置元信息
+* 自动模式
+  * constructor
 
-59 | 接口回调注入：回调注入的使用场景和限制有哪些？
+### 57 | 字段注入：为什么Spring官方文档没有单独列举这种注入方式？
 
-60 | 依赖注入类型选择：各种依赖注入有什么样的使用场景？
+实现方法
+* 手动模式
+  * Java 注解配置元信息
+  * @Autowired
+  * @Resource
+  * @Inject（可选）
+  
+@Autowired会忽略掉静态字段
 
-61 | 基础类型注入：String和Java原生类型也能注入Bean的属性，它们算依赖注入吗？
+### 58 | 方法注入：方法注入是@Autowired专利吗？
+* 实现方法
+  * 手动模式
+  * Java 注解配置元信息
+  * @Autowired
+  * @Resource
+  * @Inject（可选）
+  * @Bean
 
-62 | 集合类型注入：注入Collection和Map类型的依赖区别？还支持哪些集合类型？
 
-63 | 限定注入：如何限定Bean名称注入？如何实现Bean逻辑分组注入？
+### 59 | 接口回调注入：回调注入的使用场景和限制有哪些？
 
-64 | 延迟依赖注入：如何实现延迟执行依赖注入？与延迟依赖查找是类似的吗？
+### 60 | 依赖注入类型选择：各种依赖注入有什么样的使用场景？
+注入选型
+* 低依赖：构造器注入
+* 多依赖：Setter 方法注入
+* 便利性：字段注入 （无论在Spring或者Spring Boot里面，它慢慢处于淘汰状态）
+* 声明类：方法注入
+
+### 61 | 基础类型注入：String和Java原生类型也能注入Bean的属性，它们算依赖注入吗？
+基础类型
+* 原生类型（Primitive）：boolean、byte、char、short、int、float、long、double
+* 标量类型（Scalar）：Number、Character、Boolean、Enum、Locale、Charset、Currency、Properties、UUID
+* 常规类型（General）：Object、String、TimeZone、Calendar、Optional 等
+* Spring 类型：Resource、InputSource、Formatter 等
+
+### 62 | 集合类型注入：注入Collection和Map类型的依赖区别？还支持哪些集合类型？
+集合类型
+* 数组类型（Array）：原生类型、标量类型、常规类型、Spring 类型
+* 集合类型（Collection）
+* Collection：List、Set（SortedSet、NavigableSet、EnumSet）
+* Map：Properties
+
+### 63 | 限定注入：如何限定Bean名称注入？如何实现Bean逻辑分组注入？
+
+* 使用注解 @Qualifier 限定
+  * 通过 Bean 名称限定
+  * 通过分组限定
+* 基于注解 @Qualifier 扩展限定
+  * 自定义注解 - 如 Spring Cloud @LoadBalanced （分组）
+
+### 64 | 延迟依赖注入：如何实现延迟执行依赖注入？与延迟依赖查找是类似的吗？
+
+* 使用 API ObjectFactory 延迟注入
+  * 单一类型
+  * 集合类型
+* 使用 API ObjectProvider 延迟注入（推荐）
+  * 单一类型
+  * 集合类型
+  
+来进行注入一些非必要性的依赖，这种方式可以避免些关于NoSuchBeanException相关的一个错误。
 
 65 | 依赖处理过程：依赖处理时会发生什么？其中与依赖查找的差异在哪？
 
