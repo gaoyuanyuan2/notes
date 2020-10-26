@@ -967,97 +967,300 @@ byType：如果出现多个类型相同的Bean，一种解法就把其他的不�
   
 来进行注入一些非必要性的依赖，这种方式可以避免些关于NoSuchBeanException相关的一个错误。
 
-65 | 依赖处理过程：依赖处理时会发生什么？其中与依赖查找的差异在哪？
+### 65 | 依赖处理过程：依赖处理时会发生什么？其中与依赖查找的差异在哪？
 
-66 | @Autowired注入：@Autowired注入的规则和原理有哪些？
+基础知识
+* 入口 - DefaultListableBeanFactory#resolveDependency
+* 依赖描述符 - DependencyDescriptor
+* 自定绑定候选对象处理器 - AutowireCandidateResolver
 
-67 | JSR-330 @Inject注入：@Inject与@Autowired的注入原理有怎样的联系？
+先定义然后先注册然后先初始化;
 
-68 | Java通用注解注入原理：Spring是如何实现@Resource和@EJB等注解注入的？
+在注入过程中我们把这个对象的依赖来进行解析,然后再把它插入或者说通过反射的方式来调入;
 
-69 | 自定义依赖注入注解：如何最简化实现自定义依赖注入注解？
+### 66 | @Autowired注入：@Autowired注入的规则和原理有哪些？
 
-70 | 面试题精选
+@Autowired 注入规则
+* 非静态字段
+* 非静态方法
+* 构造器
+
+//前个阶段叫构建元数据
+AutowiredAnnotationBeanPostProcessor#postProcessMergedBeanDefinition
+//后个阶段来进行注入(这个注入过程又出现了依赖处理的过程)
+AutowiredAnnotationBeanPostProcessor#postProcessProperties
+
+注入在postProcessProperties方法执行，早于setter注入， 也早于@PostConstruct
+
+
+### 67 | JSR-330 @Inject注入：@Inject与@Autowired的注入原理有怎样的联系？
+
+@Inject 注入过程
+* 如果 JSR-330 存在于 ClassPath 中，复用 AutowiredAnnotationBeanPostProcessor 实现
+
+### 68 | Java通用注解注入原理：Spring是如何实现@Resource和@EJB等注解注入的？
+CommonAnnotationBeanPostProcessor
+* 注入注解
+  * javax.xml.ws.WebServiceRef
+  * javax.ejb.EJB
+  * javax.annotation.Resource
+* 生命周期注解
+  * javax.annotation.PostConstruct
+  * javax.annotation.PreDestroy
+
+### 69 | 自定义依赖注入注解：如何最简化实现自定义依赖注入注解？
+
+基于 AutowiredAnnotationBeanPostProcessor 实现
+* 自定义实现
+  * 生命周期处理
+  * InstantiationAwareBeanPostProcessor
+  * MergedBeanDefinitionPostProcessor
+* 元数据
+  * InjectedElement
+  * InjectionMetadata
+
+如果你非常需要你的Bean提前初始化或提前注册的时候，这时候你可以选择性地把它标成static（脱离的限制）。
+
+### 70 | 面试题精选
+
+* 沙雕面试题 - 有多少种依赖注入的方式？
+答：构造器注入(少依赖，强制性依赖)
+Setter 注入（多依赖，非强制性依赖）
+字段注入（使用便利）
+方法注入
+接口回调注入
+
+* 996 面试题 - 你偏好构造器注入还是 Setter 注入？
+答：两种依赖注入的方式均可使用，如果是必须依赖的话，那么推荐使用构造器注入，Setter 注入用于可选依赖。
+
+原始构造器参数构造来进行操作：那么不但可以帮助我们解决我们的必须依赖问题，那么不但可以帮助我们解决我们的必须依赖问题。
+
+* 劝退面试题 - Spring 依赖注入的来源有哪些？
+答：答案将《Spring IoC依赖来源》章节中继续讨论。
 
 ## 第七章：Spring IoC依赖来源（Dependency Sources） (8讲)
 
-71 | 依赖查找的来源：除容器内建和自定义Spring Bean之外，还有其他来源提供依赖查找吗？
+### 71 | 依赖查找的来源：除容器内建和自定义Spring Bean之外，还有其他来源提供依赖查找吗？
 
-72 | 依赖注入的来源：难道依赖注入的来源与依赖查找的不同吗？
+底层全部都是BeanDefinition，BeanDefinition是最终Bean用于解析的。
 
-73 | Spring容器管理和游离对象：为什么会有管理对象和游离对象？
+### 72 | 依赖注入的来源：难道依赖注入的来源与依赖查找的不同吗？
+```java
+    // ResolvableDependency这个依赖，不能用于getBean，非Spring管理对象，只能用于依赖注入
+    beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
+    beanFactory.registerResolvableDependency(ResourceLoader.class, this);
+    beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
+    beanFactory.registerResolvableDependency(ApplicationContext.class, this);
+```
+### 73 | Spring容器管理和游离对象：为什么会有管理对象和游离对象？
 
-74 | Spring Bean Definition作为依赖来源：Spring Bean的来源
+### 74 | Spring Bean Definition作为依赖来源：Spring Bean的来源
+要素
+* 元数据：BeanDefinition
+* 注册：BeanDefinitionRegistry#registerBeanDefinition
+* 类型：延迟和非延迟
+* 顺序：Bean 生命周期顺序按照注册顺序
 
-75 | 单例对象作为依赖来源：单体对象与普通Spring Bean存在哪些差异？
+### 75 | 单例对象作为依赖来源：单体对象与普通Spring Bean存在哪些差异？
 
-76 | 非Spring容器管理对象作为依赖来源：如何理解ResolvableDependency？
+* 要素
+  * 来源：外部普通 Java 对象（不一定是 POJO）
+  * 注册：SingletonBeanRegistry#registerSingleton
+* 限制
+  * 无生命周期管理
+  * 无法实现延迟初始化 Bean
 
-77 | 外部化配置作为依赖来源：@Value是如何将外部化配置注入Spring Bean的？
+它的生命周期不由Spring,上下文来进行托管,他没有办法实现所谓的延迟初始化,之后会有一个生命周期的管理。
 
-78 | 面试题精选
+### 76 | 非Spring容器管理对象作为依赖来源：如何理解ResolvableDependency？
+* 要素
+  * 注册：ConfigurableListableBeanFactory#registerResolvableDependency
+* 限制
+  * 无生命周期管理
+  * 无法实现延迟初始化 Bean
+  * 无法通过依赖查找
+  
+### 77 | 外部化配置作为依赖来源：@Value是如何将外部化配置注入Spring Bean的？
+* 要素
+  * 类型：非常规 Spring 对象依赖来源
+* 限制
+  * 无生命周期管理
+  * 无法实现延迟初始化 Bean
+  * 无法通过依赖查找
+### 78 | 面试题精选
+* 沙雕面试题 - 注入和查找的依赖来源是否相同？
+答：否，依赖查找的来源仅限于 Spring BeanDefinition 以及单例对
+象，而依赖注入的来源还包括 Resolvable Dependency 以及
+@Value 所标注的外部化配置
+
+* 996 面试题 - 单例对象能在 IoC 容器启动后注册吗？
+答：可以的，单例对象的注册与 BeanDefinition 不同，BeanDefinition 会
+被 ConfigurableListableBeanFactory#freezeConfiguration() 方法影响，
+从而冻结注册，单例对象则没有这个限制。
+
+* 劝退面试题 - Spring 依赖注入的来源有哪些？
+答：
+Spring BeanDefinition
+单例对象
+Resolvable Dependency
+@Value 外部化配置
 
 ## 第八章：Spring Bean作用域（Scopes） (9讲)
 
-79 | Spring Bean作用域：为什么Spring Bean需要多种作用域？
+### 79 | Spring Bean作用域：为什么Spring Bean需要多种作用域？
 
-80 | "singleton" Bean作用域：单例Bean在当前Spring应用真是唯一的吗？
+层次性的应用，上下文的时候或者层次性的BeanFactory时候，id或名称并不是唯一的。（多个BeanFactory）
 
-不是
+### 80 | "singleton" Bean作用域：单例Bean在当前Spring应用真是唯一的吗？
 
-81 | "prototype" Bean作用域：原型Bean在哪些场景下会创建新的实例？
+Bean作用域其实严格意义上面来讲不是所有的Spring的Bean，而是指的我们的BeanDefinition。
 
-82 | "request" Bean作用域：request Bean会在每次HTTP请求创建新的实例吗？
+单例和原型可能同时存在，使用的时候会产生一些问题。
 
-83 | "session" Bean作用域：session Bean在Spring MVC场景下存在哪些局限性？
+无论是 Singleton 还是 Prototype Bean 均会执行初始化方法回调；
+不过仅 Singleton Bean 会执行销毁方法回调。
 
-84 | "application" Bean作用域：application Bean是否真的有必要？
+### 81 | "prototype" Bean作用域：原型Bean在哪些场景下会创建新的实例？
 
-没太大必要
+注意事项
+* Spring 容器没有办法管理 prototype Bean 的完整生命周期，也没有办法记录示例的存在。销毁回调方法将不会执行，可以利用 BeanPostProcessor 进行清扫工作。
 
-85 | 自定义Bean作用域：设计Bean作用域应该注意哪些原则？
+### 82 | "request" Bean作用域：request Bean会在每次HTTP请求创建新的实例吗？
 
-86 | 课外资料：Spring Cloud RefreshScope是如何控制Bean的动态刷新？
+### 83 | "session" Bean作用域：session Bean在Spring MVC场景下存在哪些局限性？
 
-87 | 面试题精选
+### 84 | "application" Bean作用域：application Bean是否真的有必要？
+
+### 85 | 自定义Bean作用域：设计Bean作用域应该注意哪些原则？
+
+### 86 | 课外资料：Spring Cloud RefreshScope是如何控制Bean的动态刷新？
+
+### 87 | 面试题精选
+
+* 沙雕面试题 - Spring 內建的 Bean 作用域有几种？
+答：singleton、prototype、request、session、application 以及
+websocket
+
+* 996 面试题 - singleton Bean 是否在一个应用是唯一的？
+答：否，singleton bean 仅在当前 Spring IoC 容器（BeanFactory）中是单例对象
+
+* 劝退面试题 - “application”Bean 是否被其他方案替代？
+答：可以的，实际上，“application” Bean 与“singleton” Bean 没有本质区别。(层次性上下文)，
+它无非就是在某个地方存储了一下。
+
+如果一个静态字段在JVM里面是不是唯一的？
+答：否，通常来说是给它ClassLoader是唯一的，但是一个应用可以有多个ClassLoader，ClassLoader之间是可以相互隔离的。
+
+
 
 ## 第九章：Spring Bean生命周期（Bean Lifecycle） (18讲)
 
-88 | Spring Bean 元信息配置阶段：BeanDefinition配置与扩展
+### 88 | Spring Bean 元信息配置阶段：BeanDefinition配置与扩展
 
-89 | Spring Bean 元信息解析阶段：BeanDefinition的解析
+### 89 | Spring Bean 元信息解析阶段：BeanDefinition的解析
 
-90 | Spring Bean 注册阶段：BeanDefinition与单体Bean注册
+* 面向资源 BeanDefinition 解析
+  * BeanDefinitionReader
+  * XML 解析器 - BeanDefinitionParser
+* 面向注解 BeanDefinition 解析
+  * AnnotatedBeanDefinitionReader
 
-91 | Spring BeanDefinition合并阶段：BeanDefinition合并过程是怎样出现的？
+### 90 | Spring Bean 注册阶段：BeanDefinition与单体Bean注册
 
-92 | Spring Bean Class加载阶段：Bean ClassLoader能够被替换吗?
+* BeanDefinition 注册接口
+  * BeanDefinitionRegistry
 
-93 | Spring Bean实例化前阶段：Bean的实例化能否被绕开？
+### 91 | Spring BeanDefinition合并阶段：BeanDefinition合并过程是怎样出现的？
 
-94 | Spring Bean实例化阶段：Bean实例是通过Java反射创建吗？
+* BeanDefinition 合并
+  * 父子 BeanDefinition 合并
+    * 当前 BeanFactory 查找
+    * 层次性 BeanFactory 查找
+    
+在合并过程中，通常会把一个GenericBeanDefinition变成一个RootBeanDefinition分类型。子类合并的时候，通常会把子的Definition
+来覆盖父的Definition里的实例，在最终得到BeanDefinition的时候合并后的结果就是说基本上是通过一个GenericBeanDefinition变成一个RootBeanDefinition。
 
-95 | Spring Bean实例化后阶段：Bean实例化后是否一定被是使用吗？
 
-96 | Spring Bean属性赋值前阶段：配置后的PropertyValues还有机会修改吗？
+### 92 | Spring Bean Class加载阶段：Bean ClassLoader能够被替换吗?
 
-有
+ * ClassLoader 类加载
+ * Java Security 安全控制
+ * ConfigurableBeanFactory 临时 ClassLoader
+ 
+ 其实我们的BeanDefinition变成一个Class的过程，还是利用我们传统的Java的ClassLoader
 
-```java
-public abstract class InstantiationAwareBeanPostProcessorAdapter implements SmartInstantiationAwareBeanPostProcessor {
-    public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
-        return null;
-    }
-}
-```
+### 93 | Spring Bean实例化前阶段：Bean的实例化能否被绕开？
 
-97 | Aware接口回调阶段：众多Aware接口回调的顺序是安排的？
+ * 非主流生命周期 - Bean 实例化前阶段
+   * InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation
+   
+它是一个在初始在实例化之前的一个前置操作
 
-98 | Spring Bean初始化前阶段：BeanPostProcessor
 
-99 | Spring Bean初始化阶段：@PostConstruct、InitializingBean以及自定义方法
+### 94 | Spring Bean实例化阶段：Bean实例是通过Java反射创建吗？
 
-100 | Spring Bean初始化后阶段：BeanPostProcessor
+实例化方式
+ * 传统实例化方式
+   * 实例化策略 - InstantiationStrategy
+ * 构造器依赖注入
+
+构造器注入按照类型注入，resolveDependency
+
+### 95 | Spring Bean实例化后阶段：Bean实例化后是否一定被是使用吗？
+
+* Bean 属性赋值（Populate）判断
+  * InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation
+
+可以理解为它是个Bean的赋值的一个判断
+
+### 96 | Spring Bean属性赋值前阶段：配置后的PropertyValues还有机会修改吗？
+
+* Bean 属性值元信息
+  * PropertyValues
+* Bean 属性赋值前回调
+  * Spring 1.2 - 5.0：InstantiationAwareBeanPostProcessor#postProcessPropertyValues
+  * Spring 5.1：InstantiationAwareBeanPostProcessor#postProcessProperties
+  
+元信息就是称为一个类叫PropertyValues，BeanDefinition里面有个属性的一个值称为PropertyValues，
+
+### 97 | Aware接口回调阶段：众多Aware接口回调的顺序是安排的？
+
+* Spring Aware 接口
+  * BeanNameAware
+  * BeanClassLoaderAware
+  * BeanFactoryAware
+  * EnvironmentAware
+  * EmbeddedValueResolverAware
+  * ResourceLoaderAware
+  * ApplicationEventPublisherAware
+  * MessageSourceAware
+  * ApplicationContextAware
+  
+如果你是个简单的一个BeanFactory实现，比如像DefaultListableBeanFactory，这个时候你是没办法进行所谓的和应用上下文相关的Aware
+
+### 98 | Spring Bean初始化前阶段：BeanPostProcessor
+
+* 已完成
+  * Bean 实例化
+  * Bean 属性赋值
+  * Bean Aware 接口回调
+  * 方法回调
+  * BeanPostProcessor#postProcessBeforeInitialization
+
+### 99 | Spring Bean初始化阶段：@PostConstruct、InitializingBean以及自定义方法
+* Bean 初始化（Initialization）
+  * @PostConstruct 标注方法
+  * 实现 InitializingBean 接口的 afterPropertiesSet() 方法
+  * 自定义初始化方法
+  
+一个BeanFactory可以对应多个BeanPostProcessor实现
+
+BeforeInitialization 初始化前阶段就已经完成了PostConstruct 
+
+### 100 | Spring Bean初始化后阶段：BeanPostProcessor
+
+* 方法回调
+  * BeanPostProcessor#postProcessAfterInitialization
 
 101 | Spring Bean初始化完成阶段：SmartInitializingSingleton
 
