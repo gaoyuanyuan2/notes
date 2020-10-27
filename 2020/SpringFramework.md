@@ -1262,15 +1262,78 @@ BeforeInitialization 初始化前阶段就已经完成了PostConstruct
 * 方法回调
   * BeanPostProcessor#postProcessAfterInitialization
 
-101 | Spring Bean初始化完成阶段：SmartInitializingSingleton
+### 101 | Spring Bean初始化完成阶段：SmartInitializingSingleton
 
-102 | Spring Bean销毁前阶段：DestructionAwareBeanPostProcessor用在怎样的场景?
+* 方法回调
+  * Spring 4.1 +：SmartInitializingSingleton#afterSingletonsInstantiated
 
-103 | Spring Bean销毁阶段：@PreDestroy、DisposableBean以及自定义方法
+在我们的所有的单例对象实例化之后，BeanDefinition已经变成Bean之后，逐一地进行我们的Singleton回调。
 
-104 | Spring Bean垃圾收集（GC）：何时需要GC Spring Bean？
 
-105 | 面试题精选
+
+### 102 | Spring Bean销毁前阶段：DestructionAwareBeanPostProcessor用在怎样的场景?
+
+* 方法回调
+  * DestructionAwareBeanPostProcessor#postProcessBeforeDestruction
+  
+容器里面被销毁
+
+### 103 | Spring Bean销毁阶段：@PreDestroy、DisposableBean以及自定义方法
+
+* Bean 销毁（Destroy）
+  * @PreDestroy 标注方法
+  * 实现 DisposableBean 接口的 destroy() 方法
+  * 自定义销毁方法
+
+### 104 | Spring Bean垃圾收集（GC）：何时需要GC Spring Bean？
+
+* Bean 垃圾回收（GC）
+  * 关闭 Spring 容器（应用上下文）
+  * 执行 GC
+  * Spring Bean 覆盖的 finalize() 方法被回调
+
+### 105 | 面试题精选
+
+* 沙雕面试题 - BeanPostProcessor 的使用场景有哪些？
+
+答：BeanPostProcessor 提供 Spring Bean 初始化前和初始化后的生
+命周期回调，分别对应 postProcessBeforeInitialization 以及
+postProcessAfterInitialization 方法，允许对关心的 Bean 进行扩展
+，甚至是替换。
+（这个对象也许是本身参数传过来的Bean对象，也可能不是传输Bean对象，但是如果是返回null的话，相对说是没有调整）
+
+加分项：其中，ApplicationContext 相关的 Aware 回调也是基于
+BeanPostProcessor 实现，即 ApplicationContextAwareProcessor。
+
+* 996 面试题 - BeanFactoryPostProcessor 与BeanPostProcessor 的区别
+
+答：BeanFactoryPostProcessor 是 Spring BeanFactory（实际为
+ConfigurableListableBeanFactory） 的后置处理器，用于扩展
+BeanFactory，或通过 BeanFactory 进行依赖查找和依赖注入
+
+加分项：BeanFactoryPostProcessor 必须有 Spring ApplicationContext
+执行，BeanFactory 无法与其直接交互。（就是它的一个BeanFactory的后置操作）
+
+而 BeanPostProcessor 则直接与BeanFactory 关联，属于 N 对 1 的关系。
+
+* 劝退面试题 - BeanFactory 是怎样处理 Bean 生命周期？
+
+答：
+BeanFactory 的默认实现为 DefaultListableBeanFactory，其中 Bean生命周期与方法映射如下：
+BeanDefinition 注册阶段 - registerBeanDefinition
+BeanDefinition 合并阶段 - getMergedBeanDefinition
+Bean 实例化前阶段 - resolveBeforeInstantiation
+Bean 实例化阶段 - createBeanInstance
+Bean 初始化后阶段 - populateBean
+Bean 属性赋值前阶段 - populateBean
+Bean 属性赋值阶段 - populateBean
+Bean Aware 接口回调阶段 - initializeBean
+Bean 初始化前阶段 - initializeBean
+Bean 初始化阶段 - initializeBean
+Bean 初始化后阶段 - initializeBean
+Bean 初始化完成阶段 - preInstantiateSingletons
+Bean 销毁前阶段 - destroyBean
+Bean 销毁阶段 - destroyBean
 
 ## 第十章：Spring配置元信息（Configuration Metadata） (17讲)
 
