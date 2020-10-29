@@ -240,17 +240,20 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 |泛型(Generic)|3.0 +|ApplicationListener|
 
 * Java 6语法特性
+
 |语法特性|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |接口@Override|4.0 +|
 
 * Java 7语法特性
+
 |语法特性|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |Diamond语法|5.0 +|DefaultListableBeanFactory|
 |try-with-resources语法|5.0 +|ResourceBundleMessageSource|
 
 * Java 8语法特性
+
 |语法特性|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |Lambda语法|5.0 +|PropertyEditorRegistrySupport|
@@ -259,6 +262,7 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 ### 08 | JDK API实践：Spring怎样取舍Java I/O、集合、反射、动态代理等API的使用？
 
 * < Java5 API
+
 |API类型|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |反射(Reflection)|1.0 +|MethodMatcher|
@@ -271,6 +275,7 @@ Java反射是从ava 1.2
 
 
 * Java 5 API
+
 |API类型|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |XML处理(DOM,SAX..)|1.0 +|XmlBeanDefinitionReader|
@@ -285,6 +290,7 @@ InstrumentationSavingAgent：API可以帮助我们去做字节码的一个重写
 
 
 * Java 6 API
+
 |API类型|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |JDBC 4.0 (JSR 221)|1.0 +|JdbcTemplate|
@@ -304,12 +310,14 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 到底哪个类建了Component索引，那么这时候我就可以定位到类而不需要逐一扫描。
 
 * Java 7 API
+
 |API类型|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |Fork/Join框架(JSR 166)|3.1 +|ForkJoinPoolFactoryBean|
 |NIO 2 (JSR 203)|4.0 +|PathResource|
 
 * Java 8 API
+
 |API类型|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |Date and Time API (JSR 310)|4.0 +|Date TimeContext|
@@ -323,6 +331,7 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 ### 09 | Java EE API整合：为什么Spring要与“笨重”的Java EE共舞？
 
 * Java EE Web技术相关
+
 |JSR规范|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |Servlet + JSP(JSR 035)|1.0 +|DispatcherServlet|
@@ -334,6 +343,7 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 |WebSocket(JSR 356)|4.0 +|WebSocketHandler|
 
 * Java EE数据存储相关
+
 |JSR规范|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |JDO(JSR 12)|1.0 - 4.2|JdoTemplate|
@@ -342,6 +352,7 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 |Java Caching API(JSR 107)|3.2 +|JCacheCache|
 
 * Java EE Bean技术相关
+
 |JSR规范|Spring支持版本|代表实现|
 |:-:|:-:|:-:|
 |JMS(JSR 914)|1.1 +|JmsTemplate|
@@ -459,6 +470,7 @@ Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Serv
 ### 18 | 轻量级IoC容器：如何界定IoC容器的“轻重”？
 
 1.优劣对比
+
 |类型|依赖处理|实现便利性|代码侵入性|API依赖性|可读性|
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |依赖查找|主动获取|相对繁琐|侵入业务逻辑|依赖容器API|良好|
@@ -591,6 +603,7 @@ FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻�
 ## 第四章：Spring Bean基础 (11讲)
 
 ### 31. 如何注册一个Spring Bean?
+
 什么是 BeanDefinition？ 
 * BeanDefinition 是 Spring Framework 中定义 Bean 的配置元信息接口，包含：
   * Bean 的类名
@@ -632,6 +645,7 @@ BeanDefinition 注册
   * 配置类方式：AnnotatedBeanDefinitionReader#register(Class...)注
 
 ### 36 | 实例化Spring Bean：Bean实例化的姿势有多少种？
+
 Bean 实例化（Instantiation）
 *  常规方式
   * 通过构造器（配置元信息：XML、Java 注解和 Java API ）
@@ -658,9 +672,11 @@ Bean 初始化（Initialization）
 * Bean 延迟初始化（Lazy Initialization）
   * XML 配置：<bean lazy-init=”true” ... />
   * Java 注解：@Lazy(true)
+  
 ### 39 | 销毁Spring Bean： 销毁Bean的基本操作有哪些？
 
 ### 40 | 回收Spring Bean：Spring IoC容器管理的Bean能够被垃圾回收吗？
+
 * Bean 垃圾回收（GC）
   * 1. 关闭 Spring 容器（应用上下文）
   * 2. 执行 GC
@@ -683,6 +699,7 @@ Bean 初始化（Initialization）
 
 
 ### 43 | 单一类型依赖查找：如何查找已知名称或类型的Bean对象？
+
 单一类型依赖查找接口 - BeanFactory
 * 根据 Bean 名称查找
   * getBean(String)
@@ -697,6 +714,7 @@ Bean 初始化（Initialization）
 * 根据 Bean 名称 + 类型查找：getBean(String,Class)
 
 ### 44 | 集合类型依赖查找：如何查找已知类型多个Bean集合？
+
 集合类型依赖查找接口 - ListableBeanFactory
 * 根据 Bean 类型查找
   * 获取同类型 Bean 名称列表
@@ -757,6 +775,7 @@ Bean 延迟依赖查找接口
 ### 47 | 安全依赖查找
 
 * 依赖查找安全性对比
+
 |依赖查找类型| 代表实现 |是否安全|
 |:-:|:-:|:-:|
 |单一类型查找 |BeanFactory#getBean|否|
@@ -772,7 +791,9 @@ Bean 延迟依赖查找接口
 DefaultListableBeanFactory implements ConfigurableListableBeanFactory ：既是单一类型又是集合类型和层次类型，兜底实现。
 
 ### 48 | 内建可查找的依赖：哪些Spring IoC容器内建依赖可供查找？
+
 * AbstractApplicationContext 内建可查找的依赖（基类）
+
 |Bean 名称| Bean 实例 |使用场景|
 |:-:|:-:|:-:|
 |environment| Environment 对象| 外部化配置以及 Profiles|
@@ -787,6 +808,7 @@ environment：外部化配置属性主要是指的我们比如说像-D参数
 systemProperties：当我们去获取比如说系统的一些路径的时候
 
 * 注解驱动 Spring 应用上下文内建可查找的依赖（部分）
+
 |Bean 名称| Bean 实例 |使用场景|
 |:-:|:-:|:-:|
 |org.springframework.context.annotation.internalConfigurationAnnotationProcessor|ConfigurationClassPostProcessor 对象|处理 Spring 配置类|
@@ -808,6 +830,7 @@ AnnotationConfigUtils
 ### 49 | 依赖查找中的经典异常：Bean找不到？Bean不是唯一的？Bean创建失败？
 
 * BeansException 子类型
+
 |异常类型 |触发条件（举例） |场景举例|
 |:-:|:-:|:-:|
 |NoSuchBeanDefinitionException |当查找 Bean 不存在于 IoC 容器时 |BeanFactory#getBean ObjectFactory#getObject|
@@ -845,6 +868,7 @@ AnnotationConfigUtils
   * Autowiring（自动绑定）
 
 *依赖注入类型
+
 |依赖注入类型| 配置元数据举例|
 |:-:|:-:|
 |Setter 方法| <proeprty name="user" ref="userBean"/>|
@@ -1337,11 +1361,29 @@ Bean 销毁阶段 - destroyBean
 
 ## 第十章：Spring配置元信息（Configuration Metadata） (17讲)
 
-106 | Spring配置元信息：Spring存在哪些配置元信息？它们分别用在什么场景？
+### 106 | Spring配置元信息：Spring存在哪些配置元信息？它们分别用在什么场景？
 
-107 | Spring Bean配置元信息：BeanDefinition
+* 配置元信息
+  * Spring Bean 配置元信息 - BeanDefinition
+  * Spring Bean 属性元信息 - PropertyValues
+  * Spring 容器配置元信息
+  * Spring 外部化配置元信息 - PropertySource
+  * Spring Profile 元信息 - @Profile
 
-108 | Spring Bean属性元信息：PropertyValues
+### 107 | Spring Bean配置元信息：BeanDefinition
+
+* Bean 配置元信息 - BeanDefinition
+  * GenericBeanDefinition：通用型 BeanDefinition
+  * RootBeanDefinition：无 Parent 的 BeanDefinition 或者合并后 BeanDefinition
+  * AnnotatedBeanDefinition：注解标注的 BeanDefinition
+
+### 108 | Spring Bean属性元信息：PropertyValues
+
+* Bean 属性元信息 - PropertyValues
+  * 可修改实现 - MutablePropertyValues
+  * 元素成员 - PropertyValue
+  * Bean 属性上下文存储 - AttributeAccessor
+  * Bean 元信息元素 - BeanMetadataElement
 
 109 | Spring容器配置元信息
 
