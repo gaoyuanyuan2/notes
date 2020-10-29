@@ -9,8 +9,6 @@
 2.SpringCloud
 3.SpringSecurity
 
-
-
 细节：
 1.Java语言特性
 
@@ -30,8 +28,6 @@ JPA JMX Bean Validation
 
 5.第三方框架的整合
 
-
-
 优势
 
 API抽象
@@ -42,11 +38,7 @@ API抽象
 
 功能可扩展性、可测试性
 
-
-
 ### 02 | 内容综述
-
-
 
 1.特性
 
