@@ -1377,7 +1377,7 @@ Bean 销毁阶段 - destroyBean
   * Bean 属性上下文存储 - AttributeAccessor
   * Bean 元信息元素 - BeanMetadataElement
 
-109 | Spring容器配置元信息
+### 109 | Spring容器配置元信息
 
 110 | 基于XML资源装载Spring Bean配置元信息
 
