@@ -1,5 +1,7 @@
 # GitHub
 
+* Git 的最佳实践希望大家在开发的过程中，快速提交，快速合并，快速完成。这样可以少很多冲突的事
+
 ##  Github 三大套件 
 
 1.Issues 讨论。问题提交 
@@ -99,6 +101,15 @@ git credential-manager uninstall  清除掉缓存在git中的用户名和密码 
 
 git config --global credential.helper store 再保存
 
+11. 
+
+git pull --rebase
+
+为了避免有 merge 动作，可以把服务器上的提交直接合并到你的代码中。
+
+12.
+
+git stash命令，可以把当前没有完成的事先暂存一下。
 
 
 ## 哈希
@@ -144,10 +155,50 @@ git config --global credential.helper store 再保存
 
 [参考](https://blog.csdn.net/qq_36135928/article/details/78714501)
 
+##  工作流
+
+### GitFlow 协同工作流的工作过程
+
+整个代码库中一共有五种分支。
+
+* Master 分支。也就是主干分支，用作发布环境，上面的每一次提交都是可以发布的。
+
+* Feature 分支。也就是功能分支，用于开发功能，其对应的是开发环境。
+
+* Developer 分支。是开发分支，一旦功能开发完成，就向 Developer 分支合并，合并完成后，删除功能分支。这个分支对应的是集成测试环境。
+
+* Release 分支。当 Developer 分支测试达到可以发布状态时，开出一个 Release 分支来，然后做发布前的准备工作。这个分支对应的是预发环境。之所以需要这个 Release 分支，是我们的开发可以继续向前，不会因为要发布而被 block 住而不能提交。
+
+一旦 Release 分支上的代码达到可以上线的状态，那么需要把 Release 分支向 Master 分支和 Developer 分支同时合并，以保证代码的一致性。然后再把 Release 分支删除掉。
+
+* Hotfix 分支。是用于处理生产线上代码的 Bug-fix，每个线上代码的 Bug-fix 都需要开一个 Hotfix 分支，完成后，向 Developer 分支和 Master 分支上合并。合并完成后，删除 Hotfix 分支。
 
 
+与其花时间在 Git 协同工作流上，还不如把时间花在调整软件架构和自动化软件生产和运维流程上来，这才是真正简化协同工作流程的根本
+
+### GitHub Flow
+
+所谓 GitHub Flow，其实也叫 Forking flow，也就是 GitHub 上的那个开发方式。
+
+每个开发人员都把“官方库”的代码 fork 到自己的代码仓库中。
+
+然后，开发人员在自己的代码仓库中做开发，想干啥干啥。
+
+因此，开发人员的代码库中，需要配两个远程仓库，一个是自己的库，一个是官方库（用户的库用于提交代码改动，官方库用于同步代码）。
+
+然后在本地建“功能分支”，在这个分支上做代码开发。
+
+这个功能分支被 push 到开发人员自己的代码仓库中。
+
+然后，向“官方库”发起 pull request，并做 Code Review。
+
+一旦通过，就向官方库进行合并。
+
+这就是 GitHub 的工作流程。
+
+如果你有“官方库”的权限，那么就可以直接在“官方库”中建功能分支开发，然后提交 pull request。通过 Code Review 后，合并进 Master 分支，而 Master 一旦有代码被合并就可以马上 release。
 
         
-      
+  
 
       
