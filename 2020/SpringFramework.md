@@ -1379,31 +1379,110 @@ Bean 销毁阶段 - destroyBean
 
 ### 109 | Spring容器配置元信息
 
-110 | 基于XML资源装载Spring Bean配置元信息
+这个Bean的加载是有序的，也就是说它是通过first-in-first-out方式；
 
-111 | 基于Properties资源装载Spring Bean配置元信息：为什么Spring官方不推荐？
+BeanDefinition只能确保Bean的定义的一个顺序；
 
-112 | 基于Java注解装载Spring Bean配置元信息
+Bean是不是要加载，取决于依赖查找的时机或依赖注入的时机。这两个时机是不确定的，那是由用户的代码行为来进行控制的。
 
-113 | Spring Bean配置元信息底层实现之XML资源
+如果你用ApplicationContext，AbstractApplicationContext加载的时候，它在最后面refresh的时候，这个过程中它会通过BeanDefinition的顺序来进行初始化。
 
-114 | Spring Bean配置元信息底层实现之Properties资源
 
-115 | Spring Bean配置元信息底层实现之Java注解
 
-116 | 基于XML资源装载Spring IoC容器配置元信息
+## 110 | 基于XML资源装载Spring Bean配置元信息
 
-117 | 基于Java注解装载Spring IoC容器配置元信息
+## 111 | 基于Properties资源装载Spring Bean配置元信息：为什么Spring官方不推荐？
 
-118 | 基于Extensible XML authoring 扩展Spring XML元素
+## 112 | 基于Java注解装载Spring Bean配置元信息
 
-119 | Extensible XML authoring扩展原理
+## 113 | Spring Bean配置元信息底层实现之XML资源
 
-120 | 基于Properties资源装载外部化配置
+Spring XML 资源 BeanDefinition 解析与注册
 
-121 | 基于Yaml资源装载外部化配置
+* 核心 API - XmlBeanDefinitionReader
+    * 资源 - Resource
+    * 底层 - BeanDefinitionDocumentReader
+      * XML 解析 - Java DOM Level 3 API
+      * BeanDefinition 解析 - BeanDefinitionParserDelegate
+      * BeanDefinition 注册 - BeanDefinitionRegistry
 
-122 | 面试题
+## 114 | Spring Bean配置元信息底层实现之Properties资源
+
+Spring Properties 资源 BeanDefinition 解析与注册
+
+* 核心 API - PropertiesBeanDefinitionReader
+  * 资源
+     * 字节流 - Resource
+     * 字符流 - EncodedResouce
+  * 底层
+     * 存储 - java.util.Properties
+     * BeanDefinition 解析 - API 内部实现
+     * BeanDefinition 注册 - BeanDefinitionRegistry
+     
+### 115 | Spring Bean配置元信息底层实现之Java注解
+
+Spring Java 注册 BeanDefinition 解析与注册
+* 核心 API - AnnotatedBeanDefinitionReader
+  * 资源
+     * 类对象 - java.lang.Class
+  * 底层
+     * 条件评估 - ConditionEvaluator
+     * Bean 范围解析 - ScopeMetadataResolver
+     * BeanDefinition 解析 - 内部 API 实现
+     * BeanDefinition 处理 - AnnotationConfigUtils.processCommonDefinitionAnnotations
+     * BeanDefinition 注册 - BeanDefinitionRegistry
+
+## 116 | 基于XML资源装载Spring IoC容器配置元信息
+
+## 117 | 基于Java注解装载Spring IoC容器配置元信息
+
+## 118 | 基于Extensible XML authoring 扩展Spring XML元素
+
+* Spring XML 扩展
+  * 编写 XML Schema 文件：定义 XML 结构
+  * 自定义 NamespaceHandler 实现：命名空间绑定
+  * 自定义 BeanDefinitionParser 实现：XML 元素与 BeanDefinition 解析
+  * 注册 XML 扩展：命名空间与 XML Schema 映射
+
+## 119 | Extensible XML authoring扩展原理
+
+## 120 | 基于Properties资源装载外部化配置
+
+## 121 | 基于Yaml资源装载外部化配置
+
+## 122 | 面试题
+
+* 沙雕面试题 - Spring 內建 XML Schema 常见有哪些？
+
+答：
+
+|命名空间| 所属模块| Schema 资源 URL|
+|---|---|---|
+|beans |spring-beans |https://www.springframework.org/schema/beans/spring-beans.xsd|
+|context |spring-context |https://www.springframework.org/schema/context/springcontext.xsd|
+|aop| spring-aop |https://www.springframework.org/schema/aop/spring-aop.xsd|
+|tx |spring-tx| https://www.springframework.org/schema/tx/spring-tx.xsd|
+|util |spring-beans |https://www.springframework.org/schema/util/spring-util.xsd|
+|tool |spring-beans| https://www.springframework.org/schema/tool/spring-tool.xsd|
+
+* 996 面试题 - Spring配置元信息具体有哪些？
+
+答：
+
+* Bean 配置元信息：通过媒介（如 XML、Proeprties 等），解析 BeanDefinition
+* IoC 容器配置元信息：通过媒介（如 XML、Proeprties 等），控制 IoC 容器行为，比如注解驱动、AOP 等
+* 外部化配置：通过资源抽象（如 Proeprties、YAML 等），控制 PropertySource
+* Spring Profile：通过外部化配置，提供条件分支流程
+
+
+* 劝退面试题 - Extensible XML authoring 的缺点？
+
+答：
+
+* 高复杂度：开发人员需要熟悉 XML Schema，spring.handlers，spring.schemas以及 Spring API 。
+* 嵌套元素支持较弱：通常需要使用方法递归或者其嵌套解析的方式处理嵌套（子）元素。
+* XML 处理性能较差：Spring XML 基于 DOM Level 3 API 实现，该 API 便于理解，然而性能较差。
+* XML 框架移植性差：很难适配高性能和便利性的 XML 框架，如 JAXB。
 
 第十一章：Spring资源管理（Resources） (11讲)
 
