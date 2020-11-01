@@ -1389,13 +1389,13 @@ Bean是不是要加载，取决于依赖查找的时机或依赖注入的时机�
 
 
 
-## 110 | 基于XML资源装载Spring Bean配置元信息
+### 110 | 基于XML资源装载Spring Bean配置元信息
 
-## 111 | 基于Properties资源装载Spring Bean配置元信息：为什么Spring官方不推荐？
+### 111 | 基于Properties资源装载Spring Bean配置元信息：为什么Spring官方不推荐？
 
-## 112 | 基于Java注解装载Spring Bean配置元信息
+### 112 | 基于Java注解装载Spring Bean配置元信息
 
-## 113 | Spring Bean配置元信息底层实现之XML资源
+### 113 | Spring Bean配置元信息底层实现之XML资源
 
 Spring XML 资源 BeanDefinition 解析与注册
 
@@ -1406,7 +1406,7 @@ Spring XML 资源 BeanDefinition 解析与注册
       * BeanDefinition 解析 - BeanDefinitionParserDelegate
       * BeanDefinition 注册 - BeanDefinitionRegistry
 
-## 114 | Spring Bean配置元信息底层实现之Properties资源
+### 114 | Spring Bean配置元信息底层实现之Properties资源
 
 Spring Properties 资源 BeanDefinition 解析与注册
 
@@ -1432,11 +1432,11 @@ Spring Java 注册 BeanDefinition 解析与注册
      * BeanDefinition 处理 - AnnotationConfigUtils.processCommonDefinitionAnnotations
      * BeanDefinition 注册 - BeanDefinitionRegistry
 
-## 116 | 基于XML资源装载Spring IoC容器配置元信息
+### 116 | 基于XML资源装载Spring IoC容器配置元信息
 
-## 117 | 基于Java注解装载Spring IoC容器配置元信息
+### 117 | 基于Java注解装载Spring IoC容器配置元信息
 
-## 118 | 基于Extensible XML authoring 扩展Spring XML元素
+### 118 | 基于Extensible XML authoring 扩展Spring XML元素
 
 * Spring XML 扩展
   * 编写 XML Schema 文件：定义 XML 结构
@@ -1444,13 +1444,13 @@ Spring Java 注册 BeanDefinition 解析与注册
   * 自定义 BeanDefinitionParser 实现：XML 元素与 BeanDefinition 解析
   * 注册 XML 扩展：命名空间与 XML Schema 映射
 
-## 119 | Extensible XML authoring扩展原理
+### 119 | Extensible XML authoring扩展原理
 
-## 120 | 基于Properties资源装载外部化配置
+### 120 | 基于Properties资源装载外部化配置
 
-## 121 | 基于Yaml资源装载外部化配置
+### 121 | 基于Yaml资源装载外部化配置
 
-## 122 | 面试题
+### 122 | 面试题
 
 * 沙雕面试题 - Spring 內建 XML Schema 常见有哪些？
 
@@ -1484,9 +1484,13 @@ Spring Java 注册 BeanDefinition 解析与注册
 * XML 处理性能较差：Spring XML 基于 DOM Level 3 API 实现，该 API 便于理解，然而性能较差。
 * XML 框架移植性差：很难适配高性能和便利性的 XML 框架，如 JAXB。
 
-第十一章：Spring资源管理（Resources） (11讲)
+## 第十一章：Spring资源管理（Resources） (11讲)
 
-123 | 引入动机：为什么Spring不使用Java标准资源管理，而选择重新发明轮子？
+### 123 | 引入动机：为什么Spring不使用Java标准资源管理，而选择重新发明轮子？
+
+* Java 标准资源管理强大，然而扩展复杂，资源存储方式并不统一
+* Spring 要自立门户（重要的话，要讲三遍）
+* Spring “抄”、“超” 和 “潮
 
 124 | Java标准资源管理：Java URL资源管理存在哪些潜规则？
 
