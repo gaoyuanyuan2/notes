@@ -167,5 +167,15 @@ beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 jpa 默认实现是hibernate
 
 
-## 其他
+## 些常用操作
+
+* 判断类是否存在
+  * ClassUtils.isPresent()
+* 判断Bean是否已定义
+  * ListableBeanFactory.containsBeanDefinition()
+  * ListableBeanFactory.getBeanNamesForType()
+* 注册Bean定义.
+  * BeanDefinitionRegistry.registerBeanDefinition()
+  * GenericBeanDefinition
+  * BeanFactory.registerSingleton()
 
