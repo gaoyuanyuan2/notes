@@ -34,6 +34,11 @@ Spring Boot出现嵌入式容器启动方式后，嵌入式容器则成为应用
 
 * 提供运维(Production-Ready) 特性，如指标信息(Metrics)、 健康检查及外部化配置：绝无代码生成，并且不需要XML配置
 
+传统容器启动是Servlet引导
+
+SpringBoot 2.0 是由SpringApplication启动的
+
+
 ## 理解独立的Spring应用
 
 Spring Boot 1.x 中仅有Servlet容器实现
@@ -366,3 +371,504 @@ AutoConfigurationPackages.Registrar是自动装配BasePackages的核心实现。
 
 
 
+资源跨域
+* CrossOrigin
+* WebMvcConfigurer#addCorsMappings
+* 传统解决方案
+  * IFrame
+  * JSONP
+
+
+* 自定义Servlet Web Server
+  * WebServerFactoryCustomizer
+* 自定义Reactive Web Server
+  * ReactiveWebServerFactoryCustomizer
+  
+* Spring事务抽象
+  * PlatformTransactionManager
+* JDBC事务处理
+  * DataSourceTransactionManager
+* 自动装配
+  * TransactionAutoConfiguration
+
+
+Spring Boot配置
+* 外部化配置
+  * ConfigurationProperty
+* @Profile
+* 配置属性
+  * PropertySources
+
+
+Spring Boot Actuator
+* 端点:各类Web和JMX Endpoints
+* 健康检查: Health、HealthIndicator
+* 指标:内建Metrics、自定义Metrics
+
+Spring模式注解装配
+模式注解是一种用于明在应用中扮演“组件“角色的注解。如Spring Framework中的@Repository 标注在任何类 上, 用于扮演仓储角色的模式
+注解。
+@Component作为一种由Spring容器托管的通用模式组件,任何被@Component标准的组件均为组件扫描的候选对象。类似地,凡是被
+@Component元标注( meta-annotated )的注解,如@Service, 当任何组件标注它时 ,也被视作组件扫描的候选对象
+
+Spring条件装配
+* 定义: Bean装配的前置判断
+* 举例: @Profile、@Conditional
+* 实现:注解方式、编程方式
+
+
+
+Spring厂加载机制
+* 实现类: SpringFactoriesLoader
+* 配置资源: META-INF/spring.factories
+
+实现方法
+* 1.激活自动装配@EnableAutoConfiguration
+* 2.实现自动装配XXXAutoConfiguration
+* 3.配置自动装配实现 META-INF/spring.factories
+
+
+### 准备阶段
+
+* 配置: Spring Bean来源
+* 推断:Web应用类型和主引导类(MainClass)
+* 加载:应用上下文初始器和应用事件监听器
+
+#### 配置Spring Boot Bean源
+
+Java配置Class或XML上下文配置文件集合,用于Spring Boot BeanDefinitionLoader 读取, 并且将配置源解析加载为Spring Bean定义
+* 数量:一个或多个以上
+
+#### Java配置Class
+
+用于Spring注解驱动中Java配置类,大多数情况是Spring模式注解所标注的类, 如eConfiguration
+
+#### XML上下文配置文件
+
+用于Spring 传统配置驱动中的XML文件。
+
+#### 推断Web应用类型
+
+根据当前应用ClassPath中是否存在相关实现类来推断Web应用的类型,包括: 
+* Web Reactive : WebApplicationType.REACTIVE
+* Web Servlet : WebApplicationType.SERVLET
+* 非Web : WebApplicationType.NONE
+
+### 运行阶段
+* 加载: SpringApplication运行监听器
+* 运行: SpringApplication运行监听器
+* 监听: Spring Boot事件、Spring 事件
+
+* 创建:应用上下文、Environment、 其他(不重要)
+* 失败:故障分析报告
+* 回调: CommandLineRunner、ApplicationRunner
+
+
+* 加载SpringApplication 运行监听器( SpringApplicationRunListeners )
+利用Spring工厂加载机制,读取SpringApplicationRunListener对象集合,并且封装到组合类SpringApplicationRunListeners
+* 运行SpringApplication 运行监听器( SpringApplicationRunListeners )
+SpringApplicationRuntListener监听多个运行状态方法:
+
+#### 监听Spring Boot事件Spring事件
+
+Spring Boot通过Spr ingApplicationRunListener的实现类EventPublishingRunListener 
+利用Spring Framework事件API , 广播SpringBoot事件。
+
+#### Spring Framework事件/监听器编程模型
+* Spring 应用事件
+  * 普通应用事件: ApplicationEvent
+  * 应用上下文事件: ApplicationContextEvent
+* Spring 应用监听器
+  * 接口编程模型: ApplicationListener
+  * 注解编程模型: @EventListener
+* Spring 应用事广播器
+  * 接口: ApplicationEventMulticaster
+  * 实现类: SimpleApplicationEventMulticaster
+    * 执行模式:同步或异步
+
+
+#### 创建Spring应用上下文( ConfigurableApplicationContext )
+
+根据准备阶段的推断Web应用类型创建对应的ConfigurableApplicationContext实例:
+* Web Reactive : AnnotationConfigReactiveWebServerApplicationContext
+* Web Servlet : AnnotationConfigServletWebServerApplicationContext
+* 非Web: AnnotationConfigApplicationContext
+
+
+#### 创建Environment
+
+根据准备阶段的推断Web应用类型创建对应的ConfigurableEnvironment实例:
+* Web Reactive : StandardEnvironment
+* Web Servlet : StandardServletEnvironment
+* 非Web : StandardEnvironment
+
+#### 认识Spring Web MVC
+
+Spring Framework时代的一般认识
+* 实现Controller
+* 配置WebMVC组件
+* 部署DispatcherServlet
+
+配置Web MVC组件
+* Component-scan
+* RequestMappingHandlerMapping
+* RequestMappingHandlerAdapter
+* InternalResourceViewResolver
+
+部署DispatcherServlet
+
+mvn -Dmaven.test.skip -U clean package
+
+#### Spring Framework时代的重新认识
+
+* Web MVC核心组件
+* Web MVC注解驱动
+* Web MVC自动装配
+
+处理器管理
+* 映射: HandlerMapping
+* 适配: HandlerAdapter
+* 执行: HandlerExecutionChain
+
+页面渲染
+* 视图解析: ViewResolver
+* 国际化: LocaleResolver、LocaleContextResolver
+* 个性化: ThemeResolver
+
+异常处理
+* 异常解析: HandlerExceptionResolver
+
+
+HandlerMapping
+映射请求( Request )到处理器( Handler )加上其关联的拦截器( HandlerInterceptor )列表，其映射关系
+基于不同的HandlerMapping实现的一些标准细节。其中两种主要HandlerMapping 实现，
+RequestMappingHandlerMapping支持标注@RequestMapping 的方法，SimpleUr lHandlerMapping维护精
+确的URI路径与处理器的映射
+
+HandlerAdapter
+帮助DispatcherServlet 调用请求处理器( Handler),无需关注其中实际的调用细节。 比如,调用注解实
+现的Controller需要解析其关联的注解. HandlerAdapter 的主要目的是为了屏蔽与DispatcherServlet 之
+间的诸多细节。
+
+HandlerExceptionResolver
+解析异常,可能策略是将异常处理映射到其他处理器( Handlers)、或到某个 HTML错误页面,或者其他。
+
+ViewResolver
+从处理器( Handler )返回字符类型的逻辑视图名称解析出实际的View 对象,该对象将渲染后的内容输出
+到HTTP响应中。
+
+LocaleResolver/LocaleContextResolver
+从客户端解析出locale, 为其实现国际化视图。
+
+MultipartResolver
+解析多部分请求(如Web浏览器文件上传)的抽象实现
+
+Web MVC注解驱动
+* 注解配置: @Configuration ( Spring 范式注解)
+* 组件激活: @EnableWebMvc ( Spring模块装配)
+* 自定义组件: WebMvcConfigurer ( Spring Bean )
+
+* 模型属性: @ModelAttribute
+* 请求头: @RequestHeader
+* Cookie : @CookieValue
+
+* 校验参数: @Valid、@Validated
+* 注解处理: @ExceptionHandler
+* 切面通知 : @ControllerAdvice
+
+Web MVC自动装配
+
+* Servlet依赖: Servlet 3.0+
+* Servlet SPI : ServletContainerInitializer  启动回调onStartup()
+* Spring适配: SpringServletContainerInitializer
+
+@HandlesTypes(WebApplicationInitializer.class) 筛选器
+
+* Spring SPI : WebApplicationInitializer
+* 编程驱动 : AbstractDispatcherServletInitializer
+* 注解驱动 : AbstractAnnotationConfigDispatcherServletInitializer
+
+
+Spring Boot时代的简化
+
+Spring Boot时代的简化-完全自动装配
+* DispatcherServlet : DispatcherServletAutoConfiguration
+* 替换 @EnableWebMvc : WebMvcAutoConfiguration
+* Servlet容器: ServletWebServerFactoryAutoConfiguration
+
+Spring Boot时代的简化-装配条件
+* Web类型: Servlet
+* API 依赖: Servlet、Spring Web MVC
+* Bean依赖: WebMvcConfigurationSupport
+
+装配条件
+
+Web类型判断(ConditionalOnWebApplication )
+* WebApplicationType
+  * Servlet类型: WebApplicationType.SERVLET
+  
+API判断(@ConditionalOnClass )
+* Servlet
+  * Servlet
+* Spring Web MVC
+  * DispatcherServlet
+  * WebMvcConfigurer
+
+
+Spring Boot时代的简化-外部化配置
+* Web MVC配置: WebMvcProperties
+* 资源配置: ResourceProperties
+
+理解自动配置顺序性
+* 绝对顺序: @AutoConfigureOrder
+* 相对顺序: @AutoConfigureAfter
+
+* 模板引擎
+* 视图处理
+* 视图内容协商
+
+Cross-Origin Resource Sharing (CORS)
+* 注解驱动: @CrossOrigin
+* 代码驱动: WebMvcConfigurer# addCorsMappings
+* Filter 组件: CorsFilter
+
+
+* 传统Servlet部署
+* 传统Servlet组件
+  * 传统web.xml注册方式
+  * 注解注册方式
+  * 编码注册方式
+
+* HandlerMethodReturnValueHandler
+* DispatcherServlet
+* Web自动装配
+
+
+Spring Boot Servlet 注册
+通过RegistrationBean 注册
+* ServletContextInitializer
+  * RegistrationBean
+    * ServletListenerRegistrationBean
+      * @WebListener
+    * FilterRegistrationBean
+      * @webFilter
+    * ServletRegistrationBean
+      * @WebServlet
+
+@ServletComponentScan 扫描package ->@web* -> RegistrationBean Bean 定义-> RegistrationBean Bean
+
+Spring Boot Servlet注册
+* @Bean方式: RegistrationBean、Servlet 组件
+* 注解方式: @ServletComponentScan
+* 编程方式: ServletContextInitializer
+
+### 从 Reactive 到 WebFlux
+
+技术回顾
+
+* 反应堆模式( Reactor )
+* Proactor 模式
+* 观察者模式( Observer )
+* 迭代器模式( Iterator )
+* Java 并发模型
+
+关于Reactive的一些讲法
+* Reactive 是异步非阻塞编程？
+* Reactive 能够提升程序性能？
+* Reactive 能解决传统编程模型遇到的困境？
+
+Reactive实现框架
+* RxJava: Reactive Extensions
+* Reactor: Spring WebFlux Reactive类库
+* FlowAPI: Java9 FlowAPI实现
+
+观点归纳
+* 阻塞导致性能瓶颈和浪费资源
+* 增加线程可能会引|起资源竞争和并发问题
+* 并行的方式不是银弹(不能解决所有问题)
+
+1.如果阻塞导致性能瓶颈和资源浪费的话，Reactive也能解决这个问题?
+2.为什么不直接使用Future#get() 方法强制所有 任务执行完毕,然后再统计总耗时?
+3.由于以上三个方法之间没有数据依赖关系,所以执行方式由串行调整为并行后,能够达到性能提升的效果。如果方法之间
+存在依赖关系时,那么提升效果是否还会如此明显,并且如何确保它们的执行顺序?
+
+* Spring事件/监听器(同步/异步) :
+  * 事件: ApplicationEvent
+  * 事件监听器: ApplicationListener
+  * 事件广播器: ApplicationEventMulticaster
+  * 事件发布器: ApplicationEventPublisher
+* Servlet事件/监听器
+  * 同步
+    * 事件: ServletContextEvent
+    * 事件监听器: ServletContextListener
+  * 异步
+    * 事件: AsyncEvent
+    * 事件监听器: AsyncListener
+
+* 关键字:
+  * 数据流( data streams )
+  * 传播变化( propagation of change )
+* 侧重点:
+  * 数据结构
+    * 数组( arrays )
+    * 事件发射器( event emitters )
+  * 数据变化
+
+* 技术连接:
+  * 观察者模式: Java observable / observer
+  * 响应流模式: Java 8 Stream
+  * 迭代器模式: Java Iterator
+
+
+
+* 关键字:
+  * 异步( asynchronous )
+  * 数据流( data streams )
+  * 并非新鲜事物( not anything new )
+  * 过于理想化( idea on steroids )
+* 侧重点:
+  * 并发模型
+  * 数据结构
+  * 技术本质
+* 技术连接:
+  * 异步:Java Future 
+  * 数据流:Java8 stream
+  
+  
+* Reactive编程模型
+  * 语言模型:响应式编程+函数式编程(可选)
+  * 并发模型:多线程编程
+  * 对立模型:命令式编程
+
+* 数据结构( Data Structure )
+  * 流式( Streams )
+  * 序列( Sequences )
+  * 事件( Events )
+  
+* Reactive设计模式
+  * 扩展模式:观察者(Observer )
+  * 对立模式:迭代器( Iterator )
+  * 混合模式:反应堆( Reactor)、Proactor
+
+* 主要目的:
+  * 通常并非让应用运行更快速
+  * 利用较少的资源提升伸缩性
+  
+* 主要目的:
+  * 结构性和可读性(Composability and readability )
+  * 高层次并发抽象( High level abstraction )。
+* 核心技术:
+  * 丰富的数据操作符( rich vocabulary of operators )
+  * 背压( Backpressure )
+  * 订阅式数据消费( Nothing happens until you subscribe )
+
+总结Reactive Programming
+Reactive Programming作为观察者模式( Observer )的延伸,不同于传统的命令编程方式( Imperative programming )同
+步拉取数据的方式,如迭代器模式( Iterator)。而是采用数据发布者同步或异步地推送到数据流( Data Streams )的方案。
+当该数据流( Data Steams )订阅者监听到传播变化时,立即作出响应动作。在实现层面上, Reactive Programming可结合
+函数式编程简化面向对象语言语法的雕肿性,屏蔽并发实现的复杂细节,提供数据流的有序操作,从而达到提升代码的可读
+性,以及减少Bugs出现的目的。同时, Reactive Programming结合背压( Backpressure )的技术解决发布端生成数据的速
+率高于订阅段消费的问题。
+
+
+Reactive Streams规范
+
+* API组件
+  * Publisher :数据发布者(上游)
+  * Subscriber :数据订阅者(下游)
+  * Subscription :订阅信号.
+  * Processor : Publisher 和Subscriber混合体
+
+* Subscriber信号事件
+  * onSubscribe :当下游订阅时
+  * onNext :当下游接收数据时
+  * onComplete :当数据流( Data Streams )执行完成时
+  * onError :当数据流( Data Streams )执行错误时
+
+* 背压( Backpressure )
+  * 1/O切换(I/O switch)
+  * 缓冲填满( the buffers are full )
+  * 数据无法接受( incapable of receiving any more data )
+  * 传输设备( transmitting device )
+  * 停止发送数据包( halts the sending of data packets )
+
+* Reactive Streams JVM
+  * 线程和边界间调停( mediate between threads to be bounded )
+  * 发布者维持速率高于订阅者( publisher side maintains a higher rate than the subscriber )
+  * 背压处理( handled by backpressure )
+
+* Reactor
+  * Propagating signals upstream (传播上游信号)
+  * 无边界模式( unbounded mode )
+  * 处理最大元素数量( process at most n elements )
+
+* Subscription
+* 订阅信号控制
+  * request:请求上游元素的数量
+  * cancel:请求停止发送数据并且清除资源
+
+总结背压
+假设下游Subscriber.工作在无边界大小的数据流水线时,当上游Publisher提供数据的速率快于下游Subscriber的消费数据速
+率时,下游Subscriber将通过传播信号( request )到.上游Publisher ,请求限制数据的数量( Demand )或通知.上游停止数
+据生产。
+
+Spring实际动机
+从Spring MVC注解驱动的时代开始, Spring官方有意识地去Servlet化。不过在Spring MVC的时代，
+Spring扔拜托不了Servlet 容器的依赖,然而Spring借助Reactive Programming的势头, WebFlux将
+Servlet容器从必须项变为可选项,并且默认采用Netty Web Server作为基础,从而组件地形成Spring全新
+技术体系,包括数据存储等技术栈:
+
+
+* 消费函数- Consumer
+  * 只有输入,没有输出
+* 生产函数- Supplier
+  * 没有输入,只有输出
+* 处理函数- Function
+  * 有输出,有输出
+* 判定函数- Predicate
+  * 判定输入真伪性
+
+结论
+
+没有明显的速度提升(甚至性能结果稍微更恶劣)
+
+关注编程用户友好性, Reactive编程尽管没有新增大量的代码,然而编码(和调试)却是变得更为复杂
+
+现在面临的最大问题是缺少文档。在生成测试应用中,它已经给我们造成了最大障碍,并使得我们可能已
+经缺少了关键点。因此,我们并不会太快地投入Reactive编程,同时等待关于它的更多反馈。因此，
+Spring WebFlux尚未证明自身明显地优于Spring MVC。
+
+## 外部化配置
+
+优先级配置
+* Java System Properties: 
+  * `-Duser.city.post_code`
+* OS Environment Variables（环境变量）
+  * USER_CITY_POST_CODE=001
+* application.properties
+
+@ConditionalOnProperty prefix name 要与application.properties完全一致,在环境变量里面,允许
+松散绑定。
+
+### 定位外部化配置属性源
+
+如何理解PropertySource 顺序
+* @TestPropertySource#properties
+* @SpringBootTest#properties
+* @TestPropertySource#locations
+
+* 如何理解PropertySource
+
+带有名称的属性源，Properties 文件、Map、 YAML 文件
+
+* 什么是Environment抽象?
+Environment与PropertySources 是1对1， PropertySources 与PropertySource 是1对N
+
+理解Spring Boot Environment生命周期
+
+Spring Framework中,尽量在
+`org.springframework.context.support.AbstractApplicationContext#prepareBeanFactory`方法前
+初始化。
+
+`Spring Boot中,尽量在org.springframework.boot.SpringApplication#refreshContext(context)`
+方法前初始化。
