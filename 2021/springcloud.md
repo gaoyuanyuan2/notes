@@ -84,6 +84,22 @@ https://github.com/nacos-group/nacos-spring-project
 https://github.com/nacos-group/nacos-spring-boot-project
 https://github.com/spring-cloud-incubator/spring-cloud-alibaba
 
+* Spring Cloud Commons抽象
+  * 服务注册和发现
+    * 应用名称(服务名称) : spring. aplication. name
+    * 应用实例: ServiceIns tance
+      * Registration
+    * 服务注册(到注册中心)
+    * 服务发现(从注册中心)
+    * 实现模块
+      * 内建: `eureka`、`consul`、`zookeeper`
+      * 孵化: `nacos`
+  * Spring  Cloud  Environment (基纡Spring Framework Environment )
+* Spring Cloud OpenFeign
+  * 类型:客户端面向Java接口的REST框架
+  * 协议:REST(HTTP)
+  * 注解: @FeignClient
+    * 服务接口绑定应用名称
 
 ## Config
 
@@ -207,3 +223,43 @@ Spring Cloud Bus用轻量级消息代理连接分布式系统的节点。然后�
 它也可以作为应用程序之间的通信通道。这个项目提供了AMQP broker或Kafka作为传输的启动器。
 
 分布式更新
+
+## Apache Dubbo
+
+### Apache Dubbo新注册中心- Nacos
+* Apache Dubbo.Alibaba Nacos生态项目以及特性介绍
+* Apache Dubbo注册中心Nacos实现
+* Apache Dubbo分布式配置Nacos整合
+
+## alibaba-arthas
+Check where a class is loaded from.查看类加载情况
+Decompile a class类反编译
+View classloader statistics 类加载情况统计
+View the method invocation details 方法调用入参返回值分析
+Find slow sub-invocations慢调用分析
+Interactive mode, auto complete support交互式，自动补全
+And more...
+Supports JDK6+
+
+## Sentinel
+* 线程池
+  * ThreadPoolExecutor
+* 线程隔离
+  * 执行线程>熔断线程
+* 信号量
+  * Semaphore
+
+隔离策略：信号量隔离
+
+### 特性
+熔断降级策略：基于响应时间或失败比率
+实时指标实现：滑动窗口
+规则配置：支持多种数据源
+扩展性：多个扩展点
+基于注解:支持
+限流:基于QPS,支持基于调用关系的限流
+流量整形:支持慢启动、匀速器模式
+系统负载保护:支持.
+控制台:开箱即用，可配置规则、查看秒级监控、机器发现等
+常见框架的适配:Servlet、Spring Cloud、Dubbo、 gRPC等
+
