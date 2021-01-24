@@ -54,3 +54,30 @@ docker pull docker.elastic.co/logstash/logstash:7.10.2
 localhost:9200/_cat/nodes?v=true&pretty
 
 docker-compose down -v
+
+localhost:5601/app/kibana
+
+http://localhost:5601/app/home#/tutorial_directory
+
+开发工具`ctrl /` 跳转到官方文档
+
+## 文档的基本CRUD与批量操作
+
+mget 是通过文档ID列表得到文档信息。
+
+msearch 是根据查询条件，搜索到相应文档。
+
+## 问答
+
+* mysql同步es有什么比较靠谱的中间件？
+logstash的jdbc plugin
+
+* 如果文档的id采用自定义id而不是系统自动生成，需要注意什么吗？
+es的hash函数会确保id被均匀分配到不同的分片的。自增id一般不会有什么问题。但是如果你自己指定了routing参数，有可能会引起分配不均匀的情况发生。
+
+
+## 注意事项
+
+1. 大版本更新， API会有向后不兼容的情况发生
+
+2.大版本的升级，数据需要重建索引
