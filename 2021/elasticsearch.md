@@ -49,3 +49,8 @@ docker pull docker.elastic.co/kibana/kibana:7.10.2
 docker run --link YOUR_ELASTICSEARCH_CONTAINER_NAME_OR_ID:elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.2
 
 docker pull docker.elastic.co/logstash/logstash:7.10.2
+
+
+localhost:9200/_cat/nodes?v=true&pretty
+
+docker-compose down -v
