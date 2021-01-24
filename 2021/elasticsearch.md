@@ -8,9 +8,9 @@ Elasticsearch 是一款非常强大的开源搜索及分析引擎。可以帮助
 
 ## 安装
 
-docker pull docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+docker pull docker.elastic.co/elasticsearch/elasticsearch:7.10.2
 
-docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.2
 
 查看节点：
 http://localhost:9200/_cat/nodes
