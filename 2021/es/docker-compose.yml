@@ -71,7 +71,8 @@ services:
       - elastic
   logstash:
     image: docker.elastic.co/logstash/logstash:7.10.2
-#    volumes:
+    volumes:
+      - logstash:/usr/share/logstash/data
 #      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:rw
 #      - ./movies.csv:/usr/share/logstash/data/movies.csv
     links:
