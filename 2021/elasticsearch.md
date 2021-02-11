@@ -119,6 +119,49 @@ mget 是通过文档ID列表得到文档信息。
 
 msearch 是根据查询条件，搜索到相应文档。
 
+## Elasticsearch基本概念
+
+* Index索引
+  * Type类型
+  * Document文档
+
+### 文档(Document)
+
+* Elasticsearch 是面向文档的，文档是所有可搜索数据的最小单位
+
+* 文档会 被序列化成JSON格式，保存在Elasticsearch 中
+
+* 每个文档都有一个Unique ID
+
+### 文档的元数据
+
+* 元数据，用于标注文档的相关信息
+  * _ index: 文档所属的索引名
+  * _type: 文档所属的类型名
+  * _id: 文档唯一ld
+  * _source: 文档的原始Json数据
+  * _all: 整合所有字段内容到该字段，已被废除
+  * _version: 文档的版本信息
+  * _score: 相关性打分
+
+### 索引
+
+* Index-索引是文档的容器，是一类文档的结合
+  * Index体现了逻辑空间的概念:每个索引都有自己的Mapping定义，用于定义包含的文档的字段名和字段类型。
+  * Shard体现了物理空间的概念:索引中的数据,分散在Shard上。
+* 索引的Mapping与Settings
+  * Mapping定义文档字段的类型
+  * Setting定义不同的数据分布
+
+### 索引的不同语意
+
+* 名词:一个Elasticsearch 集群中,可以创建很多个不同的索引
+* 动词:保存一个文档到Elasticsearch的过程也叫索引(indexing)
+  * ES中，创建一个倒排索引的过程
+* 名词:一个B树索引，一个倒排索引
+
+
+
 ## 倒排索引
 
 ## 分析器
