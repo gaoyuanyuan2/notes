@@ -112,13 +112,6 @@ http://localhost:5601/app/home#/tutorial_directory
 |modules||包含所有ES模块|
 |plugins||包含所有已安装插件|
 
-
-## 文档的基本CRUD与批量操作
-
-mget 是通过文档ID列表得到文档信息。
-
-msearch 是根据查询条件，搜索到相应文档。
-
 ## Elasticsearch基本概念
 
 * Index索引
@@ -171,14 +164,74 @@ msearch 是根据查询条件，搜索到相应文档。
 |Schema|Mapping|
 |SQL|DSL|
 
+### Master-eligible nodes和Master Node
+
+* 每个节点启动后， 默认就是一个Master eligible 节点
+  * 可以设置node.master: false禁止
+* Master-eligible节点可以参加选主流程，成为Master节点
+* 当第一个节点启动时候，它会将自己选举成Master节点
+* 每个节点上都保存了集群的状态，只有Master节点才能修改集群的状态信息
+  * 集群状态. (Cluster State)， 维护了一个集群中，必要的信息
+    * 所有的节点信息
+    * 所有的索引和其相关的Mapping与Setting 信息
+    * 分片的路由信息
+    
+### Data Node & Coordinating Node
+
+* Data Node 
+  * 可以保存数据的节点， 叫做Data Node。负责保存分片数据。在数据扩展上起到了至关重要的作用
+* Coordinating Node
+  * 负责接受Client的请求，将请求分发到合适的节点，最终把结果汇集到一起
+  * 每个节点默认都起到了Coordinating Node的职责
+
+### 分片(Primary Shard & Replica Shard)
+
+* 主分片，用以解决数据水平扩展的问题。通过主分片，可以将数据分布到集群内的所有节点之上
+  * 一个分片是一个运行的Lucene的实例
+  * 主分片数在索引创建时指定，后续不允许修改，除非Reindex
+* 副本，用以解决数据高可用的问题。分片是主分片的拷贝
+  * 副本分片数，可以动态题调整
+  * 增加副本数，还可以在一定程度上提高服务的可用性(读取的吞吐)
+
+
+## 文档的基本CRUD与批量操作
+
+### Create一个文档
+
+* 支持自动生成文档Id和指定文档ld两种方式
+* 通过调用"post /users/_doc"
+  * 系统会自动生成documentId
+* 使用HTTP PUT user/_create/1 创建时，URI中显示指定_create， 此时如果该id的文档已经存在，操作失败
+
+### Get一个文档
+
+GET users/_doc/1
+
+### Index文档
+
+Index和Create不一样的地方:如果文档不存在，就索引新的文档。否则现有文档会被删除，新的文档被索引。版本信息+1
+
+### Update文档
+
+POST users/_update/1
+
+### 批量读取
+
+批量操作，可以减少网络连接所产生的开销，提高性能
+
+mget 是通过文档ID列表得到文档信息。
+
+msearch 是根据查询条件，搜索到相应文档。
+
+
 ## 倒排索引
 
-## 分析器
+* 正排索引-文档Id到文档内容和单词的关联
+* 倒排索引-单词到文档Id的关系
 
-倒排索引的核心组成
+### 倒排索引包含两个部分
 
-倒排索引包含两个部分
-*  单词词典(Term Dictionary)，记录所有文档的单词，记录单词到倒排列表的关联关系
+* 单词词典(Term Dictionary)，记录所有文档的单词，记录单词到倒排列表的关联关系
   * 单词词典一般比较大，可以通过B+树或哈希拉链法实现，以满足高性能的插入与查询
 * 倒排列表(Posting List) -记录 了单词对应的文档结合，由倒排索引|项组成
   * 倒排索引项 (Posting)
@@ -187,6 +240,21 @@ msearch 是根据查询条件，搜索到相应文档。
   * 位置(Position) - 单词在文档中分词的位置。用于语句搜索(phrase query)
   * 偏移(Offset) -记录单词的开始结束位置，实现高亮显示
   
+* Elasticsearch的JSON文档中的每个字段，都有自己的倒排索引可以指定对某些字段不做索引
+  * 优点:节省存储空间
+  * 缺点:字段无法被搜索
+
+### Elasticsearch的内置分词器
+* Standard Analyzer 默认分词器，按词切分，小写处理
+* Simple Analyzer 按照非字母切分(符号被过滤) ，小写处理
+* Stop Analyzer 小写处理，停用词过滤(the， a，is)
+* Whitespace Analyzer 按照空格切分，不转小写
+* Keyword Analyzer 不分词，直接将输入当作输出
+* Patter Analyzer 正则表达式，默认\W+ (非字符分隔)
+* Language 提供了30多种常见语言的分词器
+* Customer Analyzer 自定义分词器
+
+
 ## 注意事项
 
 1. 大版本更新， API会有向后不兼容的情况发生
