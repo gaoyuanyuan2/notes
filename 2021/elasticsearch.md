@@ -6,7 +6,9 @@ Elasticsearch 是一款非常强大的开源搜索及分析引擎。可以帮助
 
 除了搜索，结合 Kibana、Logstash、Beats，Elastic Stack 还被广泛运用在大数据近实时分析领域，包括日志分析、指标监控、信息安全等多个领域。它可以帮助你探索海量结构化、非结构化数据，按需创建可视化报表，对监控数据设置报警阈值。甚至通过使用机器学习技术，自动识别异常状况。
 
-我到底能够使用 Elasticsearch 做什么？
+
+### 到底能够使用 Elasticsearch 做什么？
+
 数字、文本、地理位置、结构化数据、非结构化数据。适用于所有数据类型。全文本搜索只是全球众多公司利用 Elasticsearch 解决各种挑战的冰山一角。查看直接依托 Elastic Stack 所构建解决方案的完整列表。
 
 Metrics
@@ -35,6 +37,42 @@ SIEM
 Endpoint Security
 预防、检测、猎捕并应对威
 
+### 主要功能
+
+* 海量数据的分户式存储以及集群管理
+  * 服务与数据的高可用，水平扩展
+* 近实时搜索，性能卓越
+  * 结构化/全文/地理位置/自动完成
+* 海量数据的近实时分析
+  * 聚合功能
+
+## Elastic Stack生态圈
+
+![生态圈](/img/es生态圈.png)
+
+### Logstash:数据处理管道
+
+开源的服务器端数据处理管道，支持从不同来源采集数据,转换数据，并将数据发送到不同的存储库中
+
+### Logstash特性
+
+* 实时解析和转换数据
+  * 从IP地址破译出地理坐标
+  * 将PII数据匿名化，完全排除敏感字段
+* 可扩展
+  * 200多个插件(日志/数据库/Arcsigh/Netflow)
+* 可靠性安全性
+  * Logstash 会通过持久化队列来保证至少将运行中的事件送达一次
+  * 数据传输加密
+* 监控
+
+### Kibana:可视化分析利器
+
+* Kibana 名字的含义= Kiwifruit + Banana
+* 数据可视化工具，帮助用户解开对数据的任何疑问
+* 基于Logstash的工具，2013 年加入Elastic公司
+
+
 ## 安装
 
 docker pull docker.elastic.co/elasticsearch/elasticsearch:7.10.2
@@ -60,6 +98,20 @@ localhost:5601/app/kibana
 http://localhost:5601/app/home#/tutorial_directory
 
 开发工具`ctrl /` 跳转到官方文档
+
+### Elasticsearch的文件目录结构
+
+|目录|配置文件|描述|
+|:--:|:--:|:--:|
+|bin||脚本文件，包括启动elasticsearch,安装插件。运行统计数据等|
+|config|elasticsearch.yml|集群配置文件，user, role based相关配置|
+|JDK||Java运行坏境|
+|data|path.data|数据文件|
+|lib||Java类库|
+|logs|path.log |日志文件|
+|modules||包含所有ES模块|
+|plugins||包含所有已安装插件|
+
 
 ## 文档的基本CRUD与批量操作
 
