@@ -67,6 +67,34 @@ mget 是通过文档ID列表得到文档信息。
 
 msearch 是根据查询条件，搜索到相应文档。
 
+## Elasticsearch基本概念
+
+* Index索引
+  * Type类型
+  * Document文档
+
+### 文档(Document)
+
+* Elasticsearch 是面向文档的，文档是所有可搜索数据的最小单位
+
+* 文档会 被序列化成JSON格式，保存在Elasticsearch 中
+
+* 每个文档都有一个Unique ID
+
+### 文档的元数据
+
+* 元数据，用于标注文档的相关信息
+  * _ index: 文档所属的索引名
+  * _type: 文档所属的类型名
+  * _id: 文档唯一ld
+  * _source: 文档的原始Json数据
+  * _all: 整合所有字段内容到该字段，已被废除
+  * _version: 文档的版本信息
+  * _score: 相关性打分
+
+
+
+
 ## 倒排索引
 
 ## 分析器
