@@ -160,7 +160,16 @@ msearch 是根据查询条件，搜索到相应文档。
   * ES中，创建一个倒排索引的过程
 * 名词:一个B树索引，一个倒排索引
 
+### 抽象与类比
 
+|RDBMS|Elasticsearch|
+|:--:|:--:|
+|RDBMS|Elasticsearch|
+|Table|Index(Type)|
+|Row|Document|
+|Column|Filed|
+|Schema|Mapping|
+|SQL|DSL|
 
 ## 倒排索引
 
