@@ -254,6 +254,71 @@ msearch 是根据查询条件，搜索到相应文档。
 * Language 提供了30多种常见语言的分词器
 * Customer Analyzer 自定义分词器
 
+## Dynamic Mapping
+
+* Mapping类似数据库中的schema的定义，作用如下
+  * 定义索引中的字段的名称
+  * 定义字段的数据类型，例如字符串，数字，布尔....
+  * 字段，倒排索引的相关配置，(Analyzed or Not Analyzed,Analyzer)
+* Mapping会把JSON文档映射成Lucene所需要的扁平格式
+* 一个Mapping属于一个索引的Type
+  * 每个文档都属于一个 Type
+  * 一个Type有一个Mapping定义
+  * 7.0开始，不需要在Mapping定义中指定type信息
+
+### 什么是Dynamic Mapping
+* 在写入文档时候， 如果索引不存在,会自动创建索引
+* Dynamic Mapping的机制，使得我们无需手动定义Mappings。Elasticsearch会自动根据文档信息，推算出字段的类型
+* 但是有时候会推算 的不对，例如地理位置信息
+* 当类型如果设置不对时，会导致一些功能无法正常运行，例如Range查询
+
+### 能否更改Mapping的字段类型
+
+* 两种情况
+  * 新增加字段Dynamic设为true时，一旦有新增字段的文档写入，Mapping也同时被更新Dynamic设为false, Mapping 不会被更新，新增字段的数据无法被索引，但是信息会出现在_ _source中Dynamic设置成Strict，文档写入失败
+  * 对已有字段，一旦已经有数据写入，就不再支持修改字段定义Lucene实现的倒排索引，-但生成后，就不允许修改
+  * 如果希望改变字段类型，必须Reindex API，重建索引
+* 原因
+  * 如果修改了字段的数据类型，会导致已被索引的属于无法被搜索
+  * 但是如果是增加新的字段，就不会有这样的影响
+
+### 自定义Mapping的一些建议
+
+* 可以参考API手册，纯手写
+* 为了减少输入的工作量，减少出错概率，可以依照以下步骤
+  * 创建一个临时的index，写入一些样本数据
+  * 通过访问Mapping API获得该临时文件的动态Mapping定义
+  * 修改后用， 使用该配置创建你的索引
+  * 删除临时索引
+
+### 控制当前字段是否被索引
+
+Index -控制当前字段是否被索引。默认为true。如果设置成false， 该字段不可被搜索
+
+Index Options
+
+* 四种不同级别的Index Options配置，可以控制倒排索引记录的内容
+  * docs-记录doc id
+  * freqs -记录doc id和term frequencies
+  * positions -记录doc id / term frequencies / term position
+  * offsets - doc id / term frequencies / term posistion / character offects
+* Text类型默认记录postions，其他默认为docs
+* 记录内容越多，占用存储空间越大
+
+
+## 字段的数据类型
+
+* 简单类型
+  * Text / Keyword
+  *  Date
+  * Integer / Floating
+Boolean
+  * IPv4 & IPv6
+  * 复杂类型- 对象和嵌套对象
+  * 对象类型/嵌套类型
+* 特殊类型
+  * geo_ point & geo_ shape / percolator
+
 
 ## 注意事项
 
