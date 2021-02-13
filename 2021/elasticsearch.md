@@ -45,6 +45,35 @@ Endpoint Security
   * 结构化/全文/地理位置/自动完成
 * 海量数据的近实时分析
   * 聚合功能
+  
+
+### 注意事项
+
+1. 大版本更新， API会有向后不兼容的情况发生
+
+2. 大版本的升级，数据需要重建索引
+
+### 问答
+
+* mysql同步es有什么比较靠谱的中间件？
+
+logstash的jdbc plugin
+
+* 如果文档的id采用自定义id而不是系统自动生成，需要注意什么吗？
+
+es的hash函数会确保id被均匀分配到不同的分片的。自增id一般不会有什么问题。但是如果你自己指定了routing参数，有可能会引起分配不均匀的情况发生。
+
+* 跳页问题有没有好的解决方案呢?
+
+跳页应该只能用from size做，避免页数太深即可。搜索引擎真的返回几千页，其实也没啥意义。
+
+* _msearch与_search的查询语法是一样通用的吧？
+
+语法通用
+
+相比普通search，msearch可以通过一次网络请求，获得多条查询结果。所以，减少了网络开销，所以提升了性能。
+
+
 
 ## Elastic Stack生态圈
 
@@ -254,6 +283,11 @@ msearch 是根据查询条件，搜索到相应文档。
 * Language 提供了30多种常见语言的分词器
 * Customer Analyzer 自定义分词器
 
+### Analyzer由哪几，个部分组成?
+
+Character Filter + Tokenizer + Token Filter
+
+
 ## Dynamic Mapping
 
 * Mapping类似数据库中的schema的定义，作用如下
@@ -275,8 +309,8 @@ msearch 是根据查询条件，搜索到相应文档。
 ### 能否更改Mapping的字段类型
 
 * 两种情况
-  * 新增加字段Dynamic设为true时，一旦有新增字段的文档写入，Mapping也同时被更新Dynamic设为false, Mapping 不会被更新，新增字段的数据无法被索引，但是信息会出现在_ _source中Dynamic设置成Strict，文档写入失败
-  * 对已有字段，一旦已经有数据写入，就不再支持修改字段定义Lucene实现的倒排索引，-但生成后，就不允许修改
+  * 新增加字段Dynamic设为true时，一旦有新增字段的文档写入，Mapping也同时被更新Dynamic设为false, Mapping 不会被更新，新增字段的数据无法被索引，但是信息会出现在_source中Dynamic设置成Strict，文档写入失败
+  * 对已有字段，一旦已经有数据写入，就不再支持修改字段定义Lucene实现的倒排索引，一但生成后，就不允许修改
   * 如果希望改变字段类型，必须Reindex API，重建索引
 * 原因
   * 如果修改了字段的数据类型，会导致已被索引的属于无法被搜索
@@ -291,9 +325,28 @@ msearch 是根据查询条件，搜索到相应文档。
   * 修改后用， 使用该配置创建你的索引
   * 删除临时索引
 
+### 什么是Index Template
+
+Index Templates -帮助你设定Mappings和Settings,并按照- -定的规则，自动匹配到新创建的索引之上
+* 当一个索引被新创建时
+  * 应用Elasticsearch默认的settings和mappings
+  * 应用order数值低的Index Template中的设定
+  * 应用order高的Index Template中的设定，之前的设定会被覆盖
+  * 应用创建索引时，用户所指定的Settings和Mappings, 并覆盖之前模版中的设定
+
+### 什么是Dynamic Template
+
+保证推断类型正确
+
+* 根据Elasticsearch识别的数据类型，结合字段名称，来动态设定字段类型
+  * 所有 的字符串类型都设定成Keyword,或者关闭keyword字段
+  * is开头的字段都设置成boolean
+  * long开头的都设置成long类型
+
+
 ### 控制当前字段是否被索引
 
-Index -控制当前字段是否被索引。默认为true。如果设置成false， 该字段不可被搜索
+Index 控制当前字段是否被索引。默认为true。如果设置成false， 该字段不可被搜索
 
 Index Options
 
@@ -320,30 +373,17 @@ Boolean
 * 特殊类型
   * geo_ point & geo_ shape / percolator
 
+字段类型修改，需要重新reindex
 
-## 注意事项
 
-1. 大版本更新， API会有向后不兼容的情况发生
+## 基于Term的查询
 
-2.大版本的升级，数据需要重建索引
+* Term的重要性
+  * Term是表达语意的最小单位。搜索和利用统计语言模型进行自然语言处理都需要处理Term
+* 特点
+  * Term Level Query: Term Query / Range Query / Exists Query / Prefix Query /Wildcard Query
+  * 在ES 中，Term查询，对输入不做分词。会将输入作为一个整体，在倒排索引中查找准确的词项，并且使用相关度算分公式为每个包含该词项的文档进行相关度算分-例如“Apple Store“
+  * 可以通过Constant Score将查询转换成一个Filtering, 避免算分,并利用缓存，提高性能
 
-## 问答
 
-* mysql同步es有什么比较靠谱的中间件？
-
-logstash的jdbc plugin
-
-* 如果文档的id采用自定义id而不是系统自动生成，需要注意什么吗？
-
-es的hash函数会确保id被均匀分配到不同的分片的。自增id一般不会有什么问题。但是如果你自己指定了routing参数，有可能会引起分配不均匀的情况发生。
-
-* 跳页问题有没有好的解决方案呢?
-
-跳页应该只能用from size做，避免页数太深即可。搜索引擎真的返回几千页，其实也没啥意义。
-
-* _msearch与_search的查询语法是一样通用的吧？
-
-语法通用
-
-相比普通search，msearch可以通过一次网络请求，获得多条查询结果。所以，减少了网络开销，所以提升了性能。
 
