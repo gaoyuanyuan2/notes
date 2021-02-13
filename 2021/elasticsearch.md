@@ -305,6 +305,7 @@ Index Options
 * Text类型默认记录postions，其他默认为docs
 * 记录内容越多，占用存储空间越大
 
+### Exact Values不需要被分词
 
 ## 字段的数据类型
 
