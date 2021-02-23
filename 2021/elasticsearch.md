@@ -16,6 +16,7 @@ Metrics
 
 APM
 获得有关自己应用程序性能的洞见。
+
 Uptime
 监测可用性问题并进行应对。
 
@@ -400,7 +401,7 @@ Boolean
 * 文本也可以是结构化的。
   * 如彩色笔可以有离散的颜色集合:红(red) 、 绿(green) 、 蓝(blue)
   * 一个博客可能被标记了标签，例如，分布式(distributed) 和搜索(search)
-  * 电商网站.上的商品都有UPCs (通用产品码Universal Product Codes) 或其他的唯一标识，它们都需要遵从严格规定的、结构化的格式。
+  * 电商网站上的商品都有UPCs (通用产品码Universal Product Codes) 或其他的唯一标识，它们都需要遵从严格规定的、结构化的格式。
 
 ### 在Elasticsearch中，有Query和Filter两种不同的Context
 
@@ -468,3 +469,150 @@ Boolean
  * Random Score:为每一个用户使用一个不同的，随机算分结果
  * 衰减函数:以某个字段的值为标准，距离某个值越近，得分越高
  * Script Score:自定义脚本完全控制所需逻辑
+
+## Suggesters搜索建议
+
+* 现代的搜索引擎， 一般都会提供Suggest as you type的功能
+* 帮助用户在输入搜索的过程中， 进行自动补全或者纠错。通过协助用户输入更加精准的关键词，提高后续搜索阶段文档匹配的程度
+* 在google.上搜索，一开始会自动补全。当输入到一定长度,如因为单词拼写错误无法补全，就会开始提示相似的词或者句子
+
+
+### 4种类别的Suggesters
+
+原理:将输入的文本分解为Token,然后在索引的字典里查找相似的Term并返回
+
+* Term Suggester
+* Phrase Suggester
+* Complete Suggester
+* Context Suggester
+
+###  Term Suggester
+
+### Phrase Suggester
+
+* Phrase Suggester在Term Suggester.上增加了一些额外的逻辑
+* 一些参数
+  * Suggest Mode : missing, popular, always
+  * Max Errors: 最多可以拼错的Terms数
+  * Confidence: 限制返回结果数，默认为1
+
+* 几种 Suggestion Mode
+  * Missing -如索引中已经存在，就不提供建议
+  * Popular-推荐出现频率更加高的词
+  * Always -无论是否存在，都提供建议
+
+### Completion Suggester
+
+* Completion：⾃动补全与基于上下⽂的提示
+
+### Context Suggester
+
+什么是Context Suggester
+* Completion Suggester的扩展
+  * 可以在搜索中加入更多的上下文信息，例如，输入"star"
+  * 咖啡相关:建议"Starbucks"
+  * 电影相关: "star wars"
+
+实现Context Suggester
+* 可以定义两种类型的Context
+  * Category -任意的字符串
+  * Geo -地理位置信息
+* 实现Context Suggester的具体步骤
+  * 定制一个 Mapping
+  * 索引数据，并且为每个文档加入Context信息
+  * 结合Context进行Suggestion查询
+
+
+### 精准度和召回率
+
+* 精准度
+  * Completion > Phrase > Term
+* 召回率
+  * Term > Phrase > Completion
+* 性能
+  * Completion > Phrase > Term
+
+## 分片
+
+### Lucene Index
+
+在Lucene中，单个倒排索引文件被称为Segment。Segment是自包含的，不可变更的。多个Segments汇总在一起，称为Lucene的Index，其对应的就是ES中的Shard
+
+当有新文档写入时，会生成新Segment，查询时会同时查询所有Segments,并且对结果汇总。Lucene中有一个文件，用来记录所有Segments信息，叫做Commit Point
+
+删除的文档信息，保存在“.del”文件中
+
+
+### 什么是Refresh
+
+* 将Index buffer写入Segment的过程叫Refresh。Refresh 不执行fsync操作
+* Refresh频率:默认1秒发生一次，可通过index.refresh_interval 配置。Refresh 后，数据就可以被搜索到了。这也是为什么Elasticsearch被称为近实时搜索
+* 如果系统有大量的数据写入，那就会产生很多的Segment
+* Index Buffer被占满时，会触发Refresh, 默认值是JVM的10%
+
+### 什么是Transaction Log
+
+* Segment写入磁盘的过程相对耗时，借助文件系统缓存，Refresh 时，先将Segment写入缓存以开放查询
+
+* 为了保证数据不会丢失。所以在Index文档时，同时写Transaction L og，高版本开始，Transaction Log默认落盘。每个分片有一个Transaction Log
+
+* 在ES Refresh时，Index Buffer被清空,Transaction log不会清空
+
+### 什么是Flush
+
+* ES Flush & Lucene Commit
+  * 调用Refresh, Index Buffer清空并且Refresh
+  * 调用fsync,将缓存中的Segments写入磁盘.
+  * 清空(删除) Transaction Log
+  * 默认30分钟调用一次
+  * TransactionLog满(默认512 MB)
+
+
+### 分布式搜索的运行机制
+
+* Easticsearch的搜索，会分两阶段进行
+
+  * 第一阶段 Query
+    * 用户发出搜索请求到ES节点。节点收到请求后，会以Coordinating节点的身份，在6个主副分片中随机选择3个分片，发送查询请求
+    * 被选中的分片执行查询，进行排序。然后，每个分片都会返回From + Size个排序后的文档Id和排序值给Coordinating节点
+  * 第二阶段 Fetch
+    * Coordiating Node会将Query阶段，从从每个分片获取的排序后的文档Id列表, 重新进行排序。选取From到From + Size个文档的Id
+    * 以multi get请求的方式，到相应的分片获取详细的文档数据
+    
+* Query-then- Fetch
+
+## Update By Query & Reindex API
+
+使用场景
+* 一般在以下几种情况时，我们需要重建索引
+  * 索引的 Mappings发生变更:字段类型更改，分词器及字典更新
+  * 索引的Settings发生变更:索引的主分片数发生改变
+  * 集群内， 集群间需要做数据迁移
+* Elasticsearch的内置提供的API
+  * Update By Query:在现有索引上重建
+  * Reindex:在其他索引上重建索引
+  
+## 集群
+
+### JVM设定
+
+* 从ES6开始，只支持64位的JVM
+  * 配置config / jvm. options
+* 避免修改默认配置
+  * 将内存Xms和Xmx设置成一样，避免heap resize 时引发停顿
+  * Xmx设置不要超过物理内存的50%; 单个节点上，最大内存建议不要超过32 G内存
+    * https://www.elastic.co/blog/a-heap-of-trouble
+  * 生产环境，JVM必须使用Server模式
+  * 关闭JVM Swapping
+  
+### 索引生命周期常见的阶段
+
+* Hot: 索引还存在着大量的读写操作
+* Warm:索引不存在写操作，还有被查询的需要
+* Cold:数据不存在写操作，读操作也不多
+* Delete:索引不再需要，可以被安全删除
+
+
+## Logstash
+
+ELT工具/数据搜集处理引擎。支持200多个插件

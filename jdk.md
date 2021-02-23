@@ -598,3 +598,6 @@ Subscription
 统一日志API ( Platform Logging API )自旋等待提示( Spin-Wait Hints )压缩字符串( Compact String )
 
 GitHub资源: https://github.com/mercyblitz
+
+
+accounts.stream().collect(Collectors.toMap(Account::getUsername, Function.identity(), (key1, key2) -> key2));
