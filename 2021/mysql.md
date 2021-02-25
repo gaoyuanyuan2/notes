@@ -192,6 +192,8 @@ SELECT * FROM `performance_schema`.`table_io_waits_summary_by_index_usage`
 
 全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句。
 
+取消:unlock tables
+
 全局锁的典型使用场景是，做全库逻辑备份。也就是把整库每个表都 select 出来存成文本。
 
 官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。全局锁主要用在逻辑备份过程中。对于全部是 InnoDB 引擎的库，我建议你选择使用single-transaction 参数，对应用会更友好。
