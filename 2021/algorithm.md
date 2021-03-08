@@ -19,3 +19,10 @@
 3. Recursively,左、右子树也分别为二叉查找树。
 
 
+### 遍历
+1.Pre-order 
+2.In-order
+3.Post-order 
+
+
+
