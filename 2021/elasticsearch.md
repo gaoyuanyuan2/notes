@@ -9,6 +9,13 @@ Elasticsearch 是一款非常强大的开源搜索及分析引擎。可以帮助
 
 ### 到底能够使用 Elasticsearch 做什么？
 
+订单搜索，商品推荐，日志管理，安全监控，定位附件司机和乘客
+
+日志搜集->格式化分析->全文检索->风险告警
+
+
+
+
 数字、文本、地理位置、结构化数据、非结构化数据。适用于所有数据类型。全文本搜索只是全球众多公司利用 Elasticsearch 解决各种挑战的冰山一角。查看直接依托 Elastic Stack 所构建解决方案的完整列表。
 
 Metrics
@@ -48,11 +55,39 @@ Endpoint Security
   * 聚合功能
   
 
-### 注意事项
+### 版本
 
 1. 大版本更新， API会有向后不兼容的情况发生
 
 2. 大版本的升级，数据需要重建索引
+
+新特性6.x
+
+* Lucene 7.x
+* 新功能
+  * 跨集群复制(CCR) 
+  * 索引生命周期管理，
+  * SQL的支持
+* 更友好的的升 级及数据迁移
+  * 在主要版本之间的迁移更为简化，体验升级
+  * 全新的基于操作的数据复制框架，可加快恢复数据
+* 性能优化
+  * 有效存储稀疏字段的新方法，降低了存储成本
+  * 在索引时进行排序，可加快排序的查询性能
+
+
+新特性7.x
+* Lucene8.0
+* 重大改进-正式废除单个索引下多Type的支持
+* 7.1开始，Security 功能免费使用
+* ECK - Elasticseach Operator on Kubernetes
+* 新功能
+  * New Cluster coordination
+  * Feature-Complete High Level REST Client 
+  * Script Score Query
+* 性能优化
+  * 默认的Primary Shard数从5改为1， 避免Over Sharding
+  * 性能优化，更快的Top K
 
 ### 问答
 
@@ -111,7 +146,7 @@ docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elas
 
 查看节点：
 http://localhost:9200/_cat/nodes
-
+http://localhost:9200/?pretty
 
 docker pull docker.elastic.co/kibana/kibana:7.10.2
 docker run --link YOUR_ELASTICSEARCH_CONTAINER_NAME_OR_ID:elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.2
@@ -159,9 +194,9 @@ http://localhost:5601/app/home#/tutorial_directory
 ### 文档的元数据
 
 * 元数据，用于标注文档的相关信息
-  * _ index: 文档所属的索引名
+  * _index: 文档所属的索引名
   * _type: 文档所属的类型名
-  * _id: 文档唯一ld
+  * _id: 文档唯一Id
   * _source: 文档的原始Json数据
   * _all: 整合所有字段内容到该字段，已被废除
   * _version: 文档的版本信息
@@ -224,11 +259,34 @@ http://localhost:5601/app/home#/tutorial_directory
   * 增加副本数，还可以在一定程度上提高服务的可用性(读取的吞吐)
 
 
+* 对于生产环境中分片的设定，需要提前做好容量规划
+  * 分片数设置过小
+    * 导致后续无法增加节点实现水品扩展
+    * 单个分片的数据量太大，导致数据重新分配耗时
+c分片数设置过大，7.0开始，默认主分片设置成1， 解决了over- sharding的问题
+    * 影响搜索结果的相关性打分，影响统计结果的准确性
+    * 单个节点上过多的分片，会导致资源浪费，同时也会影响性能
+
+查看集群的健康状况
+
+GET_ cluster/health
+
+* Green 主分片与副本都正常分配
+* Yellow 主分片全部正常分配，有副本分片未能正常分配
+* Red 有主分片未能分配
+  * 例如，当服务器的磁盘容量超过85%时,去创建了一个新的索引
+  
+GET_ cat/nodes
+
+GET_ cat/shards
+
 ## 文档的基本CRUD与批量操作
+
+
 
 ### Create一个文档
 
-* 支持自动生成文档Id和指定文档ld两种方式
+* 支持自动生成文档Id和指定文档Id两种方式
 * 通过调用"post /users/_doc"
   * 系统会自动生成documentId
 * 使用HTTP PUT user/_create/1 创建时，URI中显示指定_create， 此时如果该id的文档已经存在，操作失败
@@ -245,6 +303,11 @@ Index和Create不一样的地方:如果文档不存在，就索引新的文档�
 
 POST users/_update/1
 
+### 删除文档
+
+DELETE my_index/_doc/1
+
+
 ### 批量读取
 
 批量操作，可以减少网络连接所产生的开销，提高性能
@@ -252,6 +315,19 @@ POST users/_update/1
 mget 是通过文档ID列表得到文档信息。
 
 msearch 是根据查询条件，搜索到相应文档。
+
+### Bulk API 
+
+* 支持在一次API调用中，对不同的索引进行操作
+* 支持四种类型操作
+  * Index
+  * Create
+  * Update
+  * Delete
+* 可以再URI中指定Index,也可以在请求的Payload中进行
+* 操作中单条操作失败，并不会影响其他操作
+* 返回结果包括了每一条操作执行的结果
+
 
 
 ## 倒排索引
@@ -263,18 +339,19 @@ msearch 是根据查询条件，搜索到相应文档。
 
 * 单词词典(Term Dictionary)，记录所有文档的单词，记录单词到倒排列表的关联关系
   * 单词词典一般比较大，可以通过B+树或哈希拉链法实现，以满足高性能的插入与查询
-* 倒排列表(Posting List) -记录 了单词对应的文档结合，由倒排索引|项组成
+* 倒排列表(Posting List) 记录了单词对应的文档结合，由倒排索引|项组成
   * 倒排索引项 (Posting)
   * 文档ID
-  * 词频 TF-该单词在文档中出现的次数，用于相关性评分
-  * 位置(Position) - 单词在文档中分词的位置。用于语句搜索(phrase query)
-  * 偏移(Offset) -记录单词的开始结束位置，实现高亮显示
+  * 词频 TF 该单词在文档中出现的次数，用于相关性评分
+  * 位置(Position) 单词在文档中分词的位置。用于语句搜索(phrase query)
+  * 偏移(Offset) 记录单词的开始结束位置，实现高亮显示
   
 * Elasticsearch的JSON文档中的每个字段，都有自己的倒排索引可以指定对某些字段不做索引
   * 优点:节省存储空间
   * 缺点:字段无法被搜索
 
 ### Elasticsearch的内置分词器
+
 * Standard Analyzer 默认分词器，按词切分，小写处理
 * Simple Analyzer 按照非字母切分(符号被过滤) ，小写处理
 * Stop Analyzer 小写处理，停用词过滤(the， a，is)
@@ -283,6 +360,30 @@ msearch 是根据查询条件，搜索到相应文档。
 * Patter Analyzer 正则表达式，默认\W+ (非字符分隔)
 * Language 提供了30多种常见语言的分词器
 * Customer Analyzer 自定义分词器
+
+直接指定Analyzer进行测试
+
+GET _analyze
+{
+  "analyzer": "standard",
+  "text": "2 running Quick brown-foxes leap over lazy dogs in the summer evening."
+}
+
+指定索引的字段进行测试
+
+POST books/_analyze
+ "field":"title",
+ "text":"Mastering Elasticseach"
+}
+
+自定义分词起进行测试
+
+POST  /_analyze
+{
+    "tokenizer":“standard",
+    "filter": ["lowercase"],
+    "text":"Mastering Elasticseach"
+}
 
 ### Analyzer由哪几，个部分组成?
 
@@ -300,12 +401,31 @@ Character Filter + Tokenizer + Token Filter
   * 每个文档都属于一个 Type
   * 一个Type有一个Mapping定义
   * 7.0开始，不需要在Mapping定义中指定type信息
+  
+### 字段的数据类型
+
+* 简单类型
+  * Text / Keyword
+  * Date
+  * Integer / Floating
+  * Boolean
+  * IPv4 & IPv6
+* 复杂类型 -对象和嵌套对象
+  * 对象类型/嵌套类型
+* 特殊类型
+  * geo_point & geo_shape / percolator
+  
+字段类型修改，需要重新reindex
 
 ### 什么是Dynamic Mapping
+
 * 在写入文档时候， 如果索引不存在,会自动创建索引
 * Dynamic Mapping的机制，使得我们无需手动定义Mappings。Elasticsearch会自动根据文档信息，推算出字段的类型
 * 但是有时候会推算 的不对，例如地理位置信息
 * 当类型如果设置不对时，会导致一些功能无法正常运行，例如Range查询
+
+* 查看 Mapping文件
+  * GET mapping_test/_mapping
 
 ### 能否更改Mapping的字段类型
 
@@ -316,6 +436,38 @@ Character Filter + Tokenizer + Token Filter
 * 原因
   * 如果修改了字段的数据类型，会导致已被索引的属于无法被搜索
   * 但是如果是增加新的字段，就不会有这样的影响
+
+
+* 当dynamic被设置成false时候， 存在新增字段的数据写入，该数据可以被索引,但是新增字段被丢弃。
+* 当设置成Strict模式时候，数据写入直接出错。
+
+
+Index 控制当前字段是否被索引。默认为true。如果设置成false, 该字段不可被搜索节省磁盘开销。
+
+
+* 需要对Null值实现搜索
+* 只有Keyword类型支持设定Null_Value
+
+```json
+{
+ "lastName":{
+        "type": "text",
+        "copy_to": "fullName"
+         },
+ "mobile" : {
+          "type" : "keyword",
+          "null_value": "NULL"
+        }
+}
+```
+
+###  Excat values V.S Full Text
+
+* Exact Value:包括数字/日期/具体一个字符串(例如“Apple Store" )
+  * Elasticsearch 中的keyword，不需要分词处理。
+* 全文本， 非结构化的文本数据
+  * Elasticsearch 中的text
+
 
 ### 自定义Mapping的一些建议
 
@@ -328,7 +480,7 @@ Character Filter + Tokenizer + Token Filter
 
 ### 什么是Index Template
 
-Index Templates -帮助你设定Mappings和Settings,并按照- -定的规则，自动匹配到新创建的索引之上
+Index Templates 帮助你设定Mappings和Settings,并按照一定的规则，自动匹配到新创建的索引之上
 * 当一个索引被新创建时
   * 应用Elasticsearch默认的settings和mappings
   * 应用order数值低的Index Template中的设定
@@ -359,22 +511,9 @@ Index Options
 * Text类型默认记录postions，其他默认为docs
 * 记录内容越多，占用存储空间越大
 
-### Exact Values不需要被分词
 
-## 字段的数据类型
 
-* 简单类型
-  * Text / Keyword
-  *  Date
-  * Integer / Floating
-Boolean
-  * IPv4 & IPv6
-  * 复杂类型- 对象和嵌套对象
-  * 对象类型/嵌套类型
-* 特殊类型
-  * geo_ point & geo_ shape / percolator
 
-字段类型修改，需要重新reindex
 
 ## 查询
 ### 基于Term的查询
@@ -383,7 +522,7 @@ Boolean
   * Term是表达语意的最小单位。搜索和利用统计语言模型进行自然语言处理都需要处理Term
 * 特点
   * Term Level Query: Term Query / Range Query / Exists Query / Prefix Query /Wildcard Query
-  * 在ES 中，Term查询，对输入不做分词。会将输入作为一个整体，在倒排索引中查找准确的词项，并且使用相关度算分公式为每个包含该词项的文档进行相关度算分-例如“Apple Store“
+  * 在ES 中，Term查询，对输入不做分词。会将输入作为一个整体，在倒排索引中查找准确的词项，并且使用相关度算分公式为每个包含该词项的文档进行相关度算分 例如“Apple Store“
   * 可以通过Constant Score将查询转换成一个Filtering, 避免算分,并利用缓存，提高性能
 
 ### 基于全文的查询
@@ -393,6 +532,10 @@ Boolean
 * 特点
   * 索引和搜索时都会进行分词， 查询字符串先传递到一个合适的分词器，然后生成一个供查询的词项列表
   * 查询时候，先会对输入的查询进行分词，然后每个词项逐个进行底层的查询，最终将结果进行合并。并为每个文档生成一个算分。例如查“Matrix reloaded”,会查到包括Matrix或者reload的所有结果。
+
+即便是对Keyword进行Term查询，同样会进行算分
+
+可以将查询转为Filtering, 取消相关性算分的环节，以提升性能
 
 ### 结构化数据
 
@@ -408,8 +551,16 @@ Boolean
 * Query Context:相关性算分
 * Filter Context:不需要算分( Yes or No) ,可以利用Cache，获得 更好的性能
 
-### 条件组合
+### 算分
 
+* Boosting Relevance
+  * Boosting是控制相关度的一种手段
+  * 索引，字段或查询子条件
+* 参数boost的含义
+  * 当boost> 1时，打分的相关度相对性提升
+  * 当0< boost< 1时，打分的权重相对性降低
+  * 当boost<0时，贡献负分
+  
 ### bool查询
 
 |类型|说明|
@@ -429,6 +580,7 @@ Boolean
   * 加和两个查 询的评分
   * 乘以匹配语句的总数
   * 除以所有语句的总数
+  
 
 * 有一些情况下，同时匹配title和body字段的文档比只与一个字段匹配的文档的相关度更高
 * 但disjunction max query查询只会简单地使用单个最佳匹配语句的评分。score 作为整体评分。怎么办?
@@ -436,6 +588,8 @@ Boolean
   * 获得最佳匹配语句的评分_score
   * 将其他匹配语句的评分与tie_breaker 相乘
   * 对以上评分求和并规范化
+
+
 
 
 ### 单字符串多字段查询: Multi Match
