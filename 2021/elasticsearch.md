@@ -658,8 +658,10 @@ Index Options
 
 安装：./elasticsearch-plugin inStall https://github.com/KennFalcon/elasticsearch-analysis-hanlp/releases/download/v7.1.0/elasticsearch-analysis-hanlp-7.1.0.zip
 
+## Search Template 解耦程序&搜索DSL
 
-### 综合排序：Function Score Query 优化算分
+
+## 综合排序：Function Score Query 优化算分
 
 * Function Score Query
   * 可以在查询结束后， 对每一个匹配的文档进行一系列的重新算分，根据新生成的分数进行排序。
@@ -671,11 +673,49 @@ Index Options
  * 衰减函数:以某个字段的值为标准，距离某个值越近，得分越高
  * Script Score:自定义脚本完全控制所需逻辑
 
+### modifier
+
+新的算分=老的算分*log(1+投票数)
+
+
+|修饰符|意义|
+|:--:|:--:|
+|none| 不要对字段值应用任何乘数|
+|log |取字段值的常用对数。因为此函数将返回负值，并且如果将其用于0到1之间的值，则会导致错误，因此建议改用它log1p。|
+|log1p |将1加到字段值并取对数|
+|log2p |在字段值上加2并取公共对数|
+|ln| 取字段值的自然对数。因为此函数将返回负值，并且如果将其用于0到1之间的值，则会导致错误，因此建议改用它ln1p。|
+|ln1p |将1加到栏位值并取自然对数|
+|ln2p| 将2加到栏位值并取自然对数|
+|square |对字段值求平方（乘以它本身）|
+|sqrt| 取字段值的平方根|
+
+### Factor
+
+新的算分=老的算分* log(1 + factor *投票数)
+
+### Boost Mode和Max Boost
+
+* Boost Mode
+  * Multiply: 算分与函数值的乘积
+  * Sum: 算分与函数的和
+  * Min / Max: 算分与函数取最小/最大值
+  * Replace:使用函数值取代算分
+* Max Boost可以将算分控制在一个最大值
+
+### 一致性随机函数
+
+* 使用场景:网站的广告需要提高展现率
+* 具体需求:让每个用户能看到不同的随机排名，但是也希望同一个用户访问时，结果的相对顺序，保持一致(Consistently Random)
+
+
+## Index Alias实现零停机运维
+
 ## Suggesters搜索建议
 
 * 现代的搜索引擎， 一般都会提供Suggest as you type的功能
 * 帮助用户在输入搜索的过程中， 进行自动补全或者纠错。通过协助用户输入更加精准的关键词，提高后续搜索阶段文档匹配的程度
-* 在google.上搜索，一开始会自动补全。当输入到一定长度,如因为单词拼写错误无法补全，就会开始提示相似的词或者句子
+* 在google上搜索，一开始会自动补全。当输入到一定长度,如因为单词拼写错误无法补全，就会开始提示相似的词或者句子
 
 
 ### 4种类别的Suggesters
