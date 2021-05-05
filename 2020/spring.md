@@ -8,16 +8,16 @@ BeanFactory 是IOC底层容器
 
 FactoryBean是创建Bean的一种方式，帮助实现复杂的初始化逻辑
 
-BeanFactory和FactoryBean,其中BeanFactory指的是I0C容器的编程抽象，比如
+BeanFactory和FactoryBean,其中BeanFactory指的是IOC容器的编程抽象，比如
 
 ApplicationContext, XmlBeanFactory 等，这些都是IOC容器的具体表现，需要使用什么样的容器由客户决定,但Spring为我们提供了丰富的选择。
-FactoryBean 只是一个可以在I0C而容器中被管理的一个bean,是对各种处理过程和资源使用的抽象,FactoryBean在需要时产生另一个对象，而不返回
+FactoryBean 只是一个可以在IOC而容器中被管理的一个bean,是对各种处理过程和资源使用的抽象,FactoryBean在需要时产生另一个对象，而不返回
 FactoryBean本身,我们可以把它看成是一个抽象工厂，对它的调用返回的是工厂“生产的产品”。所有的FactoryBean都实现特殊的
 org.springframework.beans.factory.FactoryBean接口，当使用容器中FactoryBean的时候，
 该容器不会返回FactoryBean本身,而是返回其生成的对象。Spring 包括了大部分的通用资源和服务访问抽象的FactoryBean的实现，
 其中包括:对JNDI查询的处理，对代理对象的处理，对事务性代理的处理，对RMI代理的处理等，这些我们都可以看成是具体的工厂，
 看成是Spring为我们建立好的工厂。也就是说Spring通过使用抽象工厂模式为我们准备了一系列工厂来生产一些特定的对象，
-免除我们手工重复的工作，我们要使用时只需要在I0C容器里配置好就能很方便的使用了
+免除我们手工重复的工作，我们要使用时只需要在IOC容器里配置好就能很方便的使用了
 
 ## Spring IoC容器：BeanFactory和ApplicationContext谁才是Spring IoC容器？
 

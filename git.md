@@ -198,7 +198,20 @@ git stash命令，可以把当前没有完成的事先暂存一下。
 
 如果你有“官方库”的权限，那么就可以直接在“官方库”中建功能分支开发，然后提交 pull request。通过 Code Review 后，合并进 Master 分支，而 Master 一旦有代码被合并就可以马上 release。
 
+## 创建 git 仓库
         
-  
+mkdir notes
+cd notes
+git init
+touch README.md
+git add README.md
+git commit -m "first commit"
+git remote add origin https://gitee.com/yanguowei/notes.git
+git push -u origin master  
 
-      
+     
+已有仓库?
+
+cd existing_git_repo
+git remote add origin https://gitee.com/yanguowei/notes.git
+git push -u origin master 

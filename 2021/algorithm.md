@@ -67,7 +67,6 @@ Graph
 
 
 ### Big O notation
-s
 O(1): Constant Complexity: Constant常数复杂度
 O(log n): Logarithmic Complexity:对数复杂度
 O(n): Linear Complexity:线性时间复杂度
