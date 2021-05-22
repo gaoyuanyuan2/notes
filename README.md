@@ -1,4 +1,5 @@
 # 学习笔记
 
-* Deferred  延期的   DeferredImportSelector
+* Deferred  adj. 延期的   DeferredImportSelector
 
+* Immutable adj. 不变的；不可变的；不能变的
