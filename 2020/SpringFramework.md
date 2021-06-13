@@ -297,8 +297,7 @@ JAXB 2.0：ava API for XML Binding,Java API去绑定XML的实现,里面就会有
 
 SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就来自于两个方面：ASM、标准的Java反射，都是运行时实现。
 
-通过编译时来进行实现@Indexed：Component的基础上面，编译时把API去做一个相当于说建立索引，能够帮助我快速的定位到
-到底哪个类建了Component索引，那么这时候我就可以定位到类而不需要逐一扫描。
+通过编译时来进行实现@Indexed：Component的基础上面，编译时把API去做一个相当于说建立索引，能够帮助我快速的定位到底哪个类建了Component索引，那么这时候我就可以定位到类而不需要逐一扫描。
 
 * Java 7 API
 
@@ -389,10 +388,12 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 ### 12 | 面试题精选
 
 * 沙雕面试题 - 什么是 Spring Framework？
+
 答:
 Spring使得创建Java企业应用变得很容易。它在Java语言上面上，提供了拥抱企业环境中所需的一切，支持Groovy和Kotlin作为JVM上的可选语言，并与创建多种架构的灵活性取决于应用程序的需求。
 
 * 996面试题- Spring Framework有哪些核心模块?
+
 答:
 spring-core: Spring 基础API模块，如资源管理，泛型处理
 spring-beans: Spring Bean相关,如依赖查找（BeanFactory）,依赖注入（@Autowired）
@@ -531,7 +532,7 @@ Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Serv
 
 Spring团队通常提倡构造函数注入，因为它允许您将应用程序组件实现为不变的对象，并确保所需的依赖项不为空。
 
-此外,constructor-injected组件始终以完全初始化状态返回给客户机(调用)代码。大量的构造函数参数是一种糟糕的体验，意味着类可能有太多的责任，应该重构更好地解决问题的适当分离。当我们的Bean初始化之后是不变的对象，对我们的程序和维护性都会带来更多的便利。
+此外,constructor-injected组件始终以完全初始化状态返回给客户机(调用)代码。大量的构造函数参数是一种糟糕的体验，意味着类可能有太多的责任，应该重构更好地解决问题的适当分离。
 
 Setter注入应该主要用于可选的依赖项，这些依赖项可以被分配合理的默认值在类。否则，必须在代码使用依赖项的任何地方执行非空检查。顺序无法确定。
 
@@ -545,16 +546,19 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 ### 21 | 面试题精选
 
 * 沙雕面试题 - 什么是 IoC ？
-  答：简单地说，IoC 是反转控制，类似于好莱坞原则，主要有依赖查找和依赖注入实现。
 
-按照IoC的定义，很多方面都是IoC，比如说JavaBeans是IoC的一个容器实现，Servlet的容器也是IoC的实现，因为Servlet可以去依赖或者反向地通过JNDI的方式进行得到一些外部的一些资源，包括DataSource或者相关的EB的组件。像是Spring Framework依赖注入的框架，也能够帮助我们去实现我们的IoC。
+答：简单地说，IoC 是反转控制，类似于好莱坞原则，主要有依赖查找和依赖注入实现。
+
+按照IoC的定义，很多方面都是IoC，比如说JavaBeans是IoC的一个容器实现，Servlet的容器也是IoC的实现，因为Servlet可以去依赖或者反向地通过JNDI的方式进行得到一些外部的一些资源，包括DataSource或者相关的EBJ的组件。像是Spring Framework依赖注入的框架，也能够帮助我们去实现我们的IoC。
 
 如果是反转控制，那就包括我们说消息，因为消息其实是被动的，我们如果说我们传统的调用链路是一个主动拉的模式，那么IoC其实是一种推的模式那么推的模式在消息事件以及各种这样类似于这种反向的观察者模式的扩展都属于IoC。
 
 * 996 面试题 - 依赖查找和依赖注入的区别？
+
 答：依赖查找是主动或手动的依赖查找方式，通常需要依赖容器或标准 API实现。而依赖注入则是手动或自动依赖绑定的方式，无需依赖特定的容器和API。
 
 * 劝退面试题 - Spring 作为 IoC 容器有什么优势？
+
 答：
 典型的 IoC 管理，依赖查找和依赖注入
 AOP 抽象
@@ -598,13 +602,17 @@ BeanFactory对象不是內建 Bean 对象，而是容器內建依赖，非Spring
 
 ### 26 | Spring IoC容器：BeanFactory和ApplicationContext谁才是Spring IoC容器？
 
+#### 官网解释
+
 BeanFactory接口提供了一种高级配置机制，能够管理任何类型的对象。ApplicationContext是BeanFactory的一个子接口。
-更容易与Spring的AOP特性集成
+* 更容易与Spring的AOP特性集成
 * 消息资源处理(用于国际化)
-* 事件发表
+* 事件发布
 * 应用程序层特定的上下文，如用于web应用程序的WebApplicationContext。
 
-简而言之，BeanFactory提供了配置框架和基本功能，以及应用程序ionContext添加更多特定于企业的功能。ApplicationContext是BeanFactory的一个完整超集。
+简而言之，BeanFactory提供了配置框架和基本功能，ApplicationContext提供更多企业级功能。ApplicationContext是BeanFactory的一个完整超集。也就是说BeanFactory含有的能力，ApplicationContext全都有，并且提供以上4点更多的特性。
+
+BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的实现，在这基础上面增加了一些它的特性。
 
 
 ### 27 | Spring应用上下文：ApplicationContext除了IoC容器角色，还提供哪些特性？
@@ -639,6 +647,8 @@ Spring框架实现的控制反转(IoC)原则。IoC也称为依赖注入(DI)。DI
 
 BeanFactory 是 IoC 底层容器
 FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻辑
+
+ObjectFactory 延时查找
 
 * 劝退面试题 - Spring IoC 容器启动时做了哪些准备？
 答：IoC 配置元信息读取和解析、IoC 容器生命周期、Spring 事件发布、国际化等，更多答案将在后续专题章节逐一讨论
