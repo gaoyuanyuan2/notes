@@ -40,13 +40,13 @@ API抽象
 
 ### 02 | 内容综述
 
-1.特性
+#### 1.特性
 
 按需分配
 
 胶水：API和或者规范整合在一起
 
-2.使用API
+#### 2.使用API
 
 Spring 3 对Java 5 的支持（注解）
 
@@ -56,29 +56,17 @@ Java: XML、反射、动态代理
 
 JavaEE: Servlet、Jsp、Jpa、Jms
 
-3.自己的实现
+#### 3.自己的实现
 
 * 面向对象（OOP）：多态，接口对应语义
-
-
-* 切面编程：jdk动态代理、ASM、CGLIB、AspectJ 类的提升
-
+* 切面编程：jdk动态代理（局限性）、ASM、CGLIB、AspectJ 类的提升
 * 面向元编程
-
-配置元信息包含三种
-
-配置类：配置属性在XML或者.properties文件，会影响运行时的一些状态，比如影响依赖注入的方式
-
-注解
-
-属性配置：占位符、外部化配置
-
-
-
-不是面向程序来编程，在程序的基础上在进行元数据的一些处理
-
+ * 配置元信息包含三种
+ * 配置类：配置属性在XML或者.properties文件，会影响运行时的一些状态，比如影响依赖注入的方式
+ * 注解
+ * 属性配置：占位符、外部化配置
+   * 不是面向程序来编程，在程序的基础上在进行元数据的一些处理
 * 面向模块编程 
-
 * 面向函数编程 
 
 
@@ -122,7 +110,9 @@ Maven: 3.2 +
 * DAO支持(DAO Support)
 * O/R映射(O/R Mapping)
 * XML编列(XML Marshalling)
+  * 类似序列号和反序列化
 
+# 必考 事务抽象
 
 
 3.Web技术(Web)
@@ -131,27 +121,32 @@ Maven: 3.2 +
   * Spring MVC
   * WebSocket
   * SockJS
-* Web Reactive技术栈
+* Web Reactive技术栈（Spring 5 ）注解一样，底层实现不一样
   * Spring WebFlux
   * WebClient
   * WebSocket
 
 当然Reactive它也是可以运用Spring MVC的，也可以运用到Servlet引擎来进行实现。
 
-在Spring框架5.0之前，有另外一个东西叫做RestTemplate，或者是有个叫做HttpClient，是这个同步的。那么WebClient引用之后，它把过去的同步执行变成异步回调的方式。
+在Spring框架5.0之前，有另外一个东西叫做RestTemplate，或者是有个叫做HttpClient，是这个同步的Http执行的客户端。那么WebClient引用之后，它把过去的同步执行变成异步回调的方式。
 
 
 
 4.技术整合(Integration)
 
 * 远程调用(Remoting)
+  * 一般是同步
 * Java 消息服务 (JMS)
+  * 异步
 * Java连接架构( JCA)
 * Java 管理扩展(JMX)
+  * CPU磁盘利用率（运维）
 * Java 邮件客户端 (Email)
 * 本地任务(Tasks)
+  * 单机版
 * 本地调度(Scheduling)
 * 缓存抽象(Caching)
+  * 注解
 * Spring测试(Testing)
 
 通常来说远程调用是采用的同步的模式。
@@ -163,8 +158,11 @@ JMX 运维侧，查看CUP、磁盘利用率等。
 5.测试(Testing)
 
 * 模拟对象(Mock Objects)
+  * 单元测试
 * TestContext 框架(TestContext Framework)
+  * 集成测试
 * Spring MVC测试(Spring MVC Test)
+  * 服务端
 * Web 测试客户端(WebTestClient)
 
 
@@ -175,13 +173,13 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 
 ### 05 | Spring版本特性：Spring各个版本引入了哪些新特性？
 
-####                                                            **Java版本依赖与支持**
+####Java版本依赖与支持
 
 |Spring Framework版本|Java标准版|Java企业版|
 |:-:|:-:|:-:|
-|1.x|1.3+|J2EE 1.3 +|
-|2.x|1.4.2+|J2EE 1.3 +|
-|3.x|5+|J2EE 1.4和Java EE 5|
+|1.x|1.3+（动态代理）|J2EE 1.3 +|
+|2.x|1.4.2+（NIO）|J2EE 1.3 +|
+|3.x （注解 事件）|5+(注解)|J2EE 1.4和Java EE 5|
 |4.x|6+|JavaEE6和7|
 |5.x|8+|Java EE 7|
 
@@ -203,6 +201,7 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 * spring-test
 * spring-expression
 * spring-tx
+  * 重点
 * spring-instrument
 * spring-web
 * spring-jcl
@@ -353,9 +352,31 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 |Bean Validation(JSR 303)|3.0 +|LocalValidatorFactoryBean|
 
 
-
-
 ### 10 | Spring编程模型：Spring实现了哪些编程模型？
+
+* 面向对象编程
+  * 契约接口：Aware、BeanPostProcessor ...
+  * 设计模式：观察者模式、组合模式、模板模式 ...
+  * 对象继承：Abstract* 类
+
+* 面向切面编程
+  * 动态代理：JdkDynamicAopProxy
+  * 字节码提升：ASM、CGLib、AspectJ...
+
+* 面向元编程
+  * 注解：模式注解（@Component、@Service、@Respository ...）
+  * 配置：Environment 抽象、PropertySources、BeanDefinition ...
+  * 泛型：GenericTypeResolver、ResolvableType ...
+
+* 函数驱动
+  * 函数接口：ApplicationEventPublisher
+  * Reactive：Spring WebFlux
+
+* 模块驱动
+  * Maven Artifacts
+  * OSGI Bundles
+  * Java 9 Automatic Modules
+  * Spring @Enable*
 
 ### 11 | Spring核心价值：我们能从Spring Framework中学到哪些经验和教训呢？
 
@@ -369,8 +390,7 @@ SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就
 
 * 沙雕面试题 - 什么是 Spring Framework？
 答:
-Spring使得创建Java企业应用变得很容易。它提供了拥抱企业环境中所需的一切在Java语言上面，支持Groovy和
-Kotlin作为JVM上的可选语言，并与创建多种架构的灵活性取决于应用程序的需求。
+Spring使得创建Java企业应用变得很容易。它在Java语言上面上，提供了拥抱企业环境中所需的一切，支持Groovy和Kotlin作为JVM上的可选语言，并与创建多种架构的灵活性取决于应用程序的需求。
 
 * 996面试题- Spring Framework有哪些核心模块?
 答:
@@ -400,10 +420,10 @@ spring-expression: Spring 表达式语言模块
    * 参数注入
    * Setter注入
    * 接口注入
-它通常是由容器帮我们自动去注入一些事情。
+     * 它通常是由容器帮我们自动去注入一些事情。
 * 使用上下文查找
 * 使用模板法设计模式
-  比如说是Spring JDBC里面会用到,JDBC Template这样的实现,会给我们一种类似于比如说Statement,这样的Callback这种Callback能够帮助我们实现地更为抽象,当我们去实现这样的接口的时候,我们不需要关心Callback从哪来,那么也实现了一种反转控制的方式
+   * 比如说是Spring JDBC里面会用到,JDBC Template这样的实现,会给我们一种类似于比如说Statement,这样的Callback这种Callback能够帮助我们实现地更为抽象,当我们去实现这样的接口的时候,我们不需要关心Callback从哪来,那么也实现了一种反转控制的方式
 * 使用策略设计模式
 
 ### 15 | IoC容器的职责：IoC除了依赖注入，还涵盖哪些职责呢？
@@ -437,11 +457,43 @@ spring-expression: Spring 表达式语言模块
 
 当然Spring的Bean可以作为事件监听的一个来源，但不是唯一来源。可能是外部进行添加进去的。
 
-Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Servlet去获取比如说像数据库源或者是比如说像线程池或者是消息服务，那么也是通过JNDI的方式在我的server容器或者EJB容器或者Java EE容器里面来进行获取。
+
 
 ### 16 | 除了Spring，还有其它的IOC容器实现吗？
 
+#### 主要实现
+
+* Java SE
+  * Java Beans
+  * Java ServiceLoader SPI
+  * JNDI（Java Naming and Directory Interface） 
+* Java EE
+  * EJB（Enterprise Java Beans）
+  * Servlet 
+* 开源
+  * Apache Avalon（http://avalon.apache.org/closed.html） 
+  * PicoContainer（http://picocontainer.com/） 
+  * Google Guice（https://github.com/google/guice） 
+  * Spring Framework（https://spring.io/projects/spring-framework）
+
+
+Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Servlet去获取比如说像数据库源或者是比如说像线程池或者是消息服务，那么也是通过JNDI的方式在我的server容器或者EJB容器或者Java EE容器里面来进行获取。
+
 ### 17 | 传统IoC容器实现：JavaBeans也是IoC容器吗？
+
+#### Java Beans 作为 IoC 容器
+
+*  特性
+  * 依赖查找
+  * 生命周期管理
+  * 配置元信息
+  * 事件
+  * 自定义
+  * 资源管理
+  * 持久化
+* 规范
+  * JavaBeans
+  * BeanContext
 
 1.特性
 * 一个可以管理应用程序代码的容器。
@@ -478,16 +530,14 @@ Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Serv
 ### 19 | 依赖查找 VS. 依赖注入：为什么Spring总会强调后者，而选择性忽视前者？
 
 Spring团队通常提倡构造函数注入，因为它允许您将应用程序组件实现为不变的对象，并确保所需的依赖项不为空。
-此外,constructor-injected组件始终以完全初始化状态返回给客户机(调用)代码。大量的构造函数
-参数是一种糟糕的体验，意味着类可能有太多的责任，应该重构
-更好地解决问题的适当分离。
 
-Setter注入应该主要用于可选的依赖项，这些依赖项可以被分配合理的默认值在类。否则，必须在代码使用依赖项的任何地方执行非空检查。
+此外,constructor-injected组件始终以完全初始化状态返回给客户机(调用)代码。大量的构造函数参数是一种糟糕的体验，意味着类可能有太多的责任，应该重构更好地解决问题的适当分离。当我们的Bean初始化之后是不变的对象，对我们的程序和维护性都会带来更多的便利。
 
-有个类叫ObjectProvider这个类，它是种类型安全的方式，如果你的依赖注入的方式或者依赖查找的方式，是一个单一类型的话，它会调用getIfAvailable的方法来进行示范性地去返回
-那么等于空的时候它就会返回空,这种方式在Spring Boot的场景经常用到。
+Setter注入应该主要用于可选的依赖项，这些依赖项可以被分配合理的默认值在类。否则，必须在代码使用依赖项的任何地方执行非空检查。顺序无法确定。
 
-当我们的Bean初始化之后是不变的对象，对我们的程序和维护性都会带来更多的便利。
+有个类叫ObjectProvider这个类，它是种类型安全的方式，如果你的依赖注入的方式或者依赖查找的方式，是一个单一类型的话，它会调用getIfAvailable的方法来进行示范性地去返回那么等于空的时候它就会返回空,这种方式在Spring Boot的场景经常用到。
+
+
 
 
 ### 20 | 构造器注入 VS. Setter 注入：为什么Spring官方文档的解读会与作者的初心出现偏差？
@@ -495,13 +545,14 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 ### 21 | 面试题精选
 
 * 沙雕面试题 - 什么是 IoC ？
-答：简单地说，IoC 是反转控制，类似于好莱坞原则，主要有依赖查找和依赖注入实现
+  答：简单地说，IoC 是反转控制，类似于好莱坞原则，主要有依赖查找和依赖注入实现。
 
-包括我们说消息其实也算，因为消息其实是被动的，我们如果说我们传统的调用链路是一个主动拉的模式，那么IoC其实是一种推的模式
-那么推的模式在消息事件以及各种这样类似于这种反向的观察者模式的扩展都属于IoC。
+按照IoC的定义，很多方面都是IoC，比如说JavaBeans是IoC的一个容器实现，Servlet的容器也是IoC的实现，因为Servlet可以去依赖或者反向地通过JNDI的方式进行得到一些外部的一些资源，包括DataSource或者相关的EB的组件。像是Spring Framework依赖注入的框架，也能够帮助我们去实现我们的IoC。
+
+如果是反转控制，那就包括我们说消息，因为消息其实是被动的，我们如果说我们传统的调用链路是一个主动拉的模式，那么IoC其实是一种推的模式那么推的模式在消息事件以及各种这样类似于这种反向的观察者模式的扩展都属于IoC。
 
 * 996 面试题 - 依赖查找和依赖注入的区别？
-答：依赖查找是主动或手动的依赖查找方式，通常需要依赖容器或标准 API实现。而依赖注入则是手动或自动依赖绑定的方式，无需依赖特定的容器和API
+答：依赖查找是主动或手动的依赖查找方式，通常需要依赖容器或标准 API实现。而依赖注入则是手动或自动依赖绑定的方式，无需依赖特定的容器和API。
 
 * 劝退面试题 - Spring 作为 IoC 容器有什么优势？
 答：
@@ -1202,7 +1253,7 @@ websocket
  * ClassLoader 类加载
  * Java Security 安全控制
  * ConfigurableBeanFactory 临时 ClassLoader
- 
+
  其实我们的BeanDefinition变成一个Class的过程，还是利用我们传统的Java的ClassLoader
 
 ### 93 | Spring Bean实例化前阶段：Bean的实例化能否被绕开？

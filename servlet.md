@@ -3,7 +3,7 @@
 1、Servlet容器启动会扫描，当前应用里面每一个jar包的
 
 	ServletContainerInitializer的实现
-	
+
 2、提供ServletContainerInitializer的实现类；
 
 	必须绑定在，META-INF/services/javax.servlet.ServletContainerInitializer
@@ -20,6 +20,8 @@ META-INF/services/javax.servlet.ServletContainerInitializer
 ServletContainerInitializer；
 
 @HandlesTypes；
+
+
 
 ## Servlet
 
@@ -39,7 +41,7 @@ Java Servlet是和平台无关的服务器端组件,它运行在Servlet容器中
 Servlet和客户的通信采用“请求/响应"的模式。
 
 ##  GenericServlet(了解)
-   
+
 1、是一个Servlet. 是Servlet接口和ServletConfig接口的实现类但是一个抽象类。其中的service方法为抽象方法
 
 2、如果新建的Servlet程序直接继承GenericServlet会使开发更简洁。
@@ -52,13 +54,12 @@ Servlet和客户的通信采用“请求/响应"的模式。
 
 ③.还定义了一个init()方法,在init(ServletConfig)方法中对其进行调用,子类可以直接覆盖init,在其中实现对Servlet的初始化。
 
-④.不建议直接覆盖init(ServletConfig) ，因为如果忘记编写super.init(config);而还是用了ServletConfig接口的方法，
-则会出现空指针异常。
+④.不建议直接覆盖init(ServletConfig) ，因为如果忘记编写super.init(config);而还是用了ServletConfig接口的方法，则会出现空指针异常。
 
 ⑤.新建的init() 并非Servlet 的生命周期方法。而init(ServletConfig) 是生命周期相关的方法。
 
 ##  HttpServlet:
-   
+
 1、是一个Servlet,继承自GenericServlet。针对于HTTP协议所定制。
 
 2、在service()方法中直接把ServletRequest和ServletResponse 转为HttpServletRequest和HttpServletResponse。并调用了重载的service
@@ -96,9 +97,9 @@ Tokenizing filters
 Filters that trigger resource access events
 
 XSL/T filters that transform XML content
- 
+
 MIME-type chain filters
- 
+
 Caching filters
 
 Filter程序是一个实现了Filter接口的Java类，与Servlet程序相似,它由Servlet容器进行调用和执行
@@ -110,7 +111,7 @@ Filter程序需要在web.xml文件中进行注册和设置它所能拦截的资�
 ### 简介
 
 为了弥补Servlet的缺陷, SUN公司在Servlet的基础上推出了JSP( Java Server Pages )技术作为解决方案。
-   
+
 JSP是简化Servlet编写的一种技术,它将Java代码和HTML语句混合在同一个文件中编写,只对网页中的要动态产生的内容采用Java代码来编写，
 而对固定不变的静态内容采用普通静态HTML页面的方式编写。
 
@@ -120,12 +121,12 @@ include指令: <%@ include file="b.jsp" %>
 
 静态引入当前JSP页面与静态引入的页面紧密结合为一个Servlet。
 
-<jsp:include page= "b.jsp"> </jsp:include>
+`<jsp:include page= "b.jsp">` `</jsp:include>`
 
 动态引入:并不是像include指令生成一个 Servlet源文件,而是生成两个Servlet 源文件,然后通过一个方法的方式把目标页面包含进来。
 
 ### 其他
 
-JSP 在SpringBoot 只能war包执行
+JSP 在SpringBoot 只能war包执行。
 
 

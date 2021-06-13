@@ -2,8 +2,7 @@
 
 ## 1、函数内容
 
-方法调用render(true)对于可怜的读者来说仍然摸不着头脑。卷动屏幕，看到render(Boolean isSuite), 稍许有点帮助，不过仍然不够。应该把该函数一分为二: renderForSuite( )
-和renderForSingleTest()。
+方法调用render(true)对于可怜的读者来说仍然摸不着头脑。卷动屏幕，看到render(Boolean isSuite), 稍许有点帮助，不过仍然不够。应该把该函数一分为二: renderForSuite( )和renderForSingleTest()。
 
 ## 2、函数参数
 
