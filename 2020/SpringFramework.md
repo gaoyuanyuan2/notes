@@ -484,7 +484,7 @@ Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Serv
 
 #### Java Beans 作为 IoC 容器
 
-*  特性
+* 特性
   * 依赖查找
   * 生命周期管理
   * 配置元信息
@@ -630,27 +630,34 @@ BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的
 
 ### 29 | Spring IoC容器生命周期：IoC容器启停过程中发生了什么？
 
-启动：
+#### 启动
+
 第一个操作是创建我们的BeanFactory，并且进行初步的初始化，加入些我们的内建的一些Bean对象或者Bean依赖，以及加上一些内建的非Bean的依赖。
 第二部分就是关于BeanFactory的扩展点，通过执行BeanFactoryPostProcessor。
 第三个是对Bean的一些修改或者扩展，通过执行这个BeanPostProcessor来进行操作，这个操作这里只是注册，具体的调用是在BeanFactory里面进行操作的。
 再接下来就会定义我们说的国际化事件等
 
+#### 运行
+
+#### 停止
+
 
 ### 30 | 面试题精选
 
 * 沙雕面试题 - 什么是 Spring IoC 容器？
-Spring框架实现的控制反转(IoC)原则。IoC也称为依赖注入(DI)。DI是IOC的一种实现方式，还有依赖查找，
-看通过构造函数参数，属性的setter方式来注入一些其他的对象，来完成依赖注入。
+
+Spring框架实现的控制反转(IoC)原则。IoC也称为依赖注入(DI)。DI是IOC的一种实现方式，还有依赖查找，看通过构造函数参数，属性的setter方式来注入一些其他的对象，来完成依赖注入。
 
 * 996 面试题 - BeanFactory 与 FactoryBean？
 
-BeanFactory 是 IoC 底层容器
-FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻辑
+BeanFactory 是 IoC 底层容器。
+
+FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻辑。
 
 ObjectFactory 延时查找
 
 * 劝退面试题 - Spring IoC 容器启动时做了哪些准备？
+
 答：IoC 配置元信息读取和解析、IoC 容器生命周期、Spring 事件发布、国际化等，更多答案将在后续专题章节逐一讨论
 
 ## 第四章：Spring Bean基础 (11讲)
@@ -672,12 +679,34 @@ ObjectFactory 延时查找
 
 ### 32 | BeanDefinition元信息：除了Bean名称和类名，还有哪些Bean元信息值得关注？
 
+#### BeanDefinition 元信息
+|属性（Property） |说明|
+|:-:|:-:|
+|Class |Bean 全类名，必须是具体类，不能用抽象类或接口|
+|Name |Bean 的名称或者 ID|
+|Scope |Bean 的作用域（如：singleton、prototype 等）|
+|Constructor arguments|Bean 构造器参数（用于依赖注入）|
+|Properties |Bean 属性设置（用于依赖注入）|
+|Autowiring mode |Bean 自动绑定模式（如：通过名称 byName）|
+|Lazy initialization mode| Bean 延迟初始化模式（延迟和非延迟）|
+|Initialization method |Bean 初始化回调方法名称|
+|Destruction method |Bean 销毁回调方法名称|
 
+* BeanDefinition 构建
+  * 通过 BeanDefinitionBuilder
+  * 通过 AbstractBeanDefinition 以及派生类
 
 ### 33 | 命名Spring Bean：id和name属性命名Bean，哪个更好？
 
 * 自动生成
 * 自己定义
+
+#### 命名 Spring Bean
+
+* Bean 名称生成器（BeanNameGenerator） 
+* 由 Spring Framework 2.0.3 引入，框架內建两种实现：
+  * DefaultBeanNameGenerator：默认通用 BeanNameGenerator 实现
+* AnnotationBeanNameGenerator：基于注解扫描的 BeanNameGenerator 实现，起始于Spring Framework 2.5
 
 ### 34 | Spring Bean的别名：为什么命名Bean还需要别名？
 
@@ -688,7 +717,7 @@ ObjectFactory 延时查找
 BeanDefinition 注册
 * XML 配置元信息
   * <bean name=”...” ... />
-* Java 注解配置元信息
+* Java 注解配置元信息（不会重复注册）
   * @Bean
   * @Component
   * @Import
