@@ -293,7 +293,7 @@ InstrumentationSavingAgent：API可以帮助我们去做字节码的一个重写
 
 JSR 250：@Resource这一个注解就在里面，比如说PostConstruct或者PreDestroy都是这个API里面实现的。
 
-JAXB 2.0：ava API for XML Binding,Java API去绑定XML的实现,里面就会有个marshal、unmarshal的操作。
+JAXB 2.0：Java API for XML Binding,Java API去绑定XML的实现,里面就会有个marshal、unmarshal的操作。
 
 SpringBoot 注解的使用需求出现了急剧性的膨胀，注解的实现就来自于两个方面：ASM、标准的Java反射，都是运行时实现。
 
@@ -407,9 +407,7 @@ spring-expression: Spring 表达式语言模块
 
 ### 13 | IoC发展简介：你可能对IoC有些误会？
 
-在软件工程中，控制反转(IoC)是一种编程原理。IoC反转控制与传统控制流相比（串行）。在IoC中，计算机程序的自定义编写部分
-从通用框架接收控制流。采用这种设计的软件体系结构颠倒了控制。与传统程序设计的比较：在传统程序设计中，习惯
-表达程序目的的代码调用可重用库来处理泛型任务，但在控制反转中，是框架调用定制的或特定于任务的代码。
+在软件工程中，控制反转(IoC)是一种编程原理。IoC反转控制与传统控制流相比（串行）。在IoC中，计算机程序的自定义编写部分从通用框架接收控制流。采用这种设计的软件体系结构颠倒了控制。与传统程序设计的比较：在传统程序设计中，习惯表达程序目的的代码调用可重用库来处理泛型任务，但在控制反转中，是框架调用定制的或特定于任务的代码。
 
 ### 14 | IoC主要实现策略：面试官总问IoC和DI的区别，他真的理解吗？
 
@@ -478,7 +476,7 @@ spring-expression: Spring 表达式语言模块
   * Spring Framework（https://spring.io/projects/spring-framework）
 
 
-Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Servlet去获取比如说像数据库源或者是比如说像线程池或者是消息服务，那么也是通过JNDI的方式在我的server容器或者EJB容器或者Java EE容器里面来进行获取。
+Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Servlet去获取比如说像数据库源或者是比如说像线程池或者是消息服务，那么也是通过JNDI的方式在我的Servlet容器或者EJB容器或者Java EE容器里面来进行获取。
 
 ### 17 | 传统IoC容器实现：JavaBeans也是IoC容器吗？
 
@@ -549,7 +547,7 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 
 答：简单地说，IoC 是反转控制，类似于好莱坞原则，主要有依赖查找和依赖注入实现。
 
-按照IoC的定义，很多方面都是IoC，比如说JavaBeans是IoC的一个容器实现，Servlet的容器也是IoC的实现，因为Servlet可以去依赖或者反向地通过JNDI的方式进行得到一些外部的一些资源，包括DataSource或者相关的EBJ的组件。像是Spring Framework依赖注入的框架，也能够帮助我们去实现我们的IoC。
+按照IoC的定义，很多方面都是IoC，比如说JavaBeans是IoC的一个容器实现，Servlet的容器也是IoC的实现，因为Servlet可以去依赖或者反向地通过JNDI的方式进行得到一些外部的一些资源，包括DataSource或者相关的EJB的组件。像是Spring Framework依赖注入的框架，也能够帮助我们去实现我们的IoC。
 
 如果是反转控制，那就包括我们说消息，因为消息其实是被动的，我们如果说我们传统的调用链路是一个主动拉的模式，那么IoC其实是一种推的模式那么推的模式在消息事件以及各种这样类似于这种反向的观察者模式的扩展都属于IoC。
 
