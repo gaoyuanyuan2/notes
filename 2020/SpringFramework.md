@@ -652,7 +652,6 @@ BeanFactory 是 IoC 底层容器。
 
 FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻辑。
 
-ObjectFactory 延时查找
 
 * 劝退面试题 - Spring IoC 容器启动时做了哪些准备？
 
@@ -775,7 +774,7 @@ Bean 初始化（Initialization）
 
 ## 第五章：Spring IoC依赖查找（Dependency Lookup） (9讲)
 
-42 | 依赖查找的今世前生：Spring IoC容器从Java标准中学到了什么？
+### 42 | 依赖查找的今世前生：Spring IoC容器从Java标准中学到了什么？
 
 
 ### 43 | 单一类型依赖查找：如何查找已知名称或类型的Bean对象？
@@ -814,8 +813,7 @@ Bean 初始化（Initialization）
     
 就是Bean的定义默认情况是可以覆盖的，之前定义的bean，后面用相同名称可以同时覆盖掉。
 
-我们通过命名接口可以学习到一些什么事情：就当你去表达单和复杂的时候，我们通常来说可以通过继承，那么你去得到我的复杂或者
-复合类型的时候，首先继承我们单一的接口，同时做一些扩展。
+我们通过命名接口可以学习到一些什么事情：就当你去表达单和复杂的时候，我们通常来说可以通过继承，那么你去得到我的复杂或者复合类型的时候，首先继承我们单一的接口，同时做一些扩展。
 
 BeanDefinition其实是在Bean定义的注册阶段。
 
@@ -924,11 +922,11 @@ AnnotationConfigUtils
 
 * 沙雕面试题 - ObjectFactory 与 BeanFactory 的区别？
 
-答：ObjectFactory 与 BeanFactory 均提供依赖查找的能力。不过 ObjectFactory 仅关注一个或一种类型的 Bean 依赖查找，并且自身不具备依赖查找的能力，能力则由 BeanFactory 输出。BeanFactory 则提供了单一类型、集合类型以及层次性等多种依赖找方式。
+答：ObjectFactory 与 BeanFactory 均提供依赖查找的能力。不过 ObjectFactory 仅关注一个或一种类型的 Bean 依赖查找，并且自身不具备依赖查找的能力，能力则由 BeanFactory 输出。BeanFactory 则提供了单一类型、集合类型以及层次性等多种依赖查找方式。
 
 * 996 面试题 - BeanFactory.getBean 操作是否线程安全？
 
-答：BeanFactory.getBean 方法的执行是线程安全的，超过过程中会增加互斥锁
+答：BeanFactory.getBean 方法的执行是线程安全的，操作过程中会增加互斥锁
 
 * 劝退面试题 - Spring 依赖查找与注入在来源上的区别?
 
@@ -947,8 +945,7 @@ AnnotationConfigUtils
 * 自动模式 - 实现方提供依赖自动关联的方式，按照內建的注入规则
   * Autowiring（自动绑定）
 
-*依赖注入类型
-
+#### 依赖注入类型
 |依赖注入类型| 配置元数据举例|
 |:-:|:-:|
 |Setter 方法| <proeprty name="user" ref="userBean"/>|
@@ -1077,6 +1074,10 @@ byType：如果出现多个类型相同的Bean，一种解法就把其他的不�
 基础知识
 * 入口 - DefaultListableBeanFactory#resolveDependency
 * 依赖描述符 - DependencyDescriptor
+  * required 是否必须的
+  * eager 实时注入，和 lazy 相反 
+  * fieldName 字段名称
+  * containingClass 包含类型
 * 自定绑定候选对象处理器 - AutowireCandidateResolver
 
 先定义然后先注册然后先初始化;
