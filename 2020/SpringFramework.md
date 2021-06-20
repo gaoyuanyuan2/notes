@@ -1137,7 +1137,7 @@ Setter 注入（多依赖，非强制性依赖）
 接口回调注入
 
 * 996 面试题 - 你偏好构造器注入还是 Setter 注入？
-答：两种依赖注入的方式均可使用，如果是必须依赖的话，那么推荐使用构造器注入，Setter 注入用于可选依赖。
+答：两种依赖注入的方式均可使用，如果是必须依赖的话，那么推荐使用构造器注入（参数比较少），Setter 注入用于可选依赖。
 
 原始构造器参数构造来进行操作：那么不但可以帮助我们解决我们的必须依赖问题，那么不但可以帮助我们解决我们的必须依赖问题。
 
@@ -1150,7 +1150,26 @@ Setter 注入（多依赖，非强制性依赖）
 
 底层全部都是BeanDefinition，BeanDefinition是最终Bean用于解析的。
 
+
+查找来源
+|来源| 配置元数据|
+|:-:|:-:|
+|Spring BeanDefinition| <bean id="user" class="org.geekbang...User">|
+||@Bean public User user(){...}|
+||BeanDefinitionBuilder|
+|单例对象| API 实现|
+
 ### 72 | 依赖注入的来源：难道依赖注入的来源与依赖查找的不同吗？
+
+注入来源
+|来源| 配置元数据|
+|:-:|:-:|
+|Spring BeanDefinition| <bean id="user" class="org.geekbang...User">|
+||@Bean public User user(){...}|
+||BeanDefinitionBuilder|
+|单例对象| API 实现|
+|非 Spring 容器管理对象||
+
 ```java
     // ResolvableDependency这个依赖，不能用于getBean，非Spring管理对象，只能用于依赖注入
     beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
@@ -1158,7 +1177,16 @@ Setter 注入（多依赖，非强制性依赖）
     beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
     beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 ```
+
+
 ### 73 | Spring容器管理和游离对象：为什么会有管理对象和游离对象？
+
+依赖对象
+|来源 |Spring Bean 对象| 生命周期管理 |配置元信息 |使用场景|
+|:-:|:-:|:-:|:-:|:-:|
+|Spring BeanDefinition |是 |是| 有 |依赖查找、依赖注入|
+|单体对象 |是 |否 |无| 依赖查找、依赖注入|
+|Resolvable Dependency |否| 否| 无 |依赖注入|
 
 ### 74 | Spring Bean Definition作为依赖来源：Spring Bean的来源
 要素
@@ -1215,7 +1243,16 @@ Resolvable Dependency
 
 ### 79 | Spring Bean作用域：为什么Spring Bean需要多种作用域？
 
+|来源| 说明|
+|:-:|:-:|
+|singleton |默认 Spring Bean 作用域，一个 BeanFactory 有且仅有一个实例|
+|prototype |原型作用域，每次依赖查找和依赖注入生成新 Bean 对象|
+|request |将 Spring Bean 存储在 ServletRequest 上下文中|
+|session |将 Spring Bean 存储在 HttpSession 中|
+|application |将 Spring Bean 存储在 ServletContext 中|
+
 层次性的应用，上下文的时候或者层次性的BeanFactory时候，id或名称并不是唯一的。（多个BeanFactory）
+
 
 ### 80 | "singleton" Bean作用域：单例Bean在当前Spring应用真是唯一的吗？
 
@@ -1224,6 +1261,7 @@ Bean作用域其实严格意义上面来讲不是所有的Spring的Bean，而是
 单例和原型可能同时存在，使用的时候会产生一些问题。
 
 无论是 Singleton 还是 Prototype Bean 均会执行初始化方法回调；
+
 不过仅 Singleton Bean 会执行销毁方法回调。
 
 ### 81 | "prototype" Bean作用域：原型Bean在哪些场景下会创建新的实例？
@@ -1233,6 +1271,11 @@ Bean作用域其实严格意义上面来讲不是所有的Spring的Bean，而是
 
 ### 82 | "request" Bean作用域：request Bean会在每次HTTP请求创建新的实例吗？
 
+当对象一旦生成request的时候，每次请求的时候会形成不同对象，它所引用的配置对象是不同的；
+
+主要是基于AbstractRequest来实现，返回前端的对象实际上是一个不变代理对象，最后页面渲染的时候每次新生成一个对象。
+
+
 ### 83 | "session" Bean作用域：session Bean在Spring MVC场景下存在哪些局限性？
 
 ### 84 | "application" Bean作用域：application Bean是否真的有必要？
@@ -1241,22 +1284,26 @@ Bean作用域其实严格意义上面来讲不是所有的Spring的Bean，而是
 
 ### 86 | 课外资料：Spring Cloud RefreshScope是如何控制Bean的动态刷新？
 
+上在SC里面有一种自定义的作用域RefreshScope，
+
 ### 87 | 面试题精选
 
 * 沙雕面试题 - Spring 內建的 Bean 作用域有几种？
-答：singleton、prototype、request、session、application 以及
-websocket
+答：singleton、prototype、request、session、application 以及websocket
 
 * 996 面试题 - singleton Bean 是否在一个应用是唯一的？
-答：否，singleton bean 仅在当前 Spring IoC 容器（BeanFactory）中是单例对象
+
+答：否，singleton bean 仅在当前 Spring IoC 容器（BeanFactory）中是单例对象。因为整个应用可能包含多个应用上下文，也所谓的层次性的上下文。
+
+
+一个静态字段在JVM里面是否唯一？
+
+否，通常来说是给它ClassLoader是唯一的，但是一个应用可以有多个ClassLoader。ClassLoader之间是可以相互隔离的，可以维持不同的一个静态字段。
+
 
 * 劝退面试题 - “application”Bean 是否被其他方案替代？
-答：可以的，实际上，“application” Bean 与“singleton” Bean 没有本质区别。(层次性上下文)，
-它无非就是在某个地方存储了一下。
 
-如果一个静态字段在JVM里面是不是唯一的？
-答：否，通常来说是给它ClassLoader是唯一的，但是一个应用可以有多个ClassLoader，ClassLoader之间是可以相互隔离的。
-
+答：可以的，实际上，“application” Bean 与“singleton” Bean 没有本质区别。(层次性上下文)，它无非就是在某个地方存储了一下。
 
 
 ## 第九章：Spring Bean生命周期（Bean Lifecycle） (18讲)
@@ -1368,6 +1415,17 @@ BeforeInitialization 初始化前阶段就已经完成了PostConstruct
 * 方法回调
   * BeanPostProcessor#postProcessAfterInitialization
 
+
+initializeBean() 逐一回调
+Aware回调:invokeAwareMethods
+BeforeInitialization:applyBeanPostProcessorsBeforeInitialization
+Initialize:invokeInitMethods
+AfterInitialization:applyBeanPostProcessorsAfterInitialization
+
+
+
+
+
 ### 101 | Spring Bean初始化完成阶段：SmartInitializingSingleton
 
 * 方法回调
@@ -1405,11 +1463,10 @@ BeforeInitialization 初始化前阶段就已经完成了PostConstruct
 答：BeanPostProcessor 提供 Spring Bean 初始化前和初始化后的生
 命周期回调，分别对应 postProcessBeforeInitialization 以及
 postProcessAfterInitialization 方法，允许对关心的 Bean 进行扩展
-，甚至是替换。
+，甚至是替换。（返回null是没有调整）
 （这个对象也许是本身参数传过来的Bean对象，也可能不是传输Bean对象，但是如果是返回null的话，相对说是没有调整）
 
-加分项：其中，ApplicationContext 相关的 Aware 回调也是基于
-BeanPostProcessor 实现，即 ApplicationContextAwareProcessor。
+加分项：其中，ApplicationContext 相关的 Aware 回调也是基于BeanPostProcessor 实现，即 ApplicationContextAwareProcessor（内部类，只有在ApplicationContext中调用）。
 
 * 996 面试题 - BeanFactoryPostProcessor 与BeanPostProcessor 的区别
 
@@ -1467,7 +1524,51 @@ Bean 销毁阶段 - destroyBean
   * Bean 属性上下文存储 - AttributeAccessor
   * Bean 元信息元素 - BeanMetadataElement
 
+辅助定义BeanDefinition，同时也可以在一些生命周期阶段辅助我们进行相关的自定义。
+
+
 ### 109 | Spring容器配置元信息
+
+* Spring XML 配置元信息 - beans 元素相关
+|beans元素属性 |默认值 |使用场景|
+|:-:|:-:|:-:|
+|profile| null（留空）| Spring Profiles 配置值|
+|default-lazy-init| default |当 outter beans “default-lazy-init” 属性存在时，继承该值，否则为“false”|
+|default-merge |default |当 outter beans “default-merge” 属性存在时，继承该值，否则为“false”|
+|default-autowire| default |当 outter beans “default-autowire” 属性存在时，继承该值，否则为“no”|
+|default-autowire-candidates |null（留空） |默认 Spring Beans 名称 pattern|
+|default-init-method |null（留空）| 默认 Spring Beans 自定义初始化方法|
+|default-destroy-method| null（留空）| 默认 Spring Beans 自定义销毁方法|
+
+* Spring XML 配置元信息 - 应用上下文相关
+
+|XML 元素| 使用场景|
+|:-:|:-:|
+|<context:annotation-config /> |激活 Spring 注解驱动|
+|<context:component-scan /> |Spring @Component 以及自定义注解扫描|
+|<context:load-time-weaver /> |激活 Spring LoadTimeWeaver|
+|<context:mbean-export />| 暴露 Spring Beans 作为 JMX Beans|
+|<context:mbean-server /> |将当前平台作为 MBeanServer|
+|<context:property-placeholder /> |加载外部化配置资源作为 Spring 属性配置|
+|<context:property-override /> |利用外部化配置资源覆盖 Spring 属性值|
+
+BeanDefinitionParserDelegate处理相关的上下文容器，相关的属性和一些默认值的呈现
+
+
+### 110 | 基于XML资源装载Spring Bean配置元信息
+
+* Spring Bean 配置元信息
+|XML 元素| 使用场景|
+|:-:|:-:|
+|<beans:beans /> |单 XML 资源下的多个 Spring Beans 配置|
+|<beans:bean />| 单个 Spring Bean 定义（BeanDefinition）配置|
+|<beans:alias />| 为 Spring Bean 定义（BeanDefinition）映射别名|
+|<beans:import />| 加载外部 Spring XML 配置资源|
+
+底层实现 - XmlBeanDefinitionReader
+
+推荐用schema(XSD)的方式校验。因为DTD的结构性比较松散，理解方面相对来说会更加的没那么紧凑。
+
 
 这个Bean的加载是有序的，也就是说它是通过first-in-first-out方式；
 
@@ -1477,15 +1578,84 @@ Bean是不是要加载，取决于依赖查找的时机或依赖注入的时机�
 
 如果你用ApplicationContext，AbstractApplicationContext加载的时候，它在最后面refresh的时候，这个过程中它会通过BeanDefinition的顺序来进行初始化。
 
-
-
-### 110 | 基于XML资源装载Spring Bean配置元信息
-
+                         
 ### 111 | 基于Properties资源装载Spring Bean配置元信息：为什么Spring官方不推荐？
+
+* Spring Bean 配置元信息
+|Properties 属性名| 使用场景|
+|:-:|:-:|
+|(class) Bean| 类全称限定名|
+|(abstract)| 是否为抽象的 BeanDefinition|
+|(parent) |指定 parent BeanDefinition 名称|
+|(lazy-init)| 是否为延迟初始化|
+
+底层实现 - PropertiesBeanDefinitionReader
+
+
+* Spring Bean 配置元信息
+
+
+|Properties 属性名 |使用场景|
+|:-:|:-:|
+|(ref) |引用其他 Bean 的名称|
+|(scope) |设置 Bean 的 scope 属性|
+|${n} |n 表示第 n+1 个构造器参数|
+
+
+底层实现 - PropertiesBeanDefinitionReader
+
 
 ### 112 | 基于Java注解装载Spring Bean配置元信息
 
+* Spring 模式注解
+|Spring 注解 |场景说明| 起始版本|
+|:-:|:-:|:-:|
+|@Repository |数据仓储模式注解 |2.0|
+|@Component| 通用组件模式注解| 2.5|
+|@Service| 服务模式注解| 2.5|
+|@Controller Web| 控制器模式注解 |2.5|
+|@Configuration |配置类模式注解 |3.0|
+
+* Spring Bean 定义注解
+|Spring 注解 |场景说明| 起始版本|
+|:-:|:-:|:-:|
+|@Bean| 替换 XML 元素 <bean> |3.0|
+|@DependsOn |替代 XML 属性 <bean depends-on="..."/> |3.0|
+|@Lazy| 替代 XML 属性 <bean lazy-init="true|falses" /> |3.0|
+|@Primary| 替换 XML 元素 <bean primary="true|false" /> |3.0|
+|@Role| 替换 XML 元素 <bean role="..." /> |3.1|
+|@Lookup |替代 XML 属性 <bean lookup-method="..."> |4.1|
+
+* Spring Bean 依赖注入注解
+|Spring 注解 |场景说明| 起始版本|
+|:-:|:-:|:-:|
+|@Autowired |Bean 依赖注入，支持多种依赖查找方式 |2.5|
+|@Qualifier |细粒度的 @Autowired 依赖查找 |2.5|
+|@Resource| 类似于 @Autowired |2.5|
+|@Inject |类似于 @Autowired |2.5|
+
+* Spring Bean 条件装配注解
+|Spring 注解 |场景说明| 起始版本|
+|:-:|:-:|:-:|
+|@Profile |配置化条件装配 |3.1|
+|@Conditional |编程条件装配| 4.0|
+
+* Spring Bean 生命周期回调注解
+|Spring 注解| 场景说明| 起始版本|
+|:-:|:-:|:-:|
+|@PostConstruct |替换 XML 元素 <bean init-method="..." /> 或 InitializingBea |2.5|
+|@PreDestroy |替换 XML 元素 <bean destroy-method="..." /> 或 DisposableBean| 2.5|
+
 ### 113 | Spring Bean配置元信息底层实现之XML资源
+
+* Spring BeanDefinition 解析与注册
+|实现场景| 实现类 |起始版本|
+|:-:|:-:|:-:|
+|XML |资源 XmlBeanDefinitionReader |1.0|
+|Properties| 资源 PropertiesBeanDefinitionReader |1.0|
+|Java 注解| AnnotatedBeanDefinitionReader |3.0|
+
+
 
 Spring XML 资源 BeanDefinition 解析与注册
 
@@ -1503,7 +1673,7 @@ Spring Properties 资源 BeanDefinition 解析与注册
 * 核心 API - PropertiesBeanDefinitionReader
   * 资源
      * 字节流 - Resource
-     * 字符流 - EncodedResouce
+     * 字符流 - EncodedResource
   * 底层
      * 存储 - java.util.Properties
      * BeanDefinition 解析 - API 内部实现
@@ -1524,7 +1694,32 @@ Spring Java 注册 BeanDefinition 解析与注册
 
 ### 116 | 基于XML资源装载Spring IoC容器配置元信息
 
+* Spring IoC 容器相关 XML 配置
+|命名空间| 所属模块  |Schema资源 URL|
+|:-:|:-:|:-:|
+|beans|spring-beans| https://www.springframework.org/schema/beans/spring-beans.xsd|
+|context| spring-context |https://www.springframework.org/schema/context/spring-context.xsd|
+|aop |spring-aop |https://www.springframework.org/schema/aop/spring-aop.xsd|
+|tx |spring-tx |https://www.springframework.org/schema/tx/spring-tx.xsd|
+|util |spring-beans| https://www.springframework.org/schema/util/spring-util.xsd|
+|tool| spring-beans |https://www.springframework.org/schema/tool/spring-tool.xsd|
+
 ### 117 | 基于Java注解装载Spring IoC容器配置元信息
+
+* Spring IoC 容器装配注解
+|Spring 注解 |场景说明 |起始版本|
+|:-:|:-:|:-:|
+|@ImportResource |替换 XML 元素 <import> |3.0|
+|@Import |导入 Configuration Class |3.0|
+|@ComponentScan |扫描指定 package 下标注 Spring 模式注解的类 |3.1|
+
+首先它自身就是说它是标注在某个类上面的，这个类必须是Configuration Class，把Import或ImportResource解析完之后，来再次地把里面的内容再进行重新地进行解析（递归操作）。最终达到它的完整的一个解析的过程。
+
+* Spring IoC 配属属性注解
+|Spring 注解| 场景说明 |起始版本|
+|:-:|:-:|:-:|
+|@PropertySource |配置属性抽象| PropertySource 注解|3.1|
+|@PropertySources |@PropertySource 集合注解|4.0|
 
 ### 118 | 基于Extensible XML authoring 扩展Spring XML元素
 
@@ -1533,16 +1728,30 @@ Spring Java 注册 BeanDefinition 解析与注册
   * 自定义 NamespaceHandler 实现：命名空间绑定
   * 自定义 BeanDefinitionParser 实现：XML 元素与 BeanDefinition 解析
   * 注册 XML 扩展：命名空间与 XML Schema 映射
+  
+  
 
 ### 119 | Extensible XML authoring扩展原理
 
 ### 120 | 基于Properties资源装载外部化配置
 
+* 注解驱动
+  * @org.springframework.context.annotation.PropertySource
+  * @org.springframework.context.annotation.PropertySources
+* API 编程
+  * org.springframework.core.env.PropertySource
+  * org.springframework.core.env.PropertySources
+  
 ### 121 | 基于Yaml资源装载外部化配置
+
+API 编程
+* org.springframework.beans.factory.config.YamlProcessor
+  *  org.springframework.beans.factory.config.YamlMapFactoryBean
+  *  org.springframework.beans.factory.config.YamlPropertiesFactoryBean
 
 ### 122 | 面试题
 
-* 沙雕面试题 - Spring 內建 XML Schema 常见有哪些？
+沙雕面试题 - Spring 內建 XML Schema 常见有哪些？
 
 答：
 
@@ -1555,7 +1764,7 @@ Spring Java 注册 BeanDefinition 解析与注册
 |util |spring-beans |https://www.springframework.org/schema/util/spring-util.xsd|
 |tool |spring-beans| https://www.springframework.org/schema/tool/spring-tool.xsd|
 
-* 996 面试题 - Spring配置元信息具体有哪些？
+996 面试题 - Spring配置元信息具体有哪些？
 
 答：
 
@@ -1565,7 +1774,7 @@ Spring Java 注册 BeanDefinition 解析与注册
 * Spring Profile：通过外部化配置，提供条件分支流程
 
 
-* 劝退面试题 - Extensible XML authoring 的缺点？
+劝退面试题 - Extensible XML authoring 的缺点？
 
 答：
 
@@ -1600,8 +1809,39 @@ Spring Java 注册 BeanDefinition 解析与注册
 
 132 | 依赖注入ResourceLoader：除了ResourceLoaderAware回调注入，还有哪些注入方法？
 
-133 | 面试题精选
+### 133 | 面试题精选
 
+沙雕面试题 - Spring 配置资源中有哪些常见类型？
+
+答：
+* XML 资源
+* Properties 资源
+* YAML 资源
+
+996 面试题 - 请例举不同类型 Spring 配置资源？
+
+答：
+* XML 资源
+  * 普通 Bean Definition XML 配置资源 - *.xml
+  * Spring Schema 资源 - *.xsd
+* Properties 资源
+  * 普通 Properties 格式资源 - *.properties
+  * Spring Handler 实现类映射文件 - META-INF/spring.handlers
+  * Spring Schema 资源映射文件 - META-INF/spring.schemas
+* YAML 资源
+  * 普通 YAML 配置资源 - *.yaml 或 *.yml
+
+劝退面试题 - Java 标准资源管理扩展的步骤？
+
+答：
+* 简易实现
+  * 实现 URLStreamHandler 并放置在 sun.net.www.protocol.${protocol}.Handler 包下
+* 自定义实现
+  * 实现 URLStreamHandler 
+  * 添加 -Djava.protocol.handler.pkgs 启动参数，指向 URLStreamHandler 实现类的包下
+* 高级实现
+  * 实现 URLStreamHandlerFactory 并传递到 URL 之中
+  
 ## 第十二章：Spring国际化（i18n） (5讲)
 
 134 | Spring国际化使用场景
@@ -1613,3 +1853,27 @@ Spring Java 注册 BeanDefinition 解析与注册
 137 | Java国际化标准实现：ResourceBundle潜规则多？
 
 138 | Java文本格式化：MessageFormat脱离Spring场景，能力更强大？
+
+### 139 | 面试题精选 
+
+沙雕面试题 - Spring 国际化接口有哪些？
+
+答：
+* 核心接口 - MessageSource
+* 层次性接口 - org.springframework.context.HierarchicalMessageSource
+
+996 面试题 - Spring 有哪些 MessageSource 內建实现？
+
+答：
+* org.springframework.context.support.ResourceBundleMessageSource
+* org.springframework.context.support.ReloadableResourceBundleMessageSource
+* org.springframework.context.support.StaticMessageSource
+* org.springframework.context.support.DelegatingMessageSource
+
+劝退面试题 - 如何实现配置自动更新 MessageSource？
+
+答：
+* 主要技术
+  * Java NIO 2：java.nio.file.WatchService
+  * Java Concurrency : java.util.concurrent.ExecutorService
+  * Spring：org.springframework.context.support.AbstractMessageSource

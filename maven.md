@@ -217,3 +217,7 @@ eg:
 
 
 mvn dependency:sources
+
+maven 搜索
+
+javax.inject.inject maven artifactid
