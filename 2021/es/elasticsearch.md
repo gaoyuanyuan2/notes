@@ -137,6 +137,27 @@ es的hash函数会确保id被均匀分配到不同的分片的。自增id一般�
 * 数据可视化工具，帮助用户解开对数据的任何疑问
 * 基于Logstash的工具，2013 年加入Elastic公司
 
+键盘命令
+Ctrl/Cmd + I
+自动缩进当前请求
+Ctrl/Cmd + /
+打开当前请求的文档
+Ctrl + Space
+打开自动完成（即使未键入）
+Ctrl/Cmd + Enter
+提交请求
+Ctrl/Cmd + Up/Down
+跳转至前一/后一请求开头或结尾。
+Ctrl/Cmd + Alt + L
+折叠/展开当前范围。
+Ctrl/Cmd + Option + 0
+折叠当前范围除外的所有范围。通过加按 Shift 键来展开。
+Down arrow
+将焦点切换到自动完成菜单。使用箭头进一步选择词
+Enter/Tab
+选择自动完成菜单中当前选定的词或最顶部的词
+Esc
+关闭自动完成菜单
 
 ## 安装
 
@@ -2872,4 +2893,4 @@ JDBC Input Plugin &设计实现思路
 * 备份集群安全配置
 
 
-现在应该是EFK了
+EFK(Elasticsearch+Filebeat+Kibana)收集容器日志
