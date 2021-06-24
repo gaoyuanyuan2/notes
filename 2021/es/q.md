@@ -13,3 +13,12 @@ max virtual memory areas vm.max_map_count [65530] is too low, increase to at lea
 2) sysctl -w vm.max_map_count=262144
 
 https://zhuanlan.zhihu.com/p/348813745
+
+
+## docker desktop volumes
+
+查看数据卷
+
+cd \\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\
+
+https://stackoverflow.com/questions/43181654/locating-data-volumes-in-docker-desktop-windows
