@@ -21,4 +21,19 @@ https://zhuanlan.zhihu.com/p/348813745
 
 cd \\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\
 
+数据存放位置
+
+C:\Users\Y\AppData\Local\Docker\wsl\data
+
 https://stackoverflow.com/questions/43181654/locating-data-volumes-in-docker-desktop-windows
+
+
+## Windows 10 WSL Ubuntu 系统的 root 密码
+
+Ubuntu 的默认 root 密码是随机的，即每次开机都有一个新的 root 密码。
+我们可以在终端输入命令 sudo passwd，然后输入当前用户的密码，终端会提示我们输入新的密码并确认，此时的密码就是 root 新密码。
+修改成功后，输入命令 su root，再输入新的密码就 ok 了。
+
+
+
+

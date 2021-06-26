@@ -1,0 +1,13 @@
+FROM centos
+
+MAINTAINER vyvyan
+
+ENV MYPATH /usr/local
+WORKDIR $MYPATH
+
+RUN yum -y install vim
+RUN yum -y install net-tools
+
+EXPOSE 80
+CMD echo $MYPATH
+CMD /bin/bash
