@@ -35,5 +35,7 @@ Ubuntu 的默认 root 密码是随机的，即每次开机都有一个新的 roo
 修改成功后，输入命令 su root，再输入新的密码就 ok 了。
 
 
+## 导入cvs
 
+https://www.elastic.co/cn/blog/importing-csv-and-log-data-into-elasticsearch-with-file-data-visualizer
 

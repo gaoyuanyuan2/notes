@@ -355,6 +355,8 @@ POST  /_analyze
     "text":"Mastering Elasticseach"
 }
 
+可以在Mapping中为index和search指定不同的analyizer
+
 ### Analyzer由哪几，个部分组成?
 
 Character Filter + Tokenizer + Token Filter
@@ -400,7 +402,10 @@ Character Filter + Tokenizer + Token Filter
 ### 能否更改Mapping的字段类型
 
 * 两种情况
-  * 新增加字段Dynamic设为true时，一旦有新增字段的文档写入，Mapping也同时被更新Dynamic设为false, Mapping 不会被更新，新增字段的数据无法被索引，但是信息会出现在_source中Dynamic设置成Strict，文档写入失败
+  * 新增加字段
+    * Dynamic设为true时，一旦有新增字段的文档写入，Mapping也同时被更新
+    * Dynamic设为false, Mapping 不会被更新，新增字段的数据无法被索引，但是信息会出现在_source中
+    * Dynamic设置成Strict，文档写入失败
   * 对已有字段，一旦已经有数据写入，就不再支持修改字段定义Lucene实现的倒排索引，一但生成后，就不允许修改
   * 如果希望改变字段类型，必须Reindex API，重建索引
 * 原因
@@ -482,9 +487,6 @@ Index Options
 * 记录内容越多，占用存储空间越大
 
 
-
-
-
 ## 查询
 ### 基于Term的查询
 
@@ -506,6 +508,9 @@ Index Options
 即便是对Keyword进行Term查询，同样会进行算分
 
 可以将查询转为Filtering, 取消相关性算分的环节，以提升性能
+
+Match中的terms 之间是or的关系，Match Phrase 的terms 之间是and的关系，并且term之间位置关系也影响搜索的结果
+
 
 ### 结构化数据
 
