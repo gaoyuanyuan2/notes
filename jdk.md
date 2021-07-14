@@ -601,3 +601,4 @@ GitHub资源: https://github.com/mercyblitz
 
 
 accounts.stream().collect(Collectors.toMap(Account::getUsername, Function.identity(), (key1, key2) -> key2));
+accounts.stream().collect(Collectors.groupingBy(Account::getUsername))
