@@ -215,3 +215,7 @@ git push -u origin master
 cd existing_git_repo
 git remote add origin https://gitee.com/yanguowei/notes.git
 git push -u origin master 
+
+### 挑选合并
+ 
+git cherry-pick 9ceaed6774513e1629514ca9b055ecbc01171542
