@@ -39,3 +39,10 @@ Ubuntu 的默认 root 密码是随机的，即每次开机都有一个新的 roo
 
 https://www.elastic.co/cn/blog/importing-csv-and-log-data-into-elasticsearch-with-file-data-visualizer
 
+
+## 禁用交换编辑
+
+大多数操作系统尝试将尽可能多的内存用于文件系统缓存，并急切地换出未使用的应用程序内存。这可能会导致部分 JVM 堆甚至其可执行页面被换出到磁盘。
+交换对性能和节点稳定性非常不利，应该不惜一切代价避免
+
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/setup-configuration-memory.html
