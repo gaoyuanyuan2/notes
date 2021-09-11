@@ -285,4 +285,50 @@ POST 和 PUT 的幂等性质就略费解一点。
 * HTTP 的性能不算差，但不完全适应现在的互联网，还有很大的提升空间。
 
 
+## 海纳百川：HTTP的实体数据
 
+### HTTP 里经常遇到的几个类别：
+
+text：即文本格式的可读数据，我们最熟悉的应该就是 text/html 了，表示超文本文档，此外还有纯文本 text/plain、样式表 text/css 等。
+image：即图像文件，有 image/gif、image/jpeg、image/png 等。
+audio/video：音频和视频数据，例如 audio/mpeg、video/mp4 等。
+application：数据格式不固定，可能是文本也可能是二进制，必须由上层应用程序来解释。常见的有 application/json，application/javascript、application/pdf 等，另外，如果实在是不知道数据是什么类型，像刚才说的“黑盒”，就会是 application/octet-stream，即不透明的二进制数据。
+
+
+### Encoding type 就少了很多，常用的只有下面三种：
+
+gzip：GNU zip 压缩格式，也是互联网上最流行的压缩格式；
+deflate：zlib（deflate）压缩格式，流行程度仅次于 gzip；
+br：一种专门为 HTTP 优化的新压缩算法（Brotli）。
+
+HTTP 协议为此定义了两个 Accept 请求头字段和两个 Content 实体头字段，用于客户端和服务器进行“内容协商”。也就是说，客户端用 Accept 头告诉服务器希望接收什么样的数据，而服务器用 Content 头告诉客户端实际发送了什么样的数据。
+
+Accept字段标记的是客户端可理解的 MIME type，可以用“,”做分隔符列出多个类型，让服务器有更多的选择余地，例如下面的这个头：
+```
+Accept: text/html,application/xml,image/webp,image/png
+```
+Accept: text/html,application/xml,image/webp,image/png
+这就是告诉服务器：“我能够看懂 HTML、XML 的文本，还有 webp 和 png 的图片，请给我这四类格式的数据”。
+
+
+服务器会在响应报文里用头字段Content-Type告诉实体数据的真实类型：
+```
+Content-Type: text/html
+Content-Type: image/png
+```
+这样浏览器看到报文里的类型是“text/html”就知道是 HTML 文件，会调用排版引擎渲染出页面，看到“image/png”就知道是一个 PNG 文件，就会在页面上显示出图像。
+
+
+后来就出现了 Unicode 和 UTF-8，把世界上所有的语言都容纳在一种编码方案里，UTF-8 也成为了互联网上的标准字符集。
+
+
+在 HTTP 协议里用 Accept、Accept-Encoding、Accept-Language 等请求头字段进行内容协商的时候，还可以用一种特殊的“q”参数表示权重来设定优先级，这里的“q”是“quality factor”的意思。
+
+### 小结
+
+* 数据类型表示实体数据的内容是什么，使用的是 MIME type，相关的头字段是 Accept 和 Content-Type；
+* 数据编码表示实体数据的压缩方式，相关的头字段是 Accept-Encoding 和 Content-Encoding；
+* 语言类型表示实体数据的自然语言，相关的头字段是 Accept-Language 和 Content-Language；
+* 字符集表示实体数据的编码方式，相关的头字段是 Accept-Charset 和 Content-Type；
+* 客户端需要在请求头里使用 Accept 等头字段与服务器进行“内容协商”，要求服务器返回最合适的数据；
+* Accept 等头字段可以用“,”顺序列出多个可能的选项，还可以用“;q=”参数来精确指定权重。
