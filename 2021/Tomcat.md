@@ -116,3 +116,5 @@ JVM 无法在堆中分配对象时，会抛出这个异常，导致这个异常�
 4. 由于各种原因，操作系统创建新的线程可能会失败，下面会详细谈到。
 5.JVM 抛出“java.lang.OutOfMemoryError: Unable to create new native thread”错误。
 
+## Tomcat拒绝连接原因分析及网络优化
+
