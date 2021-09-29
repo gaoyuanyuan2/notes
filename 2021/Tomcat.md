@@ -118,3 +118,137 @@ JVM 无法在堆中分配对象时，会抛出这个异常，导致这个异常�
 
 ## Tomcat拒绝连接原因分析及网络优化
 
+### 常见异常
+
+#### java.net.SocketTimeoutException
+
+指超时错误。超时分为连接超时和读取超时，连接超时是指在调用 Socket.connect 方法的时候超时，而读取超时是调用 Socket.read 方法时超时。请你注意的是，连接超时往往是由于网络不稳定造成的，但是读取超时不一定是网络延迟造成的，很有可能是下游服务的响应时间过长。
+
+#### java.net.BindException: Address already in use: JVM_Bind
+
+指端口被占用。当服务器端调用 new ServerSocket(port) 或者 Socket.bind 函数时，如果端口已经被占用，就会抛出这个异常。我们可以用netstat –an命令来查看端口被谁占用了，换一个没有被占用的端口就能解决。
+
+#### java.net.ConnectException: Connection refused: connect
+
+指连接被拒绝。当客户端调用 new Socket(ip, port) 或者 Socket.connect 函数时，可能会抛出这个异常。原因是指定 IP 地址的机器没有找到；或者是机器存在，但这个机器上没有开启指定的监听端口。
+
+解决办法是从客户端机器 ping 一下服务端 IP，假如 ping 不通，可以看看 IP 是不是写错了；假如能 ping 通，需要确认服务端的服务是不是崩溃了。
+
+#### java.net.SocketException: Socket is closed
+
+指连接已关闭。出现这个异常的原因是通信的一方主动关闭了 Socket 连接（调用了 Socket 的 close 方法），接着又对 Socket 连接进行了读写操作，这时操作系统会报“Socket 连接已关闭”的错误。
+
+#### java.net.SocketException: Connection reset/Connect reset by peer: Socket write error
+
+指连接被重置。这里有两种情况，分别对应两种错误：第一种情况是通信的一方已经将 Socket 关闭，可能是主动关闭或者是因为异常退出，这时如果通信的另一方还在写数据，就会触发这个异常（Connect reset by peer）；如果对方还在尝试从 TCP 连接中读数据，则会抛出 Connection reset 异常。
+
+为了避免这些异常发生，在编写网络通信程序时要确保：
+
+程序退出前要主动关闭所有的网络连接。
+检测通信的另一方的关闭连接操作，当发现另一方关闭连接后自己也要关闭该连接。
+
+#### java.net.SocketException: Broken pipe
+
+指通信管道已坏。发生这个异常的场景是，通信的一方在收到“Connect reset by peer: Socket write error”后，如果再继续写数据则会抛出 Broken pipe 异常，解决方法同上。
+
+#### java.net.SocketException: Too many open files
+
+指进程打开文件句柄数超过限制。当并发用户数比较大时，服务器可能会报这个异常。这是因为每创建一个 Socket 连接就需要一个文件句柄，此外服务端程序在处理请求时可能也需要打开一些文件。
+
+你可以通过lsof -p pid命令查看进程打开了哪些文件，是不是有资源泄露，也就是说进程打开的这些文件本应该被关闭，但由于程序的 Bug 而没有被关闭。
+
+如果没有资源泄露，可以通过设置增加最大文件句柄数。具体方法是通过ulimit -a来查看系统目前资源限制，通过ulimit -n 10240修改最大文件数。
+
+
+Tomcat 中两个比较重要的参数：acceptCount 和 maxConnections。acceptCount 用来控制内核的 TCP 连接队列长度，maxConnections 用于控制 Tomcat 层面的最大连接数。在实战环节，我们通过调整 acceptCount 和相关的内核参数somaxconn，增加了系统的并发度。
+
+
+## Tomcat进程占用CPU过高怎么办
+
+对于 CPU 的问题，最重要的是要找到是哪些线程在消耗 CPU，通过线程栈定位到问题代码；如果没有找到个别线程的 CPU 使用率特别高，我们要怀疑到是不是线程上下文切换导致了 CPU 使用率过高。
+
+Blocking 指的是一个线程因为等待临界区的锁（Lock 或者 synchronized 关键字）而被阻塞的状态，请你注意的是处于这个状态的线程还没有拿到锁。
+
+Waiting 指的是一个线程拿到了锁，但是需要等待其他线程执行某些操作。比如调用了 Object.wait、Thread.join 或者 LockSupport.park 方法时，进入 Waiting 状态。前提是这个线程已经拿到锁了，并且在进入 Waiting 状态前，操作系统层面会自动释放锁，当等待条件满足，外部调用了 Object.notify 或者 LockSupport.unpark 方法，线程会重新竞争锁，成功获得锁后才能进入到 Runnable 状态继续执行。
+
+通过 vmstat 命令来查看一下操作系统层面的线程上下文切换活动
+
+https://linux.die.net/man/8/vmstat
+
+## Jetty性能调优
+
+### 操作系统层面调优
+
+对于 Linux 操作系统调优来说，我们需要加大一些默认的限制值，这些参数主要可以在/etc/security/limits.conf中或通过sysctl命令进行配置，其实这些配置对于 Tomcat 来说也是适用的，下面我来详细介绍一下这些参数。
+
+#### TCP 缓冲区大小
+
+TCP 的发送和接收缓冲区最好加大到 16MB，可以通过下面的命令配置：
+
+ sysctl -w net.core.rmem_max = 16777216
+ sysctl -w net.core.wmem_max = 16777216
+ sysctl -w net.ipv4.tcp_rmem =“4096 87380 16777216”
+ sysctl -w net.ipv4.tcp_wmem =“4096 16384 16777216”
+
+#### TCP 队列大小
+
+net.core.somaxconn控制 TCP 连接队列的大小，默认值为 128，在高并发情况下明显不够用，会出现拒绝连接的错误。但是这个值也不能调得过高，因为过多积压的 TCP 连接会消耗服务端的资源，并且会造成请求处理的延迟，给用户带来不好的体验。因此我建议适当调大，推荐设置为 4096。
+
+ sysctl -w net.core.somaxconn = 4096
+net.core.netdev_max_backlog用来控制 Java 程序传入数据包队列的大小，可以适当调大。
+
+sysctl -w net.core.netdev_max_backlog = 16384
+sysctl -w net.ipv4.tcp_max_syn_backlog = 8192
+sysctl -w net.ipv4.tcp_syncookies = 1
+
+#### 端口
+
+如果 Web 应用程序作为客户端向远程服务器建立了很多 TCP 连接，可能会出现 TCP 端口不足的情况。因此最好增加使用的端口范围，并允许在 TIME_WAIT 中重用套接字：
+
+sysctl -w net.ipv4.ip_local_port_range =“1024 65535”
+sysctl -w net.ipv4.tcp_tw_recycle = 1
+
+#### 文件句柄数
+
+高负载服务器的文件句柄数很容易耗尽，这是因为系统默认值通常比较低，我们可以在/etc/security/limits.conf中为特定用户增加文件句柄数：
+
+用户名 hard nofile 40000
+用户名 soft nofile 40000
+
+#### 拥塞控制
+
+Linux 内核支持可插拔的拥塞控制算法，如果要获取内核可用的拥塞控制算法列表，可以通过下面的命令：
+
+sysctl net.ipv4.tcp_available_congestion_control
+这里我推荐将拥塞控制算法设置为 cubic：
+
+sysctl -w net.ipv4.tcp_congestion_control = cubic
+
+### Jetty 本身的调优
+
+Jetty 本身的调优，主要是设置不同类型的线程的数量，包括 Acceptor 和 Thread Pool。
+
+#### Acceptors
+
+Acceptor 的个数 accepts 应该设置为大于等于 1，并且小于等于 CPU 核数。
+
+#### Thread Pool
+
+如果 I/O 越密集，线程阻塞越严重，那么线程数就可以配置多一些。通常情况，增加线程数需要更多的内存，因此内存的最大值也要跟着调整，所以一般来说，Jetty 的最大线程数应该在 50 到 500 之间。
+
+对于 CPU 密集型应用，将最大线程数设置 CPU 核数的 1.5 倍是最佳的。因此，在我们的实际工作中，切勿将线程池直接设置得很大，因为程序所需要的线程数可能会比我们想象的要小。
+
+## 对比
+
+Tomcat 的核心竞争力是成熟稳定，因为它经过了多年的市场考验，应用也相当广泛，对于比较复杂的企业级应用支持得更加全面。也因为如此，Tomcat 在整体结构上比 Jetty 更加复杂，功能扩展方面可能不如 Jetty 那么方便。
+
+而 Jetty 比较年轻，设计上更加简洁小巧，配置也比较简单，功能也支持方便地扩展和裁剪，比如我们可以把 Jetty 的 SessionHandler 去掉，以节省内存资源，因此 Jetty 还可以运行在小型的嵌入式设备中，比如手机和机顶盒。当然，我们也可以自己开发一个 Handler，加入 Handler 链中用来扩展 Jetty 的功能。
+
+
+Jetty 在吞吐量和响应速度方面稍有优势，并且 Jetty 消耗的线程和内存资源明显比 Tomcat 要少，这也恰好说明了 Jetty 在设计上更加小巧和轻量级的特点。
+但是 Jetty 有 2.45% 的错误率，而 Tomcat 没有任何错误，并且我经过多次测试都是这个结果。因此我们可以认为 Tomcat 比 Jetty 更加成熟和稳定。
+
+Tomcat 好比是一位工作多年比较成熟的工程师，轻易不会出错、不会掉链子，但是他有自己的想法，不会轻易做出改变。而 Jetty 更像是一位年轻的后起之秀，脑子转得很快，可塑性也很强，但有时候也会犯一点小错误。
+
+
+
