@@ -1,5 +1,10 @@
 # 透视HTTP协议
 
+![分层](/img/http-1.png) 
+![xmind](/img/http-2.png) 
+![xmind](/img/http-3.png) 
+![传输](/img/http-4.png) 
+
 ## HTTP/2
 
 HTTP/2 的制定充分考虑了现今互联网的现状：宽带、移动、不安全，在高度兼容 HTTP/1.1 的同时在性能改善方面做了很大努力，主要的特点有：
