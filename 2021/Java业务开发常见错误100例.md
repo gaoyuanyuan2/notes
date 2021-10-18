@@ -1,6 +1,26 @@
 
 # Java业务开发常见错误100例
 
+## 线程安全
+
+### ThreadLocal
+
+线程池会重用固定的几个线程，一旦线程重用，那么很可能首次从ThreadLocal获取的值是之前其他用户的请求遗留的值。这时，ThreadLocal 中的用户信息就是其他用户的信息。
+
+使用类似ThreadLocal工具来存放一些数据时，需要特别注意在代码运行完后，显式地去清空设置的数据。
+
+ThreadLocal可以理解为绑定到线程的Map，相同线程的不同逻辑需要共享数据（但又无法通过传值来共享数据），或为了避免相同线程重复创建对象希望重用数据，可以考虑使用ThreadLocal
+
+### ConcurrentHashMap
+
+ConcurrentHashMap 只能保证提供的原子性读写操作是线程安全的。
+
+* 使用了ConcurrentHashMap, 不代表对它的多个操作之间的状态是一 致的，是没有其他线程在操作它的，如果需要确保需要手动加锁。
+* 诸如size、 isEmpty和containsValue等聚合方法，在并发情况下可能会反映ConcurrentHashMap的中间状态。因此在并发情况下，这些方法的返回值只能用作参考,而不能用于流程控制。显然，利用size方法计算差异值，是一个流程控制。
+* 诸如putAll这样的聚合方法也不能确保原子性,在putAll的过程中去获取数据可能会获取到部分数据。.
+
+CopyOnWrite是一个时髦的技术， 不管是Linux还是Redis都会用到。在Java中,CopyOnWriteArrayList虽然是个线程安全的 ArrayList, 但因为其实现方式是，每次修改数据时都会复制一份数据出来,所以有明显的适用场景，即读写少或者说希望无锁读的场景。
+
 
 ## 定位应用问题，排错套路很重要
 
