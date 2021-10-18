@@ -9,6 +9,8 @@
 
 使用类似ThreadLocal工具来存放一些数据时，需要特别注意在代码运行完后，显式地去清空设置的数据。
 
+ThreadLocal可以理解为绑定到线程的Map，相同线程的不同逻辑需要共享数据（但又无法通过传值来共享数据），或为了避免相同线程重复创建对象希望重用数据，可以考虑使用ThreadLocal
+
 ### ConcurrentHashMap
 
 ConcurrentHashMap 只能保证提供的原子性读写操作是线程安全的。
