@@ -15,5 +15,27 @@
 
 区块链语言
 
+## 编写 Go 第一个程序
+
+应用程序入口
+
+1.必须是main包: package main
+2.必须是main方法: func main()
+3.文件名不一定是main.go
+
+
+获取命令行参数.
+与其他主要编程语言的差异
+
+main函数不支持传入参数
+
+在程序中直接通过os.Args获取命令行参数
+
+## 变量和常量
+
+编写测试程序
+1.源码文件以_test结尾: xxx_test.go
+2.测试方法名以Test开头: func TestXXX(t *testing.T) {...}
+
 
 
