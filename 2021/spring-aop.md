@@ -43,4 +43,13 @@ ASM 底层操作
 
 性能损耗更大
 
+## 问: Spring AOP和AspectJ AOP存在哪些区别?
+
+答:
+* AspectJ是AOP完整实现，Spring AOP则是部分实现
+* Spring AOP比AspectJ使用更简单
+* Spring AOP整合AspectJ注解与Spring IoC容器↑
+* Spring AOP仅支持基于代理模式的AOP
+* Spring AOP仅支持方法级别的Pointcuts
+
 
