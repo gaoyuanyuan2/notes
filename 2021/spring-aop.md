@@ -53,3 +53,12 @@ ASM 底层操作
 * Spring AOP仅支持方法级别的Pointcuts
 
 
+## AspectJ
+
+如果在一个aspect里面，around通常来说是在before之前。
+
+如果在不同aspect里面，根据Ordered的情况来决定。
+
+每一次的pointcut，它是筛选出一个JoinPoint，一个JoinPoint对应的是一个方法的拦截执行，方法拦截执行里面有around/before/after动作。
+
+

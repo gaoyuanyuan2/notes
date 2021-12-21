@@ -4,31 +4,34 @@
 
 ### 01 | 课程介绍
 
-生态：
+编程实现 设计理念 具体实现方法
+
+#### 生态：
 1.SpringBoot
 2.SpringCloud
 3.SpringSecurity
 
-细节：
+#### 细节：
 1.Java语言特性
 
 反射、动态代理、枚举、泛型、注解、ARM和Lambda语法
 
 2.设计思想和模式的实现
 
-OP、lOC、DDD、TDD、GoF23等
+OOP、IOC、DDD、TDD、GoF23等
 
 3.Java API的封装与简化
 
 JDBC事务Transaction Servlet
 
-JPA JMX Bean Validation
+JPA /JMX /Bean Validation
 
 4.JSR规范的适配与实现
 
 5.第三方框架的整合
 
-优势
+
+#### Spring 优势
 
 API抽象
 
@@ -58,18 +61,16 @@ JavaEE: Servlet、Jsp、Jpa、Jms
 
 #### 3.自己的实现
 
-* 面向对象（OOP）：多态，接口对应语义
-* 切面编程：jdk动态代理（局限性）、ASM、CGLIB、AspectJ 类的提升
-* 面向元编程
- * 配置元信息包含三种
- * 配置类：配置属性在XML或者.properties文件，会影响运行时的一些状态，比如影响依赖注入的方式
- * 注解
+* 面向对象（OOP）：封装/继承/多态，接口对应语义
+* 切面编程：jdk动态代理（局限性，接口），整合外部第三方框架ASM、CGLIB、AspectJ ，类上的提升。
+* 面向元编程（不是面向程序来编程，在程序的基础上再进行元数据的一些处理）
+ * 配置元信息，配置类：配置属性在XML或者.properties文件，会影响运行时的一些状态，比如影响依赖注入的方式
+ * 注解（Spring 3.0/Java 5）
  * 属性配置：占位符、外部化配置
-   * 不是面向程序来编程，在程序的基础上在进行元数据的一些处理
 * 面向模块编程 
 * 面向函数编程 
 
-
+依赖注入和依赖查找的来源：部分或者大部分来源于Spring的实例，或者是Spring的Bean，还包括包括一些单体对象或者Spring类型的一些对象等。
 
 ### 03 | 课前准备：学习三件套（工具、代码与大脑）
 
