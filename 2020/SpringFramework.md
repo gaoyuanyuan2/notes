@@ -181,8 +181,8 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 |1.x|1.3+（动态代理）|J2EE 1.3 +|
 |2.x|1.4.2+（NIO）|J2EE 1.3 +|
 |3.x （注解 事件）|5+(注解)|J2EE 1.4和Java EE 5|
-|4.x|6+|JavaEE6和7|
-|5.x|8+|Java EE 7|
+|4.x (Spring Boot 1.x)|6+|JavaEE6和7|
+|5.x(Spring Boot 2.x)|8+|Java EE 7|
 
 
 ### 06 | Spring模块化设计：Spring功能特性如何在不同模块中组织？
