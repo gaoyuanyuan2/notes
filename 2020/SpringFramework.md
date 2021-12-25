@@ -83,7 +83,7 @@ JavaEE: Servlet、Jsp、Jpa、Jms
 
 工具
 JDK: Oracle JDK 8
-Spring Framework: 5.2.2.REL EASE
+Spring Framework: 5.2.2.RELEASE
 IDE: IDEA 2019 (Community)
 Maven: 3.2 +
 
@@ -111,7 +111,7 @@ Maven: 3.2 +
 * DAO支持(DAO Support)
 * O/R映射(O/R Mapping)
 * XML编列(XML Marshalling)
-  * 类似序列号和反序列化
+  * 类似序列化和反序列化
 
 # 必考 事务抽象
 
@@ -261,7 +261,7 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 |Java Beans|1.0 +|CachedIntrospectionResults|
 |动态代理(Dynamic Proxy)|1.0 +|JdkDynamicAopProxy|
 
-Java反射是从ava 1.2
+Java反射是从Java 1.2
 
 还会借助于像AspectJ来进行实现
 
@@ -273,7 +273,7 @@ Java反射是从ava 1.2
 |XML处理(DOM,SAX..)|1.0 +|XmlBeanDefinitionReader|
 |Java管理扩展(JMX)|1.2 +|@ManagedResource |
 |Instrumentation|2.0 +|InstrumentationSavingAgent|
-|并发框架(J.U.C)|3.0 +|ThreadPoolT askScheduler|
+|并发框架(J.U.C)|3.0 +|ThreadPoolTaskScheduler|
 |格式化(Formatter)|3.0 +|DateFormatter|
 
 XmlBeanDefinitionReader：把XML内容就XML配置文件，读取为BeanDefinition 。
@@ -591,11 +591,11 @@ BeanFactory对象不是內建 Bean 对象，而是容器內建依赖，非Spring
   * 基于 XML 文件
   * 基于 Properties 文件
   * 基于 Java 注解
-  * 基于 Java API（专题讨论）
+  * 基于 Java API
 * IoC 容器配置
   * 基于 XML 文件
   * 基于 Java 注解
-  * 基于 Java API （专题讨论）
+  * 基于 Java API 
 * 外部化属性配置
   * 基于 Java 注解
 
@@ -634,7 +634,7 @@ BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的
 第一个操作是创建我们的BeanFactory，并且进行初步的初始化，加入些我们的内建的一些Bean对象或者Bean依赖，以及加上一些内建的非Bean的依赖。
 第二部分就是关于BeanFactory的扩展点，通过执行BeanFactoryPostProcessor。
 第三个是对Bean的一些修改或者扩展，通过执行这个BeanPostProcessor来进行操作，这个操作这里只是注册，具体的调用是在BeanFactory里面进行操作的。
-再接下来就会定义我们说的国际化事件等
+定义国际化事件等
 
 #### 运行
 
@@ -656,7 +656,7 @@ FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻�
 
 * 劝退面试题 - Spring IoC 容器启动时做了哪些准备？
 
-答：IoC 配置元信息读取和解析、IoC 容器生命周期、Spring 事件发布、国际化等，更多答案将在后续专题章节逐一讨论
+答：IoC 配置元信息读取和解析、IoC 容器生命周期、Spring 事件发布、国际化等。
 
 ## 第四章：Spring Bean基础 (11讲)
 
@@ -933,7 +933,7 @@ AnnotationConfigUtils
 
 答：答案将《Spring IoC依赖注入》以及《Spring IoC依赖来源》章节中继续讨论。
 
-## 第六章：Spring IoC依赖注入（Dependency Injection） (20讲)
+## 第六章：Spring IoC依赖注入（Dependency Injection） 
 
 
 ### 51 | 依赖注入的模式和类型：Spring提供了哪些依赖注入的模式和类型？
@@ -1143,9 +1143,9 @@ Setter 注入（多依赖，非强制性依赖）
 原始构造器参数构造来进行操作：那么不但可以帮助我们解决我们的必须依赖问题，那么不但可以帮助我们解决我们的必须依赖问题。
 
 * 劝退面试题 - Spring 依赖注入的来源有哪些？
-答：答案将《Spring IoC依赖来源》章节中继续讨论。
+答：Spring IoC依赖来源继续讨论。
 
-## 第七章：Spring IoC依赖来源（Dependency Sources） (8讲)
+## 第七章：Spring IoC依赖来源（Dependency Sources）
 
 ### 71 | 依赖查找的来源：除容器内建和自定义Spring Bean之外，还有其他来源提供依赖查找吗？
 
