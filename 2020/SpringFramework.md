@@ -563,7 +563,7 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 AOP 抽象
 事务抽象
 事件机制
-SPI 扩展(包括BeanPostProcessor、BeanFactoryPostProcessor、Spring Factories)
+SPI 扩展(包括BeanPostProcessor（Bean的扩展）、BeanFactoryPostProcessor（IoC容器的一个扩展）、Spring Factories（工厂扩展机制，SpringBoot自动装配经常用到）)
 强大的第三方整合
 易测试性
 更好的面向对象
