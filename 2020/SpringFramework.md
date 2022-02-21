@@ -542,6 +542,8 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 
 ### 20 | 构造器注入 VS. Setter 注入：为什么Spring官方文档的解读会与作者的初心出现偏差？
 
+构造器注入避免状态不确定性地被修改，Bean初始化之后是不变的对象，对程序和维护性都会带来更多的便利。
+
 ### 21 | 面试题精选
 
 * 沙雕面试题 - 什么是 IoC ？
@@ -571,6 +573,12 @@ SPI 扩展(包括BeanPostProcessor（Bean的扩展）、BeanFactoryPostProcessor
 ## 第三章：Spring IoC容器概述 (9讲)
 
 ### 22 | Spring IoC依赖查找：依赖注入还不够吗？依赖查找存在的价值几何？
+
+ObjectFactory:间接延迟查找bean
+ObjectFactory是没有生成新的Bean
+
+FactoryBean则不同
+
 
 ### 23 | Spring IoC依赖注入：Spring提供了哪些依赖注入模式和类型呢？
 
@@ -626,6 +634,10 @@ BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的
   * Environment 抽象（Environment Abstraction）
 
 ### 28 | 使用Spring IoC容器：选BeanFactory还是ApplicationContext？
+
+* BeanFactory是Spring底层loC容器
+* ApplicationContext是具备应用特性的BeanFactory超集
+
 
 ### 29 | Spring IoC容器生命周期：IoC容器启停过程中发生了什么？
 
@@ -761,6 +773,7 @@ Bean 初始化（Initialization）
   * 1. 关闭 Spring 容器（应用上下文）
   * 2. 执行 GC
   * 3. Spring Bean 覆盖的 finalize() 方法被回调
+  
 ### 41 | 面试题精选
 
 * 沙雕面试题 - 如何注册一个 Spring Bean？
@@ -777,6 +790,7 @@ Bean 初始化（Initialization）
 
 ### 42 | 依赖查找的今世前生：Spring IoC容器从Java标准中学到了什么？
 
+相对JavaBeans以及JNDI,Spring的实现确实会优雅很多。
 
 ### 43 | 单一类型依赖查找：如何查找已知名称或类型的Bean对象？
 
@@ -1068,7 +1082,7 @@ byType：如果出现多个类型相同的Bean，一种解法就把其他的不�
   * 单一类型
   * 集合类型
   
-来进行注入一些非必要性的依赖，这种方式可以避免些关于NoSuchBeanException相关的一个错误。
+ObjectProvider来进行注入一些非必要性的依赖，这种方式可以避免些关于NoSuchBeanException相关的一个错误。
 
 ### 65 | 依赖处理过程：依赖处理时会发生什么？其中与依赖查找的差异在哪？
 
