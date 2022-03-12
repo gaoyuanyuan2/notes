@@ -4,31 +4,34 @@
 
 ### 01 | 课程介绍
 
-生态：
+编程实现 设计理念 具体实现方法
+
+#### 生态：
 1.SpringBoot
 2.SpringCloud
 3.SpringSecurity
 
-细节：
+#### 细节：
 1.Java语言特性
 
 反射、动态代理、枚举、泛型、注解、ARM和Lambda语法
 
 2.设计思想和模式的实现
 
-OP、lOC、DDD、TDD、GoF23等
+OOP、IOC、DDD、TDD、GoF23等
 
 3.Java API的封装与简化
 
 JDBC事务Transaction Servlet
 
-JPA JMX Bean Validation
+JPA /JMX /Bean Validation
 
 4.JSR规范的适配与实现
 
 5.第三方框架的整合
 
-优势
+
+#### Spring 优势
 
 API抽象
 
@@ -58,18 +61,16 @@ JavaEE: Servlet、Jsp、Jpa、Jms
 
 #### 3.自己的实现
 
-* 面向对象（OOP）：多态，接口对应语义
-* 切面编程：jdk动态代理（局限性）、ASM、CGLIB、AspectJ 类的提升
-* 面向元编程
- * 配置元信息包含三种
- * 配置类：配置属性在XML或者.properties文件，会影响运行时的一些状态，比如影响依赖注入的方式
- * 注解
+* 面向对象（OOP）：封装/继承/多态，接口对应语义
+* 切面编程：jdk动态代理（局限性，接口），整合外部第三方框架ASM、CGLIB、AspectJ ，类上的提升。
+* 面向元编程（不是面向程序来编程，在程序的基础上再进行元数据的一些处理）
+ * 配置元信息，配置类：配置属性在XML或者.properties文件，会影响运行时的一些状态，比如影响依赖注入的方式
+ * 注解（Spring 3.0/Java 5）
  * 属性配置：占位符、外部化配置
-   * 不是面向程序来编程，在程序的基础上在进行元数据的一些处理
 * 面向模块编程 
 * 面向函数编程 
 
-
+依赖注入和依赖查找的来源：部分或者大部分来源于Spring的实例，或者是Spring的Bean，还包括包括一些单体对象或者Spring类型的一些对象等。
 
 ### 03 | 课前准备：学习三件套（工具、代码与大脑）
 
@@ -82,7 +83,7 @@ JavaEE: Servlet、Jsp、Jpa、Jms
 
 工具
 JDK: Oracle JDK 8
-Spring Framework: 5.2.2.REL EASE
+Spring Framework: 5.2.2.RELEASE
 IDE: IDEA 2019 (Community)
 Maven: 3.2 +
 
@@ -110,7 +111,7 @@ Maven: 3.2 +
 * DAO支持(DAO Support)
 * O/R映射(O/R Mapping)
 * XML编列(XML Marshalling)
-  * 类似序列号和反序列化
+  * 类似序列化和反序列化
 
 # 必考 事务抽象
 
@@ -180,8 +181,8 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 |1.x|1.3+（动态代理）|J2EE 1.3 +|
 |2.x|1.4.2+（NIO）|J2EE 1.3 +|
 |3.x （注解 事件）|5+(注解)|J2EE 1.4和Java EE 5|
-|4.x|6+|JavaEE6和7|
-|5.x|8+|Java EE 7|
+|4.x (Spring Boot 1.x)|6+|JavaEE6和7|
+|5.x(Spring Boot 2.x)|8+|Java EE 7|
 
 
 ### 06 | Spring模块化设计：Spring功能特性如何在不同模块中组织？
@@ -260,7 +261,7 @@ Mock对象我们可以去动态的去生成它，比如说在Spring Framework里
 |Java Beans|1.0 +|CachedIntrospectionResults|
 |动态代理(Dynamic Proxy)|1.0 +|JdkDynamicAopProxy|
 
-Java反射是从ava 1.2
+Java反射是从Java 1.2
 
 还会借助于像AspectJ来进行实现
 
@@ -272,7 +273,7 @@ Java反射是从ava 1.2
 |XML处理(DOM,SAX..)|1.0 +|XmlBeanDefinitionReader|
 |Java管理扩展(JMX)|1.2 +|@ManagedResource |
 |Instrumentation|2.0 +|InstrumentationSavingAgent|
-|并发框架(J.U.C)|3.0 +|ThreadPoolT askScheduler|
+|并发框架(J.U.C)|3.0 +|ThreadPoolTaskScheduler|
 |格式化(Formatter)|3.0 +|DateFormatter|
 
 XmlBeanDefinitionReader：把XML内容就XML配置文件，读取为BeanDefinition 。
@@ -541,6 +542,8 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 
 ### 20 | 构造器注入 VS. Setter 注入：为什么Spring官方文档的解读会与作者的初心出现偏差？
 
+构造器注入避免状态不确定性地被修改，Bean初始化之后是不变的对象，对程序和维护性都会带来更多的便利。
+
 ### 21 | 面试题精选
 
 * 沙雕面试题 - 什么是 IoC ？
@@ -562,7 +565,7 @@ Setter注入应该主要用于可选的依赖项，这些依赖项可以被分�
 AOP 抽象
 事务抽象
 事件机制
-SPI 扩展(包括BeanPostProcessor、BeanFactoryPostProcessor、Spring Factories)
+SPI 扩展(包括BeanPostProcessor（Bean的扩展）、BeanFactoryPostProcessor（IoC容器的一个扩展）、Spring Factories（工厂扩展机制，SpringBoot自动装配经常用到）)
 强大的第三方整合
 易测试性
 更好的面向对象
@@ -570,6 +573,12 @@ SPI 扩展(包括BeanPostProcessor、BeanFactoryPostProcessor、Spring Factories
 ## 第三章：Spring IoC容器概述 (9讲)
 
 ### 22 | Spring IoC依赖查找：依赖注入还不够吗？依赖查找存在的价值几何？
+
+ObjectFactory:间接延迟查找bean
+ObjectFactory是没有生成新的Bean
+
+FactoryBean则不同
+
 
 ### 23 | Spring IoC依赖注入：Spring提供了哪些依赖注入模式和类型呢？
 
@@ -590,11 +599,11 @@ BeanFactory对象不是內建 Bean 对象，而是容器內建依赖，非Spring
   * 基于 XML 文件
   * 基于 Properties 文件
   * 基于 Java 注解
-  * 基于 Java API（专题讨论）
+  * 基于 Java API
 * IoC 容器配置
   * 基于 XML 文件
   * 基于 Java 注解
-  * 基于 Java API （专题讨论）
+  * 基于 Java API 
 * 外部化属性配置
   * 基于 Java 注解
 
@@ -626,6 +635,10 @@ BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的
 
 ### 28 | 使用Spring IoC容器：选BeanFactory还是ApplicationContext？
 
+* BeanFactory是Spring底层loC容器
+* ApplicationContext是具备应用特性的BeanFactory超集
+
+
 ### 29 | Spring IoC容器生命周期：IoC容器启停过程中发生了什么？
 
 #### 启动
@@ -633,7 +646,7 @@ BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的
 第一个操作是创建我们的BeanFactory，并且进行初步的初始化，加入些我们的内建的一些Bean对象或者Bean依赖，以及加上一些内建的非Bean的依赖。
 第二部分就是关于BeanFactory的扩展点，通过执行BeanFactoryPostProcessor。
 第三个是对Bean的一些修改或者扩展，通过执行这个BeanPostProcessor来进行操作，这个操作这里只是注册，具体的调用是在BeanFactory里面进行操作的。
-再接下来就会定义我们说的国际化事件等
+定义国际化事件等
 
 #### 运行
 
@@ -655,7 +668,7 @@ FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻�
 
 * 劝退面试题 - Spring IoC 容器启动时做了哪些准备？
 
-答：IoC 配置元信息读取和解析、IoC 容器生命周期、Spring 事件发布、国际化等，更多答案将在后续专题章节逐一讨论
+答：IoC 配置元信息读取和解析、IoC 容器生命周期、Spring 事件发布、国际化等。
 
 ## 第四章：Spring Bean基础 (11讲)
 
@@ -760,6 +773,7 @@ Bean 初始化（Initialization）
   * 1. 关闭 Spring 容器（应用上下文）
   * 2. 执行 GC
   * 3. Spring Bean 覆盖的 finalize() 方法被回调
+  
 ### 41 | 面试题精选
 
 * 沙雕面试题 - 如何注册一个 Spring Bean？
@@ -776,6 +790,7 @@ Bean 初始化（Initialization）
 
 ### 42 | 依赖查找的今世前生：Spring IoC容器从Java标准中学到了什么？
 
+相对JavaBeans以及JNDI,Spring的实现确实会优雅很多。
 
 ### 43 | 单一类型依赖查找：如何查找已知名称或类型的Bean对象？
 
@@ -932,7 +947,7 @@ AnnotationConfigUtils
 
 答：答案将《Spring IoC依赖注入》以及《Spring IoC依赖来源》章节中继续讨论。
 
-## 第六章：Spring IoC依赖注入（Dependency Injection） (20讲)
+## 第六章：Spring IoC依赖注入（Dependency Injection） 
 
 
 ### 51 | 依赖注入的模式和类型：Spring提供了哪些依赖注入的模式和类型？
@@ -1067,7 +1082,7 @@ byType：如果出现多个类型相同的Bean，一种解法就把其他的不�
   * 单一类型
   * 集合类型
   
-来进行注入一些非必要性的依赖，这种方式可以避免些关于NoSuchBeanException相关的一个错误。
+ObjectProvider来进行注入一些非必要性的依赖，这种方式可以避免些关于NoSuchBeanException相关的一个错误。
 
 ### 65 | 依赖处理过程：依赖处理时会发生什么？其中与依赖查找的差异在哪？
 
@@ -1142,9 +1157,9 @@ Setter 注入（多依赖，非强制性依赖）
 原始构造器参数构造来进行操作：那么不但可以帮助我们解决我们的必须依赖问题，那么不但可以帮助我们解决我们的必须依赖问题。
 
 * 劝退面试题 - Spring 依赖注入的来源有哪些？
-答：答案将《Spring IoC依赖来源》章节中继续讨论。
+答：Spring IoC依赖来源继续讨论。
 
-## 第七章：Spring IoC依赖来源（Dependency Sources） (8讲)
+## 第七章：Spring IoC依赖来源（Dependency Sources）
 
 ### 71 | 依赖查找的来源：除容器内建和自定义Spring Bean之外，还有其他来源提供依赖查找吗？
 
@@ -1349,6 +1364,8 @@ Bean作用域其实严格意义上面来讲不是所有的Spring的Bean，而是
    
 它是一个在初始在实例化之前的一个前置操作
 
+能够帮助我们提前的去生成一些类似像代理对象的方式来替换掉默认的Spring loC里边的实现内容。
+
 
 ### 94 | Spring Bean实例化阶段：Bean实例是通过Java反射创建吗？
 
@@ -1378,10 +1395,15 @@ Bean作用域其实严格意义上面来讲不是所有的Spring的Bean，而是
 
 ### 97 | Aware接口回调阶段：众多Aware接口回调的顺序是安排的？
 
-* Spring Aware 接口
+#### Spring Aware 接口
+
+* BeanFactory 回调
   * BeanNameAware
   * BeanClassLoaderAware
   * BeanFactoryAware
+
+* ApplicationContext回调
+
   * EnvironmentAware
   * EmbeddedValueResolverAware
   * ResourceLoaderAware
@@ -1433,6 +1455,7 @@ AfterInitialization:applyBeanPostProcessorsAfterInitialization
 
 在我们的所有的单例对象实例化之后，BeanDefinition已经变成Bean之后，逐一地进行我们的Singleton回调。
 
+比PostProcessor更加得有用
 
 
 ### 102 | Spring Bean销毁前阶段：DestructionAwareBeanPostProcessor用在怎样的场景?
@@ -1578,7 +1601,7 @@ Bean是不是要加载，取决于依赖查找的时机或依赖注入的时机�
 
 如果你用ApplicationContext，AbstractApplicationContext加载的时候，它在最后面refresh的时候，这个过程中它会通过BeanDefinition的顺序来进行初始化。
 
-                         
+
 ### 111 | 基于Properties资源装载Spring Bean配置元信息：为什么Spring官方不推荐？
 
 * Spring Bean 配置元信息
@@ -1733,6 +1756,24 @@ Spring Java 注册 BeanDefinition 解析与注册
 
 ### 119 | Extensible XML authoring扩展原理
 
+#### 触发时机
+
+* AbstractApplicationContext#obtainFreshBeanFactory
+  * AbstractRefreshableApplicationContext#refreshBeanFactory
+    * AbstractXmlApplicationContext#loadBeanDefinitions
+      * ...
+        * XmlBeanDefinitionReader#doL oadBeanDefinitions
+          * ...
+            * BeanDefinitionParserDelegate#parseCustomElement
+
+#### 核心流程
+
+* BeanDefinitionParserDelegate#parseCustomElement(org.w3c.dom.Element, BeanDefinition)
+  * 获取namespace
+  * 通过namespace解析NamespaceHandler
+  * 构造ParserContext
+  * 解析元素，获取BeanDefinition
+
 ### 120 | 基于Properties资源装载外部化配置
 
 * 注解驱动
@@ -1748,6 +1789,10 @@ API 编程
 * org.springframework.beans.factory.config.YamlProcessor
   *  org.springframework.beans.factory.config.YamlMapFactoryBean
   *  org.springframework.beans.factory.config.YamlPropertiesFactoryBean
+
+编译时候为什么也没有问题
+兑明它当时依赖的时候就设置它的optional等于true
+
 
 ### 122 | 面试题
 
@@ -1791,23 +1836,113 @@ API 编程
 * Spring 要自立门户（重要的话，要讲三遍）
 * Spring “抄”、“超” 和 “潮
 
-124 | Java标准资源管理：Java URL资源管理存在哪些潜规则？
+### 124 | Java标准资源管理：Java URL资源管理存在哪些潜规则？
 
-125 | Spring资源接口：Resource接口有哪些语义？它是否“借鉴”了SUN的实现呢？
+#### Java标准资源定位
+|职责|说明|
+|---|---|
+|面向资源|文件系统、artifact (jar、 war、 ear 文件)以及远程资源(HTTP、 FTP等)|
+|API整合|java.lang.ClassLoader#getResource、java.io.File 或java.net.URL|
+|资源定位|java.net.URL或java.net.URI|
+|面向流式存储|java.net.URL Connection|
+|协议扩展|java.net.URL .StreamHandler或java.net.URL .StreamHandlerFactory|
 
-126 | Spring内建Resource实现：Spring框架提供了多少种内建的Resource实现呢？
+* 基于java.net.URL StreamHandler扩展协议
+  * JDK 1.8內建协议实现
+|协议|实现类|
+|---|---|
+|file|sun.net.www.protocol.file.Handler|
+|ftp|sun.net.www.protocol.ftp.Handler|
+|http|sun.net.www.protocol.http.Handler|
+|https|sun.net.www.protocol.https.Handler|
+|jar|sun.net.www.protocol.jar.Handler|
+|mailto|sun.net.www.protocol.mailto.Handler|
+|netdoc|sun.net.www.protocol.netdoc.Handler|
 
-127 | Spring Resource接口扩展：Resource能否支持写入以及字符集编码？
+* 基于java.net.URL StreamHandler扩展协议
+  * 实现类名必须为“Handler'
+|实现类命名规则|说明|
+|---|---|
+|默认|sun.net.www.protocol.${protocol}.Handler|
+|自定义|通过Java Properties java.protocol.handler.pkgs指定实现类包名，实现类名必须为“Handler”。如果存在多包名指定，通过分隔符“1”|
 
-128 | Spring资源加载器：为什么说Spring应用上下文也是一种Spring资源加载器？
 
-129 | Spring通配路径资源加载器：如何理解路径通配Ant模式？
 
-130 | Spring通配路径模式扩展：如何扩展路径匹配的规则？
+### 125 | Spring资源接口：Resource接口有哪些语义？它是否“借鉴”了SUN的实现呢？
 
-131 | 依赖注入Spring Resource：如何在XML和Java注解场景注入Resource对象？
+* 资源接口
+|类型|接口|
+|---|---|
+|输入流|org.springframework.core.io.InputStreamSource|
+|只读资源|org.springframework.core.io.Resource|
+|可写资源|org.springframework.core.io.WritableResource|
+|编码资源|org.springframework.core.io.support.EncodedResource|
+|上下文资源|org.springframework.core.io.ContextResource|
 
-132 | 依赖注入ResourceLoader：除了ResourceLoaderAware回调注入，还有哪些注入方法？
+
+### 126 | Spring内建Resource实现：Spring框架提供了多少种内建的Resource实现呢？
+
+* 內建实现
+|资源来源|资源协议|实现类|
+|---|---|---|
+|Bean定义|无|org.springframework.beans.factory.support.BeanDefinitionResource|
+|数组|无|org.springframework.core.io.ByteArrayResource|
+|类路径|classpath:/|org.springframework.core.io.ClassPathResource|
+|文件系统|file:/|org.springframework.core.io.FileSystemResource|
+|URL|URL支持的协议|org.springframework.core.io.UrlResource|
+|ServletContext|无|org.springframework.web.context.support.ServletContextResource|
+
+
+### 127 | Spring Resource接口扩展：Resource能否支持写入以及字符集编码？
+
+* 可写资源接口
+  * org.springframework.core.io.WritableResource
+    * org.springframework.core.io.FileSystemResource
+    * org.springframework.core.io.FileUrlResource (@since 5.0.2)
+    * org.springframework.core.io.PathResource (@since 4.0 & @Deprecated)
+* 编码资源接口
+  * org.springframework.core.io.support.EncodedResource
+
+
+### 128 | Spring资源加载器：为什么说Spring应用上下文也是一种Spring资源加载器？
+
+* Resource加载器
+  * org.springframework.core.io.Resourcel _oader
+    * org.springframework.core.io.DefaultResourcel _oader
+      * org.springframework.core.io.FileSystemResourcel oader
+      * org.springframework.core.io.ClassRelativeResourceL oader
+      * org.springframework.context.support.AbstractApplicationContext
+
+
+### 129 | Spring通配路径资源加载器：如何理解路径通配Ant模式？
+
+* 通配路径ResourceL oader
+  * org.springframework.core.io.support.ResourcePatternResolver
+    * org.springframework.core.io.support.PathMatchingResourcePatternResolver
+* 路径匹配器
+  * org.springframework.util.PathMatcher
+    * Ant模式匹配实现- org.springframework.util. AntPathMatcher
+
+### 130 | Spring通配路径模式扩展：如何扩展路径匹配的规则？
+
+* 实现org.springframework.util.PathMatcher
+* 重置PathMatcher
+  * PathMatchingResourcePatternResolver#setPathMatcher
+
+
+### 131 | 依赖注入Spring Resource：如何在XML和Java注解场景注入Resource对象？
+
+* 基于@Value实现
+  * 如:
+    * @Value(“classpath:/...")
+    * private Resource resource;
+
+
+### 132 | 依赖注入ResourceLoader：除了ResourceLoaderAware回调注入，还有哪些注入方法？
+
+* 方法一:实现ResourceLoaderAware回调
+* 方法二: @Autowired 注入ResourceLoader
+* 方法三:注入ApplicationContext作为ResourceLoader
 
 ### 133 | 面试题精选
 
@@ -1844,17 +1979,92 @@ API 编程
   
 ## 第十二章：Spring国际化（i18n） (5讲)
 
-134 | Spring国际化使用场景
+### 134 | Spring国际化使用场景
 
-135 | Spring国际化接口：MessageSource不是技术的创造者，只是技术的搬运工？
+* 普通国际化文案
+* Bean Validation校验国际化文案
+* Web站点页面渲染
+* Web MVC错误消息提示
 
-136 | 层次性MessageSource：双亲委派不是ClassLoader的专利吗？
+### 135 | Spring国际化接口：MessageSource不是技术的创造者，只是技术的搬运工？
 
-137 | Java国际化标准实现：ResourceBundle潜规则多？
+* 核心接口
+  * org.springframework.context.MessageSource
+* 主要概念
+  * 文案模板编码(code)
+  * 文案模板参数(args)
+  * 区域(Locale)
 
-138 | Java文本格式化：MessageFormat脱离Spring场景，能力更强大？
 
-### 139 | 面试题精选 
+### 136 | 层次性MessageSource：双亲委派不是ClassLoader的专利吗？
+
+* Spring层次性接口回顾
+  * org.springframework.beans.factory.HierarchicalBeanFactory
+  * org.springframework.context.ApplicationContext
+  * org.springframework.beans.factory.config.BeanDefinition
+* Spring层次性国际化接口
+  * org.springframework.context.HierarchicalMessageSource
+  
+层次性
+* ClassLoader
+* ResourceBundle
+
+搜索范围更大，弹性或者复用方面会更加的便利
+
+### 137 | Java国际化标准实现：ResourceBundle潜规则多？
+
+* 核心接口
+  * 抽象实现- java.util.ResourceBundle
+  * Properties资源实现- java.util.PropertyResourceBundle
+  * 例举实现- java.util.ListResourceBundle
+
+* ResourceBundle核心特性
+  * Key-Value设计
+  * 层次性设计
+  * 缓存设计
+  * 字符编码控制 - java.util.ResourceBundle.Control (@since 1.6)
+  * Control SPI扩展 - java.util.spi.ResourceBundleControlProvider (@since 1.8)
+
+
+### 138 | Java文本格式化：MessageFormat脱离Spring场景，能力更强大？
+
+* 核心接口
+  * java.text.MessageFormat
+* 基本用法
+  * 设置消息格式模式 - new MessageFormat(..)
+  * 格式化 - format(new Object[]{..})
+* 消息格式模式
+  * 格式元素 : {ArgumentIndex (,FormatType,(FormatStyle))}
+  * FormatType: 消息格式类型，可选项，每种类型在number、date、 time 和choice类型选其一
+  * FormatStyle:消息格式风格，可选项，包括: short、 medium、long、 full、 integer、 currency、percent
+
+* 高级特性
+  * 重置消息格式模式
+  * 重置java.util.Locale
+  * 重置java.text.Format
+
+### 139 | MessageSource开箱即用实现：ResourceBundle +MessageFormat组合拳？
+
+* 基于ResourceBundle + MessageFormat组合MessageSource实现
+  * org.springframework.context.support.ResourceBundleMessageSource
+* 可重载Properties + MessageFormat组合MessageSource实现
+  * org.springframework.context.support.ReloadableResourceBundleMessageSource
+
+### 140 | MessageSource内建依赖：到底“我”是谁？
+
+* MessageSource內建Bean可能来源
+  * 预注册Bean名称为:“messageSource”，类型为: MessageSource Bean
+  * 默认內建实现 - DelegatingMessageSource
+    * 层次性查找MessageSource对象
+
+### 141 | 课外资料：SpringBoot为什么要新建MessageSource Bean？ 
+
+* Spring Boot为什么要新建MessageSource Bean?
+  * AbstractApplicationContext 的实现决定了MessageSource 內建实现
+  * Spring Boot通过外部化配置简化MessageSource Bean构建
+  * Spring Boot基于Bean Validation校验非常普遍
+
+### 142 | 面试题精选 
 
 沙雕面试题 - Spring 国际化接口有哪些？
 
@@ -1877,3 +2087,892 @@ API 编程
   * Java NIO 2：java.nio.file.WatchService
   * Java Concurrency : java.util.concurrent.ExecutorService
   * Spring：org.springframework.context.support.AbstractMessageSource
+
+## 第十三章：Spring校验（Validation） (7讲)
+
+### 143 | Spring校验使用场景：为什么Validator并不只是Bean的校验？
+
+* Spring常规校验(Validator)
+* Spring数据绑定(DataBinder)
+* Spring Web参数绑定(WebDataBinder)
+* Spring WebMVC/WebFlux处理方法参数校验
+
+### 144 | Validator接口设计：画虎不成反类犬？
+
+* 接口职责
+  * Spring内部校验器接口，通过编程的方式校验目标对象
+* 核心方法
+  * supports(Class): 校验目标类能否校验
+  * validate(Object,Errors): 校验目标对象，并将校验失败的内容输出至Errors对象
+* 配套组件
+  * 错误收集器: org.springframework.validation.Errors
+  * Validator工具类: ora.springframework.validation.ValidationUtils
+
+
+### 145 | Errors接口设计：复杂得没有办法理解？
+
+* Errors文案生成步骤
+  * 选择Errors实现(如: org.springframework.validation.BeanPropertyBindingResult) 
+  * 调用reject或rejectValue方法
+  * 获取Errors对象中ObjectError或FieldError
+  * 将ObjectError或FieldError中的code和args， 关联MessageSource实现(如:ResourceBundleMessageSource)
+
+
+### 146 | Errors文案来源：Spring国际化充当临时工？
+
+* 接口职责
+  * 数据绑定和校验错误收集接口，与Java Bean和其属性有强关联性
+* 核心方法
+  * reject方法(重载) :收集错误文案
+  * rejectValue方法(重载) :收集对象字段中的错误文案
+* 配套组件
+  * Java Bean错误描述: org.springframework.validation.ObjectError
+  * Java Bean属性错误描述: org.springframework.validation.FieldError
+
+### 147 | 自定义Validator：为什么说Validator容易实现，却难以维护？
+
+* 实现org.springframework.validation.Validator接口
+  * 实现supports方法.
+  * 实现validate方法
+    * 通过Errors对象收集错误
+      * ObjectError: 对象(Bean) 错误:
+      * FieldError: 对象(Bean) 属性(Property) 错误
+    * 通过ObjectError和FieldError关联MessageSource实现获取最终文案
+
+### 148 | Validator的救赎：如果没有Bean Validation，Validator将会在哪里吗？
+
+* Bean Validation 与Validator适配
+  * 核心组件- org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
+  * 依赖Bean Validation - JSR- -303 or JSR- 349 provider
+  * Bean 方法参数校验- org.springframework.validation.beanvalidation.MethodValidationPostProcessor
+
+
+### 149 | 面试题精选
+
+沙雕面试题- Spring校验接口是哪个?
+答: org.springframework.validation.Validator
+
+996面试题- Spring有哪些校验核心组件?
+答:
+* 检验器: org.springframework.validation.Validator
+* 错误收集器: org.springframework.validation.Errors
+* Java Bean错误描述: org.springframework.validation.ObjectError
+* Java Bean属性错误描述: org.springframework.validation.FieldError
+* Bean Validation适配:
+  * org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
+
+劝退面试题-请通过示例演示Spring Bean的校验?
+
+## 第十四章：Spring数据绑定（Data Binding） (9讲)
+
+### 150 | Spring数据绑定使用场景：为什么官方文档描述一笔带过？
+
+* Spring BeanDefinition到Bean实例创建
+* Spring数据绑定(DataBinder)
+* Spring Web参数绑定(WebDataBinder)
+
+### 151 | Spring数据绑定组件：DataBinder
+
+* 标准组件
+  * org.springframework.validation.DataBinder
+* Web组件
+  * org.springframework.web.bind.WebDataBinder
+
+  * org.springframework.web.bind.ServletRequestDataBinder
+
+  * org.springframework. web.bind.support. WebRequestDataBinder
+
+  * org.springframework.web.bind.support.WebExchangeDataBinder (since 5.0)
+
+    
+
+* DataBinder核心属性
+|属性|说明|
+|---|---|
+|target|关联目标Bean|
+|objectName|目标Bean名称|
+|bindingResult|属性绑定结果|
+|typeConverter|类型转换器|
+|conversionService|类型转换服务|
+|messageCodesResolver|校验错误文案Code处理器|
+|validators|关联的Bean Validator实例集合|
+
+* DataBinder绑定方法
+  * bind(PropertyValues): 将PropertyValues Key-Value内容映射到关联Bean (target) 中的属性上
+
+### 152 | DataBinder绑定元数据：PropertyValues不是Spring Bean属性元信息吗？
+
+* DataBinder元数据- PropertyValues
+|特征|说明|
+|---|---|
+|数据来源|BeanDefinition,主要来源XML资源配置BeanDefinition|
+|数据结构|由一个或多个PropertyValue组成|
+|成员结构|PropertyValue包含属性名称，以及属性值(包括原始值、类型转换后的值)|
+|常见实现|MutablePropertyValues|
+|Web扩展实现|ServletConfigPropertyValues、ServletRequestParameterPropertyValues|
+|相关生命周期|InstantiationAwareBeanPostProcessor#postProcessProperties|
+
+### 153 | DataBinder绑定控制参数：ignoreUnknownFields和ignoreInvalidFields有什么作用？
+
+* DataBinder绑定特殊场景分析
+  * 当PropertyValues中包含名称x的PropertyValue，目标对象B不存在x属性，当bind方法执行时会发生什么?
+  * 当PropertyValues中包含名称x的PropertyValue，目标对象B中存在x属性，当bind方法执行时如何避免B属性x不被绑定?
+  * 当PropertyValues中包含名称x.y的PropertyValue， 目标对象B中存在x属性(嵌套y属性)，当.bind方法执行时，会发生什么?
+
+* DataBinder绑定控制参数
+|参数名称|说明|
+|---|---|
+|ignoreUnknownFields|是否忽略未知字段，默认值: true|
+|ignoreInvalidFields|是否忽略非法字段，默认值: false|
+|autoGrowNestedPaths|是否自动增加嵌套路径，默认值: true|
+|allowedFields|绑定字段白名单|
+|disallowedFields|绑定字段黑名单|
+|requiredFields|必须绑定字段|
+
+### 154 | Spring底层JavaBeans替换实现：BeanWrapper源于JavaBeans而高于JavaBeans？
+
+* JavaBeans核心实现- java.beans.BeanInfo
+  * 属性(Property)
+    * java.beans.PropertyEditor
+* 方法(Method)
+  * 事件(Event)
+  * 表达式(Expression)
+* Spring替代实现- org.springframework.beans. BeanWrapper
+  * 属性(Property)
+    * java.beans.PropertyEditor
+  * 嵌套属性路径(nested path)
+
+### 155 | BeanWrapper的使用场景：Spring数据绑定只是副业？
+
+* BeanWrapper
+  * Spring 底层JavaBears基础设施的中心化接口
+  * 通常不会直接使用，间接用于BeanFactory和DataBinder
+  * 提供标准JavaBeans分析和操作，能够单独或批量存储Java Bean的属性(properties)
+  * 支持嵌套属性路径(nested path)
+  * 实现类org.springframework.beans.BeanWrapperImpl
+
+### 156 | 课外资料：标准JavaBeans是如何操作属性的
+
+* 标准JavaBeans是如何操作属性的?
+|API|说明|
+|---|---|
+|java.beans.Introspector|Java Beans内省API|
+|java.beans.BeanInfo|Java Bean元信息API|
+|java.beans.BeanDescriptor|Java Bean信息描述符|
+|java.beans.PropertyDescriptor|Java Bean属性描述符|
+|java.beans.MethodDescriptor|Java Bean方法描述符|
+|java.beans.EventSetDescriptor|Java Bean 事件集合描述符|
+
+### 157 | DataBinder数据校验：又见Validator
+
+* DataBinder与BeanWrapper
+  * bind 方法生成BeanPropertyBindingResult
+  * BeanPropertyBindingResult 关联BeanWrapper
+
+
+### 158 | 面试题精选
+
+沙雕面试题 - Spring数据绑定API是什么?
+答: org.springframework.validation.DataBinder
+
+BeanWrapper与JavaBeans之间关系是?
+Spring底层JavaBeans基础设施的中心化接口
+BeanWrapper是基于JavaBeans来进行的二次封装，可以称为它是Java Beans的一个Wrapper，它会简化JavaBeans，把一些不重要的一些概念来进行模糊掉，比如说它里面的事件在BeanWrapper里面就没有体现。
+在JavaBeans的事件基础.上面做了一个提升，它的API的使用更加得友好。
+唯一实现：BeanWrapperImpl
+
+
+劝退面试题 - DataBinder是怎么完成属性类型转换的?
+
+一种是传统的基于PropertyEditor的方式来进行修改，另外的方式是通过Converter API来进行操作。
+
+
+## 第十五章：Spring类型转换（Type Conversion） (15讲)
+
+### 159 | Spring类型转换的实现：Spring提供了哪几种类型转换的实现？
+
+* 基于JavaBeans接口的类型转换实现
+  * 基于java.beans.PropertyEditor接口扩展
+* Spring 3.0+通用类型转换实现
+
+### 160 | 使用场景：Spring类型转换各自的使用场景以及发展脉络是怎样的？
+
+* 场景分析
+|场景|基于JavaBeans接口的类型转换实现|Spring 3.0+通用类型转换实现|
+|---|---|
+|数据绑定|YES|YES|
+|BeanWrapper|YES|YES|
+|Bean属性类型装换|YES|YES|
+|外部化属性类型转换|NO|YES|
+
+
+### 161 | 基于JavaBeans接口的类型转换：Spring是如何扩展PropertyEditor接口实现类型转换的？
+
+* 核心职责
+  * 将String类型的内容转化为目标类型的对象
+* 扩展原理
+  * Spring框架将文本内容传递到PropertyEditor实现的setAsText(String)方法
+  * PropertyEditor#setAsText(String) 方法实现将String类型转化为目标类型的对象
+  * 将目标类型的对象传入PropertyEditor#setValue(Object) 方法
+  * PropertyEditor#setValue(Object) 方法实现需要临时存储传入对象
+  * Spring 框架将通过PropertyEditor#getValue() 获取类型转换后的对象
+
+### 162 | Spring内建PropertyEditor扩展：哪些常见类型被Spring内建PropertyEditor实现？
+
+內建扩展(org.springframework.beans.propertyeditors 包下)
+
+|转换场景|实现类|
+|---|---|
+|String -> Byte数组|org.springframework.beans.propertyeditors.ByteArrayPropertyEditor|
+|String -> Char|org.springframework.beans.propertyeditors.CharacterEditor|
+|String -> Char数组|org.springframework.beans.propertyeditors.CharArrayPropertyEditor|
+|String -> Charset|org.springframework.beans.propertyeditors.CharsetEditor|
+|String -> Class|org.springframework.beans.propertyeditors.ClassEditor|
+|String -> Currency|org.springframework.beans.propertyeditors.CurrencyEditor|
+
+
+### 163 | 自定义PropertyEditor扩展：不尝试怎么知道它好不好用？
+
+* 扩展模式
+  * 扩展java.beans.PropertyEditorSupport类
+* 实现org.springframework.beans.PropertyEditorRegistrar
+  * 实现registerCustomEditors(org.springframework.beans.PropertyEditorRegistry) 方法
+  * 将PropertyEditorRegistrar 实现注册为Spring Bean
+* 向org.springframework.beans.PropertyEditorRegistry注册自定义PropertyEditor实现
+  * 通用类型实现registerCustomEditor(Class<?>, PropertyEditor)
+  * Java Bean属性类型实现: registerCustomEditor(Class<?>, String, PropertyEditor)
+
+### 164 | SpringPropertyEditor的设计缺陷：为什么基于PropertyEditor扩展并不适合作为类型转换？
+
+* 违反职责单一原则.
+  * java.beans.PropertyEditor接口职责太多，除了类型转换，还包括Java Beans事件和Java GUI交互
+* java.beans.PropertyEditor实现类型局限
+  * 来源类型只能为java.lang.String 类型
+* java.beans.PropertyEditor实现缺少类型安全
+  * 除了实现类命名可以表达语义，实现类无法感知目标转换类型
+
+### 165 | Spring 3通用类型转换接口：为什么Converter接口设计比PropertyEditor更合理？
+
+* 类型转换接口- org.springframework.core.convert.converter.Converter<S,T>
+  * 泛型参数S:来源类型，参数T:目标类型
+  * 核心方法: T convert(S)
+* 通用类型转换接口- org.springframework.core.convert.converter.GenericConverter
+  * 核心方法: convert(Object,TypeDescriptor,TypeDescriptor)
+  * 配对类型: org.springframework.core.convert.converter.GenericConverter.ConvertiblePair
+  * 类型描述: org.springframework.core.convert.TypeDescriptor
+
+### 166 | Spring内建类型转换器：Spring的内建类型转换器到底有多丰富？
+
+* 內建扩展
+
+|转换场景|实现类所在包名(package)|
+|---|---|
+|日期/时间相关|org.springframework.format.datetime|
+|Java 8日期/时间相关|org.springframework.format.datetime.standard|
+|通用实现|org.springframework.core.convert.support|
+
+
+### 167 | Converter接口的局限性：哪种类型转换场景Converter无法满足？有什么应对之策？
+
+* 局限一:缺少Source Type和Target Type前置判断
+  * 应对:增加org.springframework.core.convert.converter.ConditionalConverter实现
+* 局限二:仅能转换单一的Source Type和Target Type
+  * 应对:使用org.springframework.core.convert.converter.GenericConverter代替
+
+### 168 | GenericConverter接口：为什么GenericConverter比Converter更通用？
+
+* org.springframework.core.convert.converter GenericConverter
+|核心要素|说明|
+|---|---|
+|使用场景|用于“复合”类型转换场景，比如Collection、Map、数组等|
+|转换范围|Set<ConvertiblePait> getConvertible Types()|
+|配对类型|org.springframework.core.convert.converter.GenericConverter.ConvertiblePair|
+|转换方法|convert(Object,TypeDescriptor,TypeDescriptor)|
+|类型描述|org.springframework.core.convert.TypeDescriptor|
+
+### 169 | 优化GenericConverter接口：为什么GenericConverter需要补充条件判断？
+
+* GenericConverter局限性
+  * 缺少Source Type和Target Type前置判断
+  * 单一类型转换实现复杂
+* GenericConverter优化接口 - ConditionalGenericConverter
+  * 复合类型转换: org.springframework.core.convert.converter.GenericConverter
+  * 类型条件判断: org.springframework.core.convert.converter.ConditionalConverter
+
+
+### 170 | 扩展Spring类型转换器：为什么最终注册的都是ConditionalGenericConverter？
+
+* 实现转换器接口
+  * org.springframework.core.convert.converter.Converter
+  * org.springframework.core.convert.converter.ConverterFactory
+  * org.springframework.core.convert.converter.GenericConverter
+* 注册转换器实现
+  * 通过ConversionServiceFactoryBean Spring Bean
+  * 通过org.springframework.core.convert.ConversionService API
+
+### 171 | 统一类型转换服务：ConversionService足够通用吗？
+
+* org.springframework.core.convert.ConversionService
+|实现类型|说明|
+|GenericConversionService|通用ConversionService模板实现，不内置转化器实现|
+|DefaultConversionService|基础ConversionService实现，内置常用转化器实现|
+|FormattingConversionService|通用Formatter + GenericConversionService实现，不内置转化器和Formatter实现|
+|DefaultFormattingConversionService|DefaultConversionService +格式化实现(如: JSR-354 Money &Currency, JSR- -310 Date-Time)|
+
+
+### 172 | ConversionService作为依赖-能够同时作为依赖查找和依赖注入的来源吗？
+
+* 类型转换器底层接口- org.springframework.beans.TypeConverter
+  * 起始版本: Spring 2.0
+  * 核心方法- convertIfNecessary重载方法
+  * 抽象实现- org.springframework.beans.TypeConverterSupport
+  * 简单实现- org.springframework.beans.SimpleTypeConverter
+
+* 类型转换器底层抽象实现- org.springframework.beans.TypeConverterSupport
+  * 实现接口- org.springframework.beans.TypeConverter
+  * 扩展实现- org.springframework.beans.PropertyEditorRegistrySupport
+  * 委派实现- org.springframework.beans.TypeConverterDelegate
+
+* 类型转换器底层委派实现- org.springframework.beans.TypeConverterDelegate
+  * 构造来源- org.springframework.beans.AbstractNestablePropertyAccessor实现
+    * org.springframework.beans. BeanWrapperImpl
+  * 依赖- java.beans.PropertyEditor 实现
+    * 默认內建实现- PropertyEditorRegistrySupport#registerDefaultEditors
+  * 可选依赖- org.springframework.core.convert.ConversionService 实现
+
+
+### 173 | 面试题精选
+
+沙雕面试题- Spring类型转换实现有哪些?
+答:
+1. 基于JavaBeans PropertyEditor接口实现
+2. Spring 3.0+通用类型转换实现
+
+996面试题- Spring类型转换器接口有哪些?
+答:
+* 类型转换接口- org.springframework.core.convert.converter.Converter
+* 通用类型转换接口- org.springframework.core.convert.converter.GenericConverter
+* 类型条件接口- org.springframework.core.convert.converter.ConditionalConverter
+* 综合类型转换接口-org.springframework.core.convert.converter.ConditionalGenericConverter
+
+劝退面试题- TypeDescriptor是如何处理泛型?
+
+
+## 第十六章：Spring泛型处理（Generic Resolution） (8讲)
+
+### 174 | Java泛型基础：泛型参数信息在擦写后还会存在吗？
+
+* 泛型类型
+  * 泛型类型是在类型上参数化的泛型类或接口
+* 泛型使用场景
+  * 编译时强类型检查
+  * 避免类型强转
+  * 实现通用算法
+
+* 泛型类型擦写
+  * 泛型被引入到Java语言中，以便在编译时提供更严格的类型检查并支持泛型编程。类型擦除确保不会为参数化类型创建新类;因此，泛型不会产生运行时开销。为了实现泛型，编译器将类型擦除应用于:
+    * 将泛型类型中的所有类型参数替换为其边界，如果类型参数是无边界的，则将其替换为“Object”。因此，生成的字节码只包含普通类、接口和方法
+    * 必要时插入类型转换以保持类型安全
+    * 生成桥方法以保留扩展泛型类型中的多态性
+
+
+### 175 | Java 5类型接口-Type：Java类型到底是Type还是Class？
+
+* Java 5类型接口- java.lang.reflect.Type
+|派生类或接口|说明|
+|---|---|
+|java.lang.Class|Java类API,如java.lang.String|
+|java.lang.reflect.GenericArrayType↑|泛型数组类型|
+|java.lang.reflect.ParameterizedType|泛型参数类型|
+|java.lang.reflect.TypeVariable|泛型类型变量，如Collection<E>中的E|
+|java.lang.reflect.WildcardType|泛型通配类型|
+
+* Java泛型反射API
+|类型|API|
+|---|---|
+|泛型信息(Generics Info)|java.lang.Class#getGenericlnfo()|
+|泛型参数(Parameters)|java.lang.reflect.ParameterizedType|
+|泛型父类(Super Classes)|java.lang.Class#getGenericSuperclass()|
+|泛型接口(Interfaces)|java.lang.Class#getGenericInterfaces()|
+|泛型声明(Generics Declaration)|java.lang.reflect.GenericDeclaration|
+
+### 176 | Spring泛型类型辅助类：GenericTypeResolver
+
+* 核心API - org.springframework.core.GenericTypeResolver
+  * 版本支持: [2.5.2 , )
+  * 处理类型相关(Type) 相关方法
+    * resolveReturnType
+    * resolveType
+  * 处理泛型参数类型(ParameterizedType) 相关方法
+    * resolveReturnTypeArgument
+    * resolveTypeArgument
+    * resolveTypeArguments
+  * 处理泛型类型变量(TypeVariable) 相关方法
+    * getTypeVariableMap
+
+
+### 177 | Spring泛型集合类型辅助类：GenericCollectionTypeResolver
+
+* 核心API - org.springframework.core.GenericCollectionTypeResolver
+  * 版本支持: [2.0 , 4.3] 
+  * 替换实现: org.springframework.core.ResolvableType
+  * 处理Collection相关
+    * getCollection*Type
+  * 处理Map相关
+    * getMapKey*Type
+    * getMapValue*Type
+
+### 178 | Spring方法参数封装-MethodParameter：不仅仅是方法参数
+
+* 核心API - org.springframework.core.MethodParameter
+  * 起始版本: [2.0 ,)
+  * 元信息
+    * 关联的方法- Method
+    * 关联的构造器- Constructor
+    * 构造器或方法参数索引- parameterIndex
+    * 构造器或方法参数类型- parameterType
+    * 构造器或方法参数泛型类型- genericParameterType
+    * 构造器或方法参数参数名称- parameterName
+    * 所在的类- containingClass
+
+
+### 179 | Spring 4.2泛型优化实现-ResolvableType
+
+* 核心API - org.springframework.core.ResolvableType
+  * 起始版本: [4.0 , )
+  * 扮演角色: GenericTypeResolver和GenericCollectionTypeResolver替代者
+  * 工厂方法: for*方法
+  * 转换方法: as*方法
+  * 处理方法: resolve* 方法
+
+
+### 180 | ResolvableType的局限性：形式比人强？
+
+* 局限一: ResolvableType 无法处理泛型擦写
+* 局限二: ResolvableType 无法处理非具体化的ParameterizedType
+
+
+### 181 | 面试题精选
+
+沙雕面试题-Java泛型擦写发生在编译时还是运行时?
+答:运行时
+
+996面试题-请介绍Java 5 Type类型的派生类或接口?
+答:
+* java.lang.Class
+* java.lang.reflect.GenericArrayType
+* java.lang.reflect.ParameterizedType
+* java.lang.reflect.TypeVariable
+* java.lang.reflect.WildcardType
+
+劝退面试题-请说明ResolvableType的设计优势?
+答:
+* 简化Java 5 Type API开发，屏蔽复杂API的运用，如ParameterizedType
+* 不变性设计(Immutability)
+* Fluent API设计(Builder 模式)，链式(流式)编程.
+
+
+## 第十七章：Spring事件（Events） (20讲)
+
+### 182 | Java事件/监听器编程模型：为什么Java中没有提供标准实现？
+
+* 设计模式-观察者模式扩展
+  * 可观者对象(消息发送者) - java.util.Observable
+  * 观察者- java.util.Observer
+* 标准化接口
+  * 事件对象- java.util.EventObject
+  * 事件监听器- java.util.EventListener
+
+### 183 | 面向接口的事件/监听器设计模式：单事件监听和多事件监听怎么选？
+
+* 事件/监听器场景举例
+|Java技术规范| 事件接口|监听器接口|
+|---|---|---|
+|JavaBeans|java.beans.PropertyChangeEvent|java.beans.PropertyChangeListener|
+|Java AWT|java.awt.event.MouseEvent|java.awt.event.MouseListener|
+Java Swing|javax.swing.event.MenuEvent|javax.swing.event.MenuListener|
+|Java Preference|java.util.prefs.PreferenceChangeEvent|java.util.prefs.PreferenceChangeListener|
+
+### 184 | 面向注解的事件/监听器设计模式：便利也会带来伤害？
+
+* 事件/监听器注解场景举例
+|Java技术规范|事件注解|监听器注解|
+|---|---|---|
+|Servlet 3.0+||@javax.servlet.annotation.WebListener|
+|JPA 1.0+|@javax.persistence.PostPersist||
+|Java Common|@PostConstruct||
+|EJB 3.0+|@javax.ejb.PrePassivate||
+|JSF 2.0+|@javax.faces.event.ListenerFor||
+
+### 185 | Spring标准事件-ApplicationEvent：为什么不用EventObject？
+
+* Java标准事件java.util.EventObject扩展
+  * 扩展特性:事件发生事件戳
+* Spring应用上下文ApplicationEvent扩展- ApplicationContextEvent
+  * Spring应用.上下文(ApplicationContext) 作为事件源
+  * 具体实现:
+    * org.springframework.context.event.ContextClosedEvent
+    * org.springframework.context.event.ContextRefreshedEvent
+    * org.springframework.context.event.ContextStartedEvent
+    * org.springframework.context.event.ContextStoppedEvent
+
+### 186 | 基于接口的Spring事件监听器：ApplicationListener为什么选择单事件监听模式？
+
+* Java标准事件监听器java.util.EventListener扩展
+  * 扩展接口- org.springframework.context.ApplicationL istener
+  * 设计特点:单一类型事件处理
+  * 处理方法: onApplicationEvent(ApplicationEvent)
+  * 事件类型: org.springframework.context.ApplicationEvent
+
+### 187 | 基于注解的Spring事件监听器：@EventListener有哪些潜在规则？
+
+* Spring注解- @org.springframework.context.event.EventListener
+|特性|说明|
+|---|---|
+|设计特点|支持多ApplicationEvent类型，无需接口约束|
+|注解目标|方法|
+|是否支持异步执行|支持|
+|是否支持泛型类型事件|支持|
+|是指支持顺序控制|支持，配合@Order注解控制|
+
+java 反射获取的方法顺序是不固定的
+
+
+### 188 | 注册Spring ApplicationListener：直接注册和间接注册有哪些差异？
+
+* 方法一: ApplicationListener 作为Spring Bean注册
+* 方法二:通过ConfigurableApplicationContext API注册
+
+### 189 | Spring事件发布器：Spring 4.2给ApplicationEventPublisher带来哪些变化？
+
+* 方法一:通过ApplicationEventPublisher发布Spring事件
+  * 获取ApplicationEventPublisher
+    * 依赖注入
+* 方法二:通过ApplicationEventMulticaster发布Spring事件
+  * 获取ApplicationEventMulticaster
+    * 依赖注入
+    * 依赖查找
+
+### 190 | Spring 层次性上下文事件传播：这是一个Feature还是一个Bug？
+
+* 发生说明
+  * 当Spring应用出现多层次Spring应用上下文(ApplicationContext) 时，如Spring WebMVC、Spring Boot或Spring Cloud场景下，由子ApplicationContext发起Spring事件可能会传递到其ParentApplicationContext (直 到Root)的过程
+* 如何避免
+  * 定位Spring事件源(ApplicationContext) 进行过滤处理
+
+### 191 | Spring内建事件（Built-in Events）：为什么ContextStartedEvent和 ContextStoppedEvent是鸡肋事件？ - 深入剖析源码，掌握核心编程特性
+
+* ApplicationContextEvent派生事件
+  * ContextRefreshedEvent : Spring应用上下文就绪事件
+  * ContextStartedEvent : Spring应用上下文启动事件
+  * ContextStopedEvent : Spring应用上下文停止事件
+  * ContextClosedEvent : Spring应用上下文关闭事件
+
+
+### 192 | Spring 4.2 Payload事件：为什么说PayloadApplicationEvent并非一个良好的设计？
+
+* Spring Payload事件- org.springframework.context.PayloadApplicationEvent
+  * 使用场景:简化Spring事件发送，关注事件源主体
+  * 发送方法
+    * ApplicationEventPublisher#publishEvent(java.lang.Object)
+    
+### 193 | 自定义Spring事件：自定义事件业务用得上吗？
+
+* 扩展org.springframework.context.ApplicationEvent
+* 实现org.springframework.context.ApplicationListener
+* 注册org.springframework.context.ApplicationListener
+
+### 194 | 依赖注入ApplicationEventPublisher：事件推送还会引起Bug？
+
+* 通过ApplicationEventPublisherAware回调接口
+* 通过@Autowired ApplicationEventPublisher
+
+### 195 | 依赖查找ApplicationEventPublisher：ApplicationEventPublisher从何而来？
+
+* 查找条件
+  * Bean名称: "applicationEventMulticaster"
+  * Bean类型: org.springframework.context.event.ApplicationEventMulticaster
+
+
+### 196 | ApplicationEventPublisher底层实现：ApplicationEventMulticaster也是Java Observable的延伸？
+
+* 底层实现
+  * 接口: org.springframework.context.event.ApplicationEventMulticaster
+  * 抽象类: org.springframework.context.event.AbstractApplicationEventMulticaster
+  * 实现类: org.springframework.context.event.SimpleApplicationEventMulticaster
+
+### 197 | 同步和异步Spring事件广播：Spring对J.U.C Executor接口的理解不够？
+
+* 基于实现类- org.springframework.context.event.SimpleApplicationEventMulticaster
+  * 模式切换: setTaskExecutor(java.util.concurrent.Executor) 方法
+    * 默认模式:同步
+    * 异步模式:如java.util.concurrent.ThreadPoolExecutor
+  * 设计缺陷:非基于接口契约编程
+
+
+### 198 | Spring 4.1事件异常处理：ErrorHandler使用有怎样的限制？
+
+* Spring 3.0错误处理接口- org.springframework.util.ErrorHandler
+  * 使用场景
+    * Spring 事件(Events)
+      * SimpleApplicationEventMulticaster Spring 4.1开始支持
+    * Spring本地调度(Scheduling)
+      * org.springframework.scheduling.concurrent.ConcurrentTaskScheduler
+      * org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
+
+
+### 199 | Spring事件/监听器实现原理：面向接口和注解的事件/监听器实现有区别吗？
+
+* 核心类- org.springframework.context.event. SimpleApplicationEventMulticaster
+  * 设计模式:观察者模式扩展
+    * 被观察者- org.springframework. context.ApplicationListener
+      * API添加
+      * 依赖查找
+    * 通知对象- org.springframework.context.ApplicationEvent
+  * 执行模式:同步/异步
+  * 异常处理: org.springframework.util.ErrorHandler
+  * 泛型处理: org.springframework.core.ResolvableType
+  
+根据事件类型以及它的层次类型去筛选出它合适的Listener的处理方式，类型越具体越好
+
+
+### 200 | 课外资料：Spring Boot和Spring Cloud事件也是Spring事件？
+
+* Spring Boot事件
+|事件类型|发生时机|
+|---|---|
+|ApplicationStartingEvent|当Spring Boot应用已启动时|
+|ApplicationStartedEvent|当Spring Boot应用已启动时|
+|ApplicationEnvironmentPreparedEvent|当Spring Boot Environment实例已准备时|
+|ApplicationPreparedEvent|当Spring Boot应用预备时|
+|ApplicationReadyEvent|当Spring Boot应用完全可用时|
+|ApplicationFailedEvent|当Spring Boot应用启动失败时|
+
+* Spring Cloud事件
+|事件类型|发生时机|
+|---|---|
+|EnvironmentChangeEvent|当Environment示例配置属性发生变化时|
+|HeartbeatEvent|当DiscoveryClient 客户端发送心跳时|
+|InstancePreRegisteredEvent|当服务实例注册前|
+|InstanceRegisteredEvent|当服务实例注册后|
+|RefreshEvent|当RefreshEndpoint被调用时|
+|RefreshScopeRefreshedEvent|当Refresh Scope Bean刷新后|
+
+### 201 | 面试题精选
+
+* 沙雕面试题- Spring事件核心接口/组件?
+答:
+* Spring 事件- org.springframework.context.ApplicationEvent
+* Spring 事件监听器- org.springframework.context.ApplicationListener
+* Spring 事件发布器- org.springframework.context.ApplicationEventPublisher
+* Spring 事件广播器- org.springframework.context.event.ApplicationEventMulticaster
+
+996面试题- Spring同步和异步事件处理的使用场景?
+答:
+* Spring同步事件-绝大多数Spring使用场景，如ContextRefreshedEvent
+* Spring异步事件-主要QEventListener与@Asyc配合，实现异步处理，不阻塞主线程，比如长时间的数据计算任务等。不要轻易调整SimpleApplicationEventMulticaster中关联的taskExecutor对象，除非使用者非常了解Spring事件机制，否则容易出现异常行为。
+
+劝退面试题- @EventListener的工作原理?
+
+## 第十八章：Spring注解（Annotations） (12讲)
+
+### 202 | Spring注解驱动编程发展历程
+
+* 注解驱动启蒙时代: Spring Framework 1.x
+* 注解驱动过渡时代: Spring Framework 2.x
+* 注解驱动黄金时代: Spring Framework 3.x
+* 注解驱动完善时代: Spring Framework 4.x
+* 注解驱动当下时代: Spring Framework 5.x
+
+### 203 | Spring核心注解场景分类
+
+●Spring 模式注解
+|Spring注解|场景说明|起始版本|
+|---|---|---|
+|@Repository|数据仓储模式注解|2.0|
+|@Component|通用组件模式注解|2.5|
+|@Service|服务模式注解|2.5|
+|@Controller|Web控制器模式注解|2.5|
+|@Configuration|配置类模式注解|3.0|
+
+* 装配注解
+|Spring注解|场景说明|起始版本|
+|---|---|---|
+|@ImportResource|替换XML元素<import>|2.5|
+|@Import|导入Configuration类|2.5|
+|@ComponentScan|扫描指定package下标注Spring模式注解的类|3.1|
+
+* 依赖注入注解
+|Spring注解|场景说明|起始版本|
+|---|---|---|
+|@Autowired|Bean依赖注入，支持多种依赖查找方式|2.5|
+|@Qualifier|细粒度的@Autowired依赖查找|2.5|
+
+
+### 204 | Spring注解编程模型
+
+* 编程模型
+  * 元注解(Meta-Annotations)
+  * Spring 模式注解(Stereotype Annotations)
+  * Spring 组合注解(Composed Annotations)
+  * Spring 注解属性别名和覆盖(Attribute Aliases and Overrides)
+
+### 205 | Spring元注解（Meta-Annotations）
+
+* 举例说明
+  * java.lang.annotation.Documented
+  * java.lang.annotation.Inherited
+  * java.lang.annotation.Repeatable
+
+### 206 | Spring模式注解（Stereotype Annotations）
+
+* 理解@Component“派生性”
+  * 元标注@Component的注解在XML元素<context:component- -scan> 或注解@ComponentScan扫描中“派生”了@Component的特性，并且从Spring Framework 4.0开始支持多层次“派生性”。
+* 举例说明
+  * @Repository
+  * @Service
+  * @Controller
+  * @Configuration
+  * @SpringBootConfiguration (Spring Boot)
+
+
+### 207 | Spring组合注解（Composed Annotations）
+
+* 基本定义
+Spring组合注解(Composed Annotations)中的元注允许是Spring模式注解(Stereotype Annotation)与其他Spring功能性注解的任意组合。
+
+### 208 | Spring注解属性别名（Attribute Aliases）
+
+第一种：显性别名，相互声明@AliasFor
+第二种：隐性别名
+第三种：传递性的显性方式
+
+
+### 209 | Spring注解属性覆盖（Attribute Overrides）
+
+
+### 210 | Spring @Enable模块驱动
+
+* @Enable模块驱动
+  * @Enable模块驱动是以@Enable为前缀的注解驱动编程模型。所谓“模块”是指具备相同领域的功能组件集合，组合所形成一个独立的单元。比如Web MVC模块、AspectJ代理模块、Caching (缓存)模块、JMX (Java管理扩展)模块、Async (异步处理)模块等。
+
+* 举例说明
+  * @EnableWebMvc
+  * @Enable TransactionManagement
+  * @EnableCaching
+  * @EnableMBeanExport
+  * @EnableAsync
+
+
+* @Enable模块驱动编程模式
+  * 驱动注解: @EnableXXX
+  * 导入注解: @Import具体实现
+  * 具体实现
+    * 基于Configuration Class
+    * 基于ImportSelector接口实现
+    * 基于ImportBeanDefinitionRegistrar接口实现
+
+### 211 | Spring条件注解
+
+* 基于配置条件注解- @org.springframework.context.annotation.Profile
+  * 关联对象- org.springframework.core.env.Environment中的Profiles
+  * 实现变化:从Spring 4.0开始，@Profile基于@Conditional实现
+* 基于编程条件注解- @org.springframework.context.annotation.Conditional
+  * 关联对象- org.springframework.context.annotation.Condition具体实现
+
+* @Conditional实现原理
+  * 上下文对象- org.springframework.context.annotation.ConditionContext
+  * 条件判断 - org.springframework.context.annotation.ConditionEvaluator
+  * 配置阶段- org.springframework.context.annotation.ConfigurationCondition.ConfigurationPhase
+  * 判断入口- org.springframework.context.annotation.ConfigurationClassPostProcessor
+    * org.springframework.context.annotation.ConfigurationClassParser
+
+### 212 | 课外资料：Spring Boot和Spring Cloud是怎样在Spring注解内核上扩展的?
+
+* Spring Boot注解
+|注解|场景说明|起始版本|
+|---|---|---|
+|@SpringBootConfiguration|Spring Boot配置类|1.4.0|
+|@SpringBootApplication|Spring Boot应用引导注解|1.2.0|
+|@EnableAutoConfiguration |Spring Boot 激活自动转配|1.0.0|
+
+* Spring Cloud注解
+|注解|场景说明|起始版本|
+|---|---|---|
+|@SpringCloudApplication|Spring Cloud应用引导注解|1.0.0|
+|@EnableDiscoveryClient|Spring Cloud激活服务发现客户端注解|1.0.0|
+|@EnableCircuitBreaker|Spring Cloud激活熔断注解|1.0.0|
+
+
+### 213 | 面试题精选
+
+沙雕面试题- Spring模式注解有哪些?
+答:
+* @org.springframework.stereotype.Component
+* @org.springframework.stereotype.Repository
+* @org.springframework.stereotype.Service
+* @org.springframework.stereotype.Controller
+* @org.springframework.context.annotation.Configuration
+
+996面试题- @EventListener的工作原理?
+答:
+* 源码导读- org.springframework.context.event.EventListenerMethodProcessor
+
+劝退面试题- @PropertySource的工作原理?
+
+## 第十九章：Spring Environment抽象（Environment Abstraction） (16讲)
+
+### 214 | 理解Spring Environment抽象
+
+* 统一的Spring配置属性管理
+  * Spring Framework 3.1开始引入Environment抽象，它统一Spring 配置属性的存储，包括占位符处理和类型转换，不仅完整地替换PropertyPlaceholderConfigurer, 而且还支持更丰富的配置属性源(PropertySource)
+* 条件化Spring Bean装配管理
+  * 通过Environment Profiles 信息，帮助Spring容器提供条件化地装配Bean
+
+
+### 215 | Spring Environment接口使用场景
+
+* 用于属性占位符处理
+* 用于转换Spring配置属性类型
+* 用于存储Spring配置属性源(PropertySource)
+* 用于Profiles状态的维护
+
+### 216 | Environment占位符处理
+
+* Spring 3.1前占位符处理
+  * 组件: org.springframework.beans.factory.config.PropertyPlaceholderConfigurer
+  * 接口: org.springframework.util.StringValueResolver
+* Spring 3.1 +占位符处理.
+  * 组件: org.springframework.context.support.PropertySourcesPlaceholderConfigurer
+  * 接口: org.springframework.beans.factory.config.EmbeddedValueResolver
+
+
+### 217 | 理解条件配置Spring Profiles
+### 218 | Spring 4重构@Profile
+### 219 | 依赖注入Environment
+### 220 | 依赖查找Environment
+### 221 | 依赖注入@Value
+### 222 | Spring类型转换在Environment中的运用
+### 223 | Spring类型转换在@Value中的运用
+### 224 | Spring配置属性源PropertySource
+### 225 | Spring內建的配置属性源
+### 226 | 基于注解扩展Spring配置属性源
+### 227 | 基于API扩展Spring外部化配置属性源
+### 228 | 课外资料：Spring 4.1测试配置属性源-@TestPropertySource
+### 229 | 面试题精选
+
+## 第二十章：Spring应用上下文生命周期（Container Lifecycle） (21讲)
+
+### 230 | Spring应用上下文启动准备阶段
+### 231 | BeanFactory创建阶段
+### 232 | BeanFactory准备阶段
+### 233 | BeanFactory后置处理阶段
+### 234 | BeanFactory注册BeanPostProcessor阶段
+### 235 | 初始化内建Bean：MessageSource
+### 236 | 初始化内建Bean：Spring事件广播器
+### 237 | Spring应用上下文刷新阶段
+### 238 | Spring事件监听器注册阶段
+### 239 | BeanFactory初始化完成阶段
+### 240 | Spring应用上下刷新完成阶段
+### 241 | Spring应用上下文启动阶段
+### 242 | Spring应用上下文停止阶段

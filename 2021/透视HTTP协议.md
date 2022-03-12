@@ -1,5 +1,10 @@
 # 透视HTTP协议
 
+![分层](/img/http-1.png) 
+![xmind](/img/http-2.png) 
+![xmind](/img/http-3.png) 
+![传输](/img/http-4.png) 
+
 ## HTTP/2
 
 HTTP/2 的制定充分考虑了现今互联网的现状：宽带、移动、不安全，在高度兼容 HTTP/1.1 的同时在性能改善方面做了很大努力，主要的特点有：
@@ -62,7 +67,9 @@ HTTP 通常跑在 TCP/IP 协议栈之上，依靠 IP 协议实现寻址和路由
 URI 主要有三个基本的部分构成：
 
 1.协议名：即访问该资源应当使用的协议，在这里是“http”；
+
 2.主机名：即互联网上主机的标记，可以是域名或 IP 地址，在这里是“nginx.org”；
+
 3.路径：即资源在主机上的位置，使用“/”分隔多级目录，在这里是“/en/download.html”。
 
 HTTPS 相当于“HTTP+SSL/TLS+TCP/IP”

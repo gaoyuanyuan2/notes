@@ -212,7 +212,7 @@ SELECT * FROM `performance_schema`.`table_io_waits_summary_by_index_usage`
 
 全局锁的典型使用场景是，做全库逻辑备份。也就是把整库每个表都 select 出来存成文本。
 
-官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。全局锁主要用在逻辑备份过程中。对于全部是 InnoDB 引擎的库，我建议你选择使用single-transaction 参数，对应用会更友好。
+官方自带的逻辑备份工具是 mysql dump。当 mysql dump 使用参数–single-transaction的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。全局锁主要用在逻辑备份过程中。对于全部是 InnoDB 引擎的库，我建议你选择使用single-transaction 参数，对应用会更友好。
 
 
 ### 表级锁
@@ -557,6 +557,7 @@ kill connection + id
 第二种方法：减少连接过程的消耗。
 
 跳过权限验证的方法是：重启数据库，并使用–skip-grant-tables 参数启动。
+
 
 ### 慢查询性能问题
 
