@@ -2948,7 +2948,21 @@ Spring组合注解(Composed Annotations)中的元注允许是Spring模式注解(
 
 
 ### 217 | 理解条件配置Spring Profiles
+
+Spring 3.1条件配置
+* API:org.springframework.core.env.ConfigurableEnvironment
+ * 修改: addActiveProfile(String). setActiveProfiles(String... 和setDefaultProfiles(String..
+ * 获取: getActiveProfiles() F getDefaultProfiles()
+* 匹配: #acceptsProfiles(String...) 和acceptsProfiles(Profiles)
+ 
+* 注解: @org.springframework.context. annotation.Profile
+
 ### 218 | Spring 4重构@Profile
+
+* 基于Spring 4 org.springframework.context.annotation.Condition接口实现
+ * org.springframework.context.annotation.ProfileCondition
+
+
 ### 219 | 依赖注入Environment
 ### 220 | 依赖查找Environment
 ### 221 | 依赖注入@Value
