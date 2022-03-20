@@ -2964,29 +2964,343 @@ Spring 3.1条件配置
 
 
 ### 219 | 依赖注入Environment
+
+* 直接依赖注入
+  * 通过EnvironmentAware接口回调
+  * 通过@Autowired注入Environment
+* 间接依赖注入
+  * 通过ApplicationContextAware接口回调
+  * 通过@Autowired注入ApplicationContext
+
 ### 220 | 依赖查找Environment
+
+* 直接依赖查找
+  * 通过org.springframework.context.ConfigurableApplicationContext#ENVIRONMENT_BEAN_NAME
+* 间接依赖查找
+  * 通过org.springframework.context.ConfigurableApplicationContext#getEnvironment
+
 ### 221 | 依赖注入@Value
+
+* 通过注入@Value
+  * 实现- org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+
 ### 222 | Spring类型转换在Environment中的运用
+
+* Environment底层实现
+  * 底层实现- org.springframework.core.env.PropertySourcesPropertyResolver
+    * 核心方法- convertValueIfNecessary(Object,Class)
+  * 底层服务- org.springframework.core.convert.ConversionService
+    * 默认实现- org.springframework.core.convert.support.DefaultConversionService
+
+
 ### 223 | Spring类型转换在@Value中的运用
+
+* @Value底层实现
+  * 底层实现- org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+    * org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency
+  * 底层服务- org.springframework.beans.TypeConverter
+    * 默认实现- org.springframework.beans.TypeConverterDelegate
+      * java.beans.PropertyEditor
+      * org.springframework.core.convert.ConversionService
+
+
 ### 224 | Spring配置属性源PropertySource
+
+* API 
+  * 单配置属性源- org.springframework.core.env.PropertySource
+  * 多配置属性源- org.springframework.core.env.PropertySources
+* 注解
+  * 单配置属性源- @org.springframework.context.annotation.PropertySource
+  * 多配置属性源- @org.springframework.context.annotation.PropertySources
+* 关联
+  * 存储对象- org.springframework.core.env.MutablePropertySources
+  * 关联方法- org.springframework.core.env.ConfigurableEnvironment#getPropertySources() 
+
 ### 225 | Spring內建的配置属性源
+
+* 內建PropertySource
+|PropertySource类型|说明|
+|---|---|
+|org.springframework.core.env.Command inePropertySource|命令行配置属性源|
+|org.springframework.jndi.JndiPropertySource|JNDI配置属性源|
+|org.springframework.core.env.PropertiesPropertySource|Properties配置属性源|
+|org.springframework.web.context.support.ServletConfigPropertySource|Servlet配置属性源|
+|org.springframework.web.context.support.ServletContextPropertySource|ServletContext配置属性源|
+|org.springframework.core.env.SystemEnvironmentPropertySource|环境变量配置属性源|
+
+
+
 ### 226 | 基于注解扩展Spring配置属性源
+
+* @org.springframework.context.annotation.PropertySource实现原理
+  * 入口- org.springframework.context.annotation.ConfigurationClassParser#doProcessConfigurationClass
+    * org.springframework.context.annotation.ConfigurationClassParser#processPropertySource
+  * 4.3新增语义
+    * 配置属性字符编码- encoding
+    * org.springframework.core.io.support.PropertySourceFactory
+  * 适配对象- org.springframework.core.env.CompositePropertySource
+
+
 ### 227 | 基于API扩展Spring外部化配置属性源
+
+* Spring应用上下文启动前装配PropertySource
+* Spring应用上下文启动后装配PropertySource
+
+
 ### 228 | 课外资料：Spring 4.1测试配置属性源-@TestPropertySource
+
+* Spring 4.1测试配置属性源- @TestPropertySource
+
+
 ### 229 | 面试题精选
+
+沙雕面试题-简单介绍Spring Environment接口?
+答:
+* 核心接口- org.springframework.core.env.Environment
+* 父接口- org.springframework.core.env.PropertyResolver
+* 可配置接口- org.springframework.core.env.ConfigurableEnvironment
+* 职责:
+  * 管理Spring配置属性源
+  * 管理Profiles
+
+996面试题-如何控制PropertySource的优先级?
+
+propertySources.addFirst(propertySource);
+
+劝退面试题- Environment完整的生命周期是怎样的?
+
 
 ## 第二十章：Spring应用上下文生命周期（Container Lifecycle） (21讲)
 
 ### 230 | Spring应用上下文启动准备阶段
+
+* AbstractApplicationContext#prepareRefresh()方法
+  * 启动时间- startupDate
+  * 状态标识- closed(false)、 active(true)
+  * 初始化PropertySources - initPropertySources()
+  * 检验Environment中必须属性
+  * 初始化事件监听器集合
+  * 初始化早期Spring事件集合
+
+
 ### 231 | BeanFactory创建阶段
+
+* AbstractApplicationContext#obtainFreshBeanFactory()方法
+  * 刷新Spring应用上下文底层BeanFactory - refreshBeanFactory()
+  * 销毁或关闭BeanFactory, 如果已存在的话
+  * 创建BeanFactory - createBeanFactory()
+  * 设置BeanFactoryId
+  * 设置“是否允许BeanDefinition 重复定义”- customizeBeanFactory(DefaultListableBeanFactory)
+  * 设置“是否允许循环引用(依赖) ”- customizeBeanFactory(DefaultListableBeanFactory)
+  * 加载BeanDefinition - loadBeanDefinitions(DefaultListableBeanFactory)方法
+  * 关联新建BeanFactory到Spring应用上下文
+  * 返回Spring应用上下文底层BeanFactory - getBeanFactory()
+
+
 ### 232 | BeanFactory准备阶段
+
+* AbstractApplicationContext#prepareBeanFactory(ConfigurableListableBeanFactory)方法
+  * 关联ClassLoader
+  * 设置Bean表达式处理器
+  * 添加PropertyEditorRegistrar实现- ResourceEditorRegistrar
+  * 添加Aware回调接口BeanPostProcessor实现- ApplicationContextAwareProcessor
+  * 忽略Aware回调接口作为依赖注入接口
+  * 注册ResolvableDependency对象- BeanFactory、 ResourceLoader、ApplicationEventPublisher 以及ApplicationContext
+  * 注册ApplicationListenerDetector对象
+  * 注册LoadTimeWeaverAwareProcessor对象
+  * 注册单例对象- Environment、Java System Properties以及OS环境变量
+
 ### 233 | BeanFactory后置处理阶段
+
+* AbstractApplicationContext#postProcessBeanFactory(ConfigurableListableBeanFactory)方法
+  * 由子类覆盖该方法
+* AbstractApplicationContext#invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory方法
+  * 调用BeanFactoryPostProcessor或BeanDefinitionRegistry 后置处理方法
+  * 注册LoadTimeWeaverAwareProcessor对象
+
+
 ### 234 | BeanFactory注册BeanPostProcessor阶段
+
+* AbstractApplicationContext#registerBeanPostProcessors(ConfigurableL istableBeanFactory)方法
+  * 注册PriorityOrdered类型的BeanPostProcessor Beans
+  * 注册Ordered类型的BeanPostProcessor Beans
+  * 注册普通BeanPostProcessor Beans
+  * 注册MergedBeanDefinitionPostProcessor Beans
+  * 注册ApplicationListenerDetector对象
+
+PriorityOrdered优先，Ordered次后，常规(就是既没有实现PriorityOrdered、也没实现Ordered接口)的最后，根据我的BeanDefinition注册时候的时机。
+
+注解驱动，由于这个ClassLoader在加载的时候，扫描路径是不确定的，所以这时候会产生一些不确定的行为，尤其是在Spring Boot和Spring Cloud场景中会经常发生
+
+
 ### 235 | 初始化内建Bean：MessageSource
+
+* AbstractApplicationContext#initMessageSource()方法
+  * 回顾章节-第十二章Spring国际化- MessageSource内建依赖
+
+
 ### 236 | 初始化内建Bean：Spring事件广播器
+
+* AbstractApplicationContext#initApplicationEventMulticaster()方法
+  * 回顾章节-第十七章Spring事件- ApplicationEventPublisher底层实现
+
 ### 237 | Spring应用上下文刷新阶段
+
+* AbstractApplicationContext#onRefresh()方法
+  * 子类覆盖该方法
+    * org.springframework.web.context.support.AbstractRefreshableWebApplicationContext#onRefresh()
+    * org.springframework. web.context.support.GenericWebApplicationContext#onRefresh()
+    * org.springframework. boot.web.reactive.context.ReactiveWebServerApplicationContext#onRefresh()
+    * org.springframework.boot.web.servlet.cqntext.ServletWebServerApplicationContext#onRefresh()
+    * org.springframework.web.context.support.StaticWebApplicationContext#onRefresh()
+
 ### 238 | Spring事件监听器注册阶段
+
+* AbstractApplicationContext#registerListeners()方法
+  * 添加当前应用上下文所关联的ApplicationListener对象(集合)
+  * 添加BeanFactory所注册ApplicationListener Beans
+  * 广播早期Spring事件
+
+
 ### 239 | BeanFactory初始化完成阶段
+
+* AbstractApplicationContext#finishBeanFactorylnitialization(ConfigurableL istableBeanFactory)方法
+  * BeanFactory关联ConversionService Bean， 如果存在
+  * 添加StringValueResolver对象
+  * 依赖查找LoadTimeWeaverAware Bean
+  * BeanFactory 临时ClassLoader置为null
+  * BeanFactory冻结配置
+  * BeanFactory初始化非延迟单例Beans
+
 ### 240 | Spring应用上下刷新完成阶段
+
+* AbstractApplicationContext#finishRefresh()方法
+  * 清除ResourceLoader缓存- clearResourceCaches() @since 5.0
+  * 初始化LifecycleProcessor对象 initLifecycleProcessor()
+  * 调用LifecycleProcessor #onRefresh()方法
+  * 发布Spring应用上下文已刷新事件- ContextRefreshedEvent
+  * 向MBeanServer托管Live Beans
+
+
 ### 241 | Spring应用上下文启动阶段
+
+* AbstractApplicationContext#start()方法
+  * 启动LifecycleProcessor
+    * 依赖查找Lifecycle Beans
+    * 启动Lifecycle Beans
+  * 发布Spring应用上下文已启动事件- ContextStartedEvent
+
 ### 242 | Spring应用上下文停止阶段
+
+* AbstractApplicationContext#stop()方法
+  * 停止LifecycleProcessor
+    * 依赖查找Lifecycle Beans
+    * 停止Lifecycle Beans
+  * 发布Spring应用上下文已停止事件- ContextStoppedEvent
+
+
+### 243丨Spring应用上下文关闭阶段
+
+* AbstractApplicationContext#close()方法
+  * 状态标识: active(false)、 closed(true)
+  * Live Beans JMX撤销托管
+    * LiveBeansView.unregisterApplicationContext(ConfigurableApplicationContext)
+  * 发布Spring应用上下文已关闭事件- ContextClosedEvent
+  * 关闭LifecycleProcessor
+    * 依赖查找Lifecycle Beans
+    * 停止Lifecycle Beans
+  * 销毁Spring Beans
+  * 关闭BeanFactory
+  * 回调onClose()
+  * 注册Shutdown Hook线程(如果曾注册)
+
+### 244丨面试题精选
+
+沙雕面试题- Spring应用上下文生命周期有哪些阶段?
+答:
+* 刷新阶段- ConfigurableApplicationContext#refresh()
+* 启动阶段- ConfigurableApplicationContext#start()
+* 停止阶段- ConfigurableApplicationContext#stop()
+* 关闭阶段- ConfigurableApplicationContext#close()
+
+996面试题- Environment完整的生命周期是怎样的?
+
+通常来说在Spring Framework中，我们用默认的方式，是通过一个叫createEnvironment的方法来进行返回的，在不同的阶段是有不一样的。
+
+                       
+劝退面试题- Spring应用上下文生命周期执行动作?
+答:本章整体回顾
+
+
+### 加餐1丨为什么说ObjectFactory提供的是延迟依赖查找
+
+1.为什么说ObjectFactory提供的是延迟依赖查找?
+
+* 原因
+  * ObjectFactory (或ObjectProvider) 可关联某一类型Bean
+  * ObjectFactory 和ObjectProvider对象在被依赖注入和依赖查询时并未实时查找关联类型的Bean
+  * 当ObjectFactory (或ObjectProvider)调用getObject()方法时，目标Bean才被依赖查找
+* 总结
+  * ObjectFactory (或 ObjectProvider)相当于某一类型Bean依赖查找代理对象
+
+
+2.依赖查找(注入)的Bean会被缓存吗?
+3.@Bean 的处理流程是怎样的?
+4.BeanFactory 是如何处理循环依赖的?
+5.MyBatis与Spring Framework是如何集成的?
+
+### 加餐2丨依赖查找（注入）的Bean会被缓存吗？
+
+* 单例Bean (Singleton) - 会
+  * 缓存位置: org.springframework.beans.factory.support.DefaultSingletonBeanRegistry#singletonObjects 属性
+* 原型Bean (Prototype) -不会
+  * 当依赖查询或依赖注入时，根据BeanDefinition每次创建
+* 其他Scope Bean
+  * request: 每个ServletRequest内部缓存，生命周期维持在每次HTTP请求
+  * session: 每个HttpSession内部缓存，生命周期维持在每个用户HTTP会话
+  * application: 当前Servlet应用内部缓存
+
+判定为Prototype，它把所谓的我们的BeanDefinition，MergedBeanDefinition拿出来然后每次来进行所谓的实例化和初始化，
+                                                   
+### 加餐3丨@Bean的处理流程是怎样的？
+
+* 解析范围- Configuration Class中的@Bean方法
+* 方法类型-静态@Bean方法和实例@Bean方法
+
+BeanDefinition是个Bean的元信息的数据结构，它控制着Bean的状态，属性Property Values，也控制了生命周期，Bean的个初始化行为或者销毁行为，再者它也控制了Bean的创建的方式
+
+
+ConfigurationCLassPostProcessor，处理ComponentScan、PropertySource、PropertySources、Import注解
+
+### 加餐4丨BeanFactory如何处理循环依赖的？
+
+* 预备知识
+  * 循环依赖开关(方法) - AbstractAutowireCapableBeanFactory#setAllowCircularReferences
+  * 单例工程(属性) - DefaultSingletonBeanRegistry#singletonFactories
+  * 获取早期未处理Bean (方法) - AbstractAutowireCapableBeanFactory#getEarlyBeanReference
+  * 早期未处理Bean (属性) - DefaultSingletonBeanRegistry#earlySingletonObjects
+
+里面有三个Map起了关键作用，一个是所谓的singletonFactories，一个是singletonObjects，一个是earlySingletonObjects，有临时存储对象
+
+
+### 加餐5丨MyBatis与SpringFramework是如何集成的？
+
+
+
+
+
+
+
+
+
+@Bean它的处理逻辑,实际上它最终还是会把我们的这个方法,无论你是静态的还是动态的转换成BeanDefinition然后注册到我们的应用，上下文里面去，最终会创建成一个相应的Bean。
+
+
+
+
+
+
+
+
+
+
