@@ -10,9 +10,63 @@ Spring Framework有诸多的特性与Spring AOP密切相关，比如Spring事务
 
 无侵入性的运行时日志、数据监控、安全防护等
 
-02 | 内容综述
-03 | 知识储备：基础、基础，还是基础！
-04 | AOP引入：OOP存在哪些局限性？
+### 02 | 内容综述
+
+### 03 | 知识储备：基础、基础，还是基础！
+
+* Java基础
+  * Java Classloading
+  * Java动态代理
+  * Java反射
+  * 字节码框架: ASM、CGLIB
+
+* OOP概念
+  * 封装
+  * 继承
+  * 多态
+  
+* GoF23设计模式
+  * 创建模式(Creational patterns)
+    * 抽象工厂模式(Abstract factory)
+    * 构建器模式(Builder)
+    * 工厂方法模式(Factory method)
+    * 原型模式(Prototype)
+    * 单利模式(Singleton)
+  * 结构模式(Structural patterns)
+    * 适配器模式(Adapter)
+    * 桥接模式(Bridge)
+    * 组合模式(Composite)
+    * 装饰器模式(Decorator)
+    * 门面模式(Facade)
+    * 享元模式(Flyweight)
+    * 代理模式(Proxy) 
+  * 行为模式(Behavioral patterns)
+    * 模板方法模式(Template Method)
+    * 中继器模式(Mediator)
+    * 责任链模式(Chain of Responsibility)
+    * 观察者模式(Observer)
+    * 策略模式(Strategy)
+    * 命令模式(Command)
+    * 状态模式(State)
+    * 访问者模式(Visitor)
+    * 解释器模式(Interpreter)、 迭代器模式 (Iterator)、 备忘录模式(Memento)
+
+* Spring核心基础
+  * Spring IoC容器
+  * Spring Bean生命周期(Bean Lifecycle)
+  * Spring配置元信息(Configuration Metadata)
+  * Spring事件(Events)
+  * Spring注解(Annotations)
+
+  
+
+### 04 | AOP引入：OOP存在哪些局限性？
+
+* Java OOP存在哪些局限性?
+  * 静态化语言:类结构一旦定义，不容易被修改
+  * 侵入性扩展:通过继承和组合组织新的类结构
+
+
 05 | AOP常见使用场景
 06 | AOP概念：Aspect、Join Point和Advice等术语应该如何理解？
 07 | Java AOP设计模式：代理、判断和拦截器模式
