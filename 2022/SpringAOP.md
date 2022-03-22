@@ -91,9 +91,30 @@ Spring Framework有诸多的特性与Spring AOP密切相关，比如Spring事务
   * 超时控制
 
 
-06 | AOP概念：Aspect、Join Point和Advice等术语应该如何理解？
-07 | Java AOP设计模式：代理、判断和拦截器模式
-08 | Java AOP代理模式（Proxy）：Java静态代理和动态代理的区别是什么？
+### 06 | AOP概念：Aspect、Join Point和Advice等术语应该如何理解？
+
+* 代理模式:静态和动态代理
+* 判断模式:类、方法、注解、参数、昇常.
+* 拦截模式:前置、后置、返回、昇常
+
+
+### 07 | Java AOP设计模式：代理、判断和拦截器模式
+
+* Java静态代理
+* 常用OOP继承和组合相结合
+* Java动态代理
+* JDK动态代理
+* 字节码提升，如CGLIB
+
+### 08 | Java AOP代理模式（Proxy）：Java静态代理和动态代理的区别是什么？
+
+* 判断来源
+  * 类型(Class)
+  * 方法(Method)
+  * 注解(Annotation)
+  * 参数(Parameter)
+  * 异常(Exception)
+
 09 | Java AOP判断模式（Predicate）：如何筛选Join Point？
 10 | Java AOP拦截器模式（Interceptor）：拦截执行分别代表什么？
 11 | Spring AOP 功能概述：核心特性、编程模型和使用限制
