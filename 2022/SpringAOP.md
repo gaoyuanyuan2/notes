@@ -159,15 +159,49 @@ Aspect是一个类似像一个Class一样的，Join point相当于就是一个�
   * Spring loC容器整合
   * AspectJ注解驱动整合(非竞争关系)
 
-12 | Spring AOP编程模型：注解驱动、XML配置驱动和底层API
+### 12 | Spring AOP编程模型：注解驱动、XML配置驱动和底层API
 
-13 | Spring AOP设计目标：Spring AOP与 AOP框架之间的关系是竞争还是互补？
+* 注解驱动
+  * 实现: Enable 模块驱动，@EnableAspectJAutoProxy
+  * 注解:
+     * 激活AspectJ自动代理: @EnableAspectJAutoProxy
+     * Aspect : @Aspect
+     * Pointcut : @Pointcut
+     * Advice : @Before @AfterReturning, @After Throwing, @After @Around
+     * Introduction : @DeclareParents
 
-14 | Spring AOP Advice类型：Spring AOP丰富了哪些AOP Advice呢？
+* XML配置驱动
+  * 实现: Spring Extensble XML Authoring
+  * XML元素
 
-15 | Spring AOP代理实现：为什么Spring Framework选择三种不同AOP实现？
+### 13 | Spring AOP设计目标：Spring AOP与 AOP框架之间的关系是竞争还是互补？
 
-16 | JDK动态代理：为什么Proxy.newProxyInstance会生成新的字节码？
+Spring AOP处理AOP的方法不同于大多数其他AOP框架。这样做的目的是而不是提供最完整的AOP实现(尽管Spring AOP相当强大)。相反，其目的是在AOP实现和Spring loC之间提供一个紧密的集成帮助解决企业应用程序中的常见问题。
+
+Spring AOP从不努力与AspectJ竞争，以提供一个全面的AOP解决方案。我们相信，无论是基于代理的框架，如Spring AOP，还是成熟的框架。例如AspectJ是有价值的，它们是互补的，而不是竞争的。Spring将Spring AOP和loC与AspectJ无缝集成，使AOP的所有使用都能在一致的基于spring的应用程序体系结构。这种集成不会影响Spring AOP API或AOP联盟API。Spring AOP保持向后兼容。一个是通过Java动态代理，一个是通过像字节码提升，通过Aspectj整合。
+
+### 14 | Spring AOP Advice类型：Spring AOP丰富了哪些AOP Advice呢？
+
+* Advice类型
+  * 环绕(Around)
+  * 前置（Before）
+  * 后置(After) 
+    * 方法执行
+    * finally执行
+  * 异常(Exception)
+
+
+### 15 | Spring AOP代理实现：为什么Spring Framework选择三种不同AOP实现？
+
+* JDK动态代理实现-基于接口代理
+* CGLIB动态代理实现-基于类代理(字节码提升)
+* AspectJ适配实现
+
+通常会选择AspectJ的注解驱动或者AspectJ所对应的XML的Schema-Base实现
+
+### 16 | JDK动态代理：为什么Proxy.newProxyInstance会生成新的字节码？
+
+
 
 17 | CGLIB动态代理：为什么Java动态代理无法满足AOP的需要？
 
