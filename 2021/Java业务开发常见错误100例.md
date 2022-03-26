@@ -17,7 +17,7 @@ ConcurrentHashMap 只能保证提供的原子性读写操作是线程安全的�
 
 * 使用了ConcurrentHashMap, 不代表对它的多个操作之间的状态是一致的，是没有其他线程在操作它的，如果需要确保需要手动加锁。
 * 诸如size、 isEmpty和containsValue等聚合方法，在并发情况下可能会反映ConcurrentHashMap的中间状态。因此在并发情况下，这些方法的返回值只能用作参考,而不能用于流程控制。显然，利用size方法计算差异值，是一个流程控制。
-* 诸如putAll这样的聚合方法也不能确保原子性,在putAll的过程中去获取数据可能会获取到部分数据。.
+* 诸如putAll这样的聚合方法也不能确保原子性,在putAll的过程中去获取数据可能会获取到部分数据。
 
 CopyOnWrite是一个时髦的技术， 不管是Linux还是Redis都会用到。在Java中,CopyOnWriteArrayList虽然是个线程安全的 ArrayList, 但因为其实现方式是，每次修改数据时都会复制一份数据出来,所以有明显的适用场景，即读写少或者说希望无锁读的场景。
 
