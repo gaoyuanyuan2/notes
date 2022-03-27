@@ -203,65 +203,242 @@ Spring AOP从不努力与AspectJ竞争，以提供一个全面的AOP解决方案
 
 
 
-17 | CGLIB动态代理：为什么Java动态代理无法满足AOP的需要？
+### 17 | CGLIB动态代理：为什么Java动态代理无法满足AOP的需要？
 
-18 | AspectJ代理代理：为什么Spring推荐AspectJ注解？
+尽管我们推崇面向对象编程，本质主要是面向接口编程，也可以认为它是面向契约编程，用户不需要关注具体实现。
+Java毕竟是以类为主导的，这个类也包含了我们的接口，抽象类，以及具体实现类，无法避免开发人员不写接口注解写类的情况。
+这个时候我们就需要通过一些字节码提升的手段，帮助我们来做这个事情，所以需要运行时来创建新的Class，这种方式称之为字节码提升。
 
-19 | AspectJ基础：Aspect、Join Points、Pointcuts和Advice语法和特性
+有性能损失
 
-20 | AspectJ注解驱动：注解能完全替代AspectJ语言吗？
+### 18 | AspectJ代理代理：为什么Spring推荐AspectJ注解？
 
-21 | 面试题精选
+简化使用
 
-第二章：Spring AOP基础 (20讲)
+### 19 | AspectJ基础：Aspect、Join Points、Pointcuts和Advice语法和特性
 
-22 | Spring核心基础：《小马哥讲Spring核心编程思想》还记得多少？
+* AspectJ 语法
+  * Aspect
+  * Join Points
+  * Pointcuts
+  * Advice
+  * Introduction
 
-23 | @AspectJ注解驱动
+### 20 | AspectJ注解驱动：注解能完全替代AspectJ语言吗？
 
-24 | 编程方式创建 @AspectJ代理
+* AspectJ 注解
+  * 激活AspectJ自动代理: @EnableAspectJAutoProxy
+  * Aspect : @Aspect
+  * Pointcut : @Pointcut
+  * Advice : @Before @AfterReturning @After Throwing @After @Around
+  * Introduction : @DeclareParents
 
-25 | XML配置驱动 – 创建AOP代理
+### 21 | 面试题精选
 
-26 | 标准代理工厂API – ProxyFactory
+* 问: Spring AOP和AspectJ AOP存在哪些区别?
 
-27 | @AspectJ Pointcut指令与表达式：为什么Spring只能有限支持？
+答:
+* AspectJ是AOP完整实现，Spring AOP则是部分实现
+* Spring AOP比AspectJ使用更简单
+* Spring AOP整合AspectJ注解与Spring IoC容器
+* Spring AOP仅支持基于代理模式的AOP
+* Spring AOP仅支持方法级别的Pointcuts
 
-28 | XML配置Pointcut
+## 第二章：Spring AOP基础 (20讲)
 
-29 | API实现Pointcut
+### 22 | Spring核心基础：《小马哥讲Spring核心编程思想》还记得多少？
 
-30 | @AspectJ拦截动作：@Around与@Pointcut有区别吗？
+### 23 | @AspectJ注解驱动
 
-31 | XML配置Around Advice
+* @AspectJ注解驱动
+  * 激活@AspectJ模块
+  * 注解激活- @EnableAspectJAutoProxy
+  * XML配置- <aop:aspectj-autoproxy/>
+* 声明Aspect
+  * @Aspect
 
-32 | API实现Around Advice
 
-33 | @AspectJ前置动作：@Before与@Around谁优先级执行？
 
-34 | XML配置Before Advice
+### 24 | 编程方式创建 @AspectJ代理
 
-35 | API实现Before Advice
+* 实现类
+  * org.springframework.aop.aspectj.annotation.AspectJProxyFactory
 
-36 | @AspectJ后置动作 – 三种After Advice之间的关系？
+### 25 | XML配置驱动 – 创建AOP代理
 
-37 | XML配置三种After Advice
+* 实现方法
+  * 配置org.springframework.aop.framework.ProxyFactoryBean
+  * Spring Schema- Based配置
+    * <aop:config>
+    * <aop:aspectj-autoproxy/>
 
-38 | API实现三种After Advice
+### 26 | 标准代理工厂API – ProxyFactory
 
-39 | 自动动态代理
+* 实现类- org.springframework.aop.framework.ProxyFactory
 
-40 | 替换TargetSource
 
-41 | 面试题精选
+### 27 | @AspectJ Pointcut指令与表达式：为什么Spring只能有限支持？
 
-第三章：Spring AOP API设计与实现 (49讲)
 
-42 | Spring AOP API整体设计
 
-43 | 接入点接口 – Joinpoint
+###  28 | XML配置Pointcut
 
-44 | Joinpoint条件接口 – Pointcut
+* XML配置
+  * <aop:pointcut />
+                
+### 29 | API实现Pointcut
+
+### 30 | @AspectJ拦截动作：@Around与@Pointcut有区别吗？
+
+* 注解- @Around
+  * 与@Pointcut有什么区别?
+
+* 核心API  - org.springframework.aop.Pointcut
+  * org.springframework.aop.ClassFilter
+  * org.springframework.aop.MethodMatcher
+* 适配实现 - DеfаultРоіntсutАdvіѕоr
+
+
+Around 和Before 区别在于Before它不需要去显式去触发方法，Around需要去触发目标方法执行
+
+### 31 | XML配置Around Advice
+
+* XML 配置
+  * <aop:around />
+
+### 32 | API实现Around Advice
+
+思考： 为什么 Spring AOP 不需要设计 Around Advice？
+* 线索
+  * AspectJ @Around 与 org.aspectj.lang.ProceedingJoinPoint 配合执行被代理方法
+  * ProceedingJoinPoint#proceed() 方法类似于 Java Method#invoke(Object,Object...)
+  * Spring AOP 底层 API ProxyFactory 可通过 addAdvice 方法与 Advice 实现关联
+  * 接口 Advice 是 Interceptor 的父亲接口， 而接口 MethodInterceptor 又扩展了 Interceptor
+  * MethodInterceptor 的invoke 方法参数 MethodInvocation 与 ProceedingJoinPoint 类似
+
+### 33 | @AspectJ前置动作：@Before与@Around谁优先级执行？
+
+Around和Before执行的顺序是没有绝对的，只不过在同一个Aspect里面它Around会优先于Before，具体还是通过Ordered来进行操作。
+
+### 34 | XML配置Before Advice
+
+* XML 元素 - <aop:before>
+  * 声明规则
+  * <aop:config>
+  * <aop:aspect>
+  * <aop:before>
+  * 属性设置（ 来源于 Spring AOP Schema 类型 basicAdviceType）
+  * pointcut： Pointcut 表达式内容
+  * pointcut-ref： Pointcut 表达式名称
+
+### 35 | API实现Before Advice
+
+* 核心接口 - org.springframework.aop.BeforeAdvice
+* 类型： 标记接口， 与 org.aopalliance.aop.Advice 类似
+  * 方法 JoinPoint 扩展 - org.springframework.aop.MethodBeforeAdvice
+  * 接受对象 - org.springframework.aop.framework.AdvisedSupport
+    * 基础实现类 - org.springframework.aop.framework.ProxyCreatorSupport
+      * 常见实现类
+        * org.springframework.aop.framework.ProxyFactory
+        * org.springframework.aop.framework.ProxyFactoryBean
+        * org.springframework.aop.aspectj.annotation.AspectJProxyFactory
+
+### 36 | @AspectJ后置动作 – 三种After Advice之间的关系？
+
+* After Advice 注解
+  * 方法返回后： @org.aspectj.lang.annotation.AfterReturning
+  * 异常发生后： @org.aspectj.lang.annotation.AfterThrowing
+  * finally 执行： @org.aspectj.lang.annotation.After
+
+### 37 | XML配置三种After Advice
+
+* XML 元素 - <aop:after>
+  * 声明规则
+    * <aop:config>
+      * <aop:aspect>
+        * <aop:after>
+  * 属性设置（ 来源于 Spring AOP Schema 类型 basicAdviceType）
+    * pointcut： Pointcut 表达式内容
+    * pointcut-ref： Pointcut 表达式名称
+
+### 38 | API实现三种After Advice
+
+* 核心接口 - org.springframework.aop.AfterAdvice
+  * 类型： 标记接口， 与 org.aopalliance.aop.Advice 类似
+  * 扩展
+    * org.springframework.aop.AfterReturningAdvice
+    * org.springframework.aop.ThrowsAdvice
+  * 接受对象 - org.springframework.aop.framework.AdvisedSupport
+    * 基础实现类 - org.springframework.aop.framework.ProxyCreatorSupport
+      * 常见实现类
+        * org.springframework.aop.framework.ProxyFactory
+        * org.springframework.aop.framework.ProxyFactoryBean
+        * org.springframework.aop.aspectj.annotation.AspectJProxyFactory
+
+### 39 | 自动动态代理
+
+* 代表实现
+  * org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator
+  * org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator
+  * org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator
+
+### 40 | 替换TargetSource
+
+* 代表实现
+  * org.springframework.aop.target.HotSwappableTargetSource
+  * org.springframework.aop.target.AbstractPoolingTargetSource
+  * org.springframework.aop.target.PrototypeTargetSource
+  * org.springframework.aop.target.ThreadLocalTargetSource
+  * org.springframework.aop.target.SingletonTargetSource
+
+### 41 | 面试题精选
+
+沙雕面试题 - Spring AOP 支持哪些类型的 Advice？
+
+答：
+* Around Advice
+* Before Advice
+* After Advice
+  * After
+  * AfterReturning
+  * AfterThrowing
+
+996 面试题 - Spring AOP 编程模型有哪些， 代表组件有哪些？
+答：
+* 注解驱动： 解释和整合 AspectJ 注解， 如 @EnableAspectJAutoProxy
+* XML 配置： AOP 与 IoC Schema-Based 相结合
+* API 编程： 如 Joinpoint、 Pointcut、 Advice 和 ProxyFactory 等
+
+劝退面试题 - Spring AOP 三种实现方式是如何设计的?
+
+## 第三章：Spring AOP API设计与实现 (49讲)
+
+### 42 | Spring AOP API整体设计
+
+* Join point - Joinpoint
+* Pointcut - Pointcut
+* Advice 执行动作 - Advice
+* Advice 容器 - Advisor
+* Introduction - IntroductionInfo
+* 代理对象创建基础类 - ProxyCreatorSupport
+* 代理工厂 - ProxyFactory、 ProxyFactoryBean
+* AopProxyFactory 配置管理器 - AdvisedSupport
+* IoC 容器自动代理抽象 - AbstractAutoProxyCreator
+
+### 43 | 接入点接口 – Joinpoint
+
+* Interceptor 执行上下文 - Invocation
+  * 方法拦截器执行上下文 - MethodInvocation
+  * 构造器拦截器执行上下文 - ConstructorInvocation
+* MethodInvocation 实现
+  * 基于反射 - ReflectiveMethodInvocation
+  * 基于 CGLIB - CglibMethodInvocation
+
+### 44 | Joinpoint条件接口 – Pointcut
+
+* 核心组件
+  * 类过滤器 - ClassFilter
+  * 方法匹配器 - MethodMatcher
 
 45 | Pointcut操作 – ComposablePointcut
 
