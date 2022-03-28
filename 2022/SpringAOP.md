@@ -440,17 +440,51 @@ Around和Before执行的顺序是没有绝对的，只不过在同一个Aspect�
   * 类过滤器 - ClassFilter
   * 方法匹配器 - MethodMatcher
 
-45 | Pointcut操作 – ComposablePointcut
+### 45 | Pointcut操作 – ComposablePointcut
 
-46 | Pointcut便利实现
+* 组合实现 - org.springframework.aop.support.ComposablePointcut
+* 工具类
+  * ClassFilter 工具类 - ClassFilters
+  * MethodMatcher 工具类 - MethodMatchers
+  * Pointcut 工具类 - Pointcuts
 
-47 | Pointcut AspectJ实现 – AspectJExpressionPointcut
 
-48 | Joinpoint执行动作接口 – Advice
+### 46 | Pointcut便利实现
 
-49 | Joinpoint Before Advice标准实现
+* 静态 Pointcut - StaticMethodMatcherPointcut
+* 正则表达式 Pointcut - JdkRegexpMethodPointcut
+* 控制流 Pointcut - ControlFlowPointcut
 
-50 | Joinpoint Before Advice AspectJ实现
+### 47 | Pointcut AspectJ实现 – AspectJExpressionPointcut
+
+* 实现类 - org.springframework.aop.aspectj.AspectJExpressionPointcut
+* 指令支持 - SUPPORTED_PRIMITIVES 字段
+* 表达式 - org.aspectj.weaver.tools.PointcutExpression
+
+### 48 | Joinpoint执行动作接口 – Advice
+
+*  Around Advice - Interceptor
+  *  方法拦截器 - MethodInterceptor
+  *  构造器拦截器 - ConstructorInterceptor
+*  前置动作
+  *  标准接口 - org.springframework.aop.BeforeAdvice
+  *  方法级别 - org.springframework.aop.MethodBeforeAdvice
+*  后置动作
+  *  org.springframework.aop.AfterAdvice
+  *  org.springframework.aop.AfterReturningAdvice
+  *  org.springframework.aop.ThrowsAdvice
+
+### 49 | Joinpoint Before Advice标准实现
+
+* 接口
+  *  标准接口 - org.springframework.aop.BeforeAdvice
+  *  方法级别 - org.springframework.aop.MethodBeforeAdvice
+* 实现
+  *  org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor
+
+### 50 | Joinpoint Before Advice AspectJ实现
+
+* 实现类 - org.springframework.aop.aspectj.AspectJMethodBeforeAdvice
 
 51 | Joinpoint After Advice标准实现
 
