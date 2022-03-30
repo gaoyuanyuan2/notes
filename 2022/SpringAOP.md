@@ -594,7 +594,13 @@ Advice和Advisor之间是一-对一的关系，Spring在我们说传输或者传
   * 配置 - org.springframework.aop.framework.AdvisedSupport
   * 来源 - org.springframework.aop.framework.DefaultAopProxyFactory
 
-62 | AopProxyFactory配置管理器 – AdvisedSupport
+### 62 | AopProxyFactory配置管理器 – AdvisedSupport
+
+* 核心 API - org.springframework.aop.framework.AdvisedSupport
+  * 语义 - 代理配置
+  * 基类 - org.springframework.aop.framework.ProxyConfig
+  * 实现接口 - org.springframework.aop.framework.Advised
+  * 使用场景 - org.springframework.aop.framework.AopProxy 实现
 
 63 | Advisor链工厂接口与实现 – AdvisorChainFactory
 
