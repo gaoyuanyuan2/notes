@@ -486,27 +486,113 @@ Around和Before执行的顺序是没有绝对的，只不过在同一个Aspect�
 
 * 实现类 - org.springframework.aop.aspectj.AspectJMethodBeforeAdvice
 
-51 | Joinpoint After Advice标准实现
+### 51 | Joinpoint After Advice标准实现
 
-52 | Joinpoint After Advice AspectJ实现
+* 接口
+  * org.springframework.aop.AfterAdvice
+  * org.springframework.aop.AfterReturningAdvice
+  * org.springframework.aop.ThrowsAdvice
+* 实现
+  * org.springframework.aop.framework.adapter.ThrowsAdviceInterceptor
+  * org.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor
 
-53 | Advice容器接口 – Advisor
+### 52 | Joinpoint After Advice AspectJ实现
 
-54 | Pointcut与Advice连接器 – PointcutAdvisor
+* 接口
+  * org.springframework.aop.AfterAdvice
+  * org.springframework.aop.AfterReturningAdvice
+  * org.springframework.aop.ThrowsAdvice
+* 实现
+  * org.springframework.aop.aspectj.AspectJAfterAdvice
+  * org.springframework.aop.aspectj.AspectJAfterReturningAdvice
+  * org.springframework.aop.aspectj.AspectJAfterThrowingAdvice
 
-55 | Introduction与Advice连接器 – IntroductionAdvisor
+Aspect的实现，AfterAdvice的实现，最重要还是核心API AbstractAspectjAdvice，这个实现里面有个方法可以查询对应的AdviceMethod。
+这个查询的能力是来自于Aspect，Spring只是利用AspectJ，利用它Pointcut表达式的方式来定位到相关的方法，然后通过方法参数的方式来进行调用。
+简而言之，AspectJ在Spring里面的实现，它是采用了反射的方式来进行定位的。
 
-56 | Advisor的Interceptor适配器 – AdvisorAdapter
+### 53 | Advice容器接口 – Advisor
 
-57 | AdvisorAdapter实现
+* 接口 - org.springframework.aop.Advisor
+  * 通用实现 - org.springframework.aop.support.DefaultPointcutAdvisor
 
-58 | AOP代理接口 – AopProxy
+Advice和Advisor之间是一-对一的关系，Spring在我们说传输或者传递Advice的时候，它实际上都是通过Advisor的方式。
 
-59 | AopProxy工厂接口与实现
+### 54 | Pointcut与Advice连接器 – PointcutAdvisor
 
-60 | JDK AopProxy实现 – JdkDynamicAopProxy
+* 接口 - org.springframework.aop.PointcutAdvisor
+  * 通用实现
+    * org.springframework.aop.support.DefaultPointcutAdvisor
+  * AspectJ 实现
+    * org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor
+    * org.springframework.aop.aspectj.AspectJPointcutAdvisor
+  * 静态方法实现
+    * org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor
+    * IoC 容器实现
+    * org.springframework.aop.support.AbstractBeanFactoryPointcutAdvisor
 
-61 | CGLIB AopProxy实现 – CglibAopProxy
+### 55 | Introduction与Advice连接器 – IntroductionAdvisor
+
+* 接口 - org.springframework.aop.IntroductionAdvisor
+  * 元信息
+    * org.springframework.aop.IntroductionInfo
+      * 动态地来管理当前代理对象它实现的接口
+  * 通用实现
+    * org.springframework.aop.support.DefaultIntroductionAdvisor
+  * AspectJ 实现
+    * org.springframework.aop.aspectj.DeclareParentsAdvisor
+
+### 56 | Advisor的Interceptor适配器 – AdvisorAdapter
+
+* 接口 - org.springframework.aop.framework.adapter.AdvisorAdapter
+  * MethodBeforeAdvice 实现
+    * org.springframework.aop.framework.adapter.MethodBeforeAdviceAdapter
+  * AfterReturningAdvice 实现
+    * org.springframework.aop.framework.adapter.AfterReturningAdviceAdapter
+  * ThrowsAdvice 实现
+    * org.springframework.aop.framework.adapter.ThrowsAdviceAdapter
+  
+### 57 | AdvisorAdapter实现
+
+* MethodBeforeAdvice 实现
+  * org.springframework.aop.framework.adapter.MethodBeforeAdviceAdapter
+* AfterReturningAdvice 实现
+  * org.springframework.aop.framework.adapter.AfterReturningAdviceAdapter
+* ThrowsAdvice 实现
+  * org.springframework.aop.framework.adapter.ThrowsAdviceAdapter
+
+### 58 | AOP代理接口 – AopProxy
+
+* 接口 - org.springframework.aop.framework.AopProxy
+* 实现
+  * JDK 动态代理
+    * org.springframework.aop.framework.JdkDynamicAopProxy
+  * CGLIB 字节码提升
+    * org.springframework.aop.framework.CglibAopProxy
+      * org.springframework.aop.framework.ObjenesisCglibAopProxy
+
+### 59 | AopProxy工厂接口与实现
+
+* 接口 - org.springframework.aop.framework.AopProxyFactory
+* 默认实现： org.springframework.aop.framework.DefaultAopProxyFactory
+  * 返回类型
+    * org.springframework.aop.framework.JdkDynamicAopProxy
+    * org.springframework.aop.framework.CglibAopProxy
+      * org.springframework.aop.framework.ObjenesisCglibAopProxy
+
+也可以使用动态编译，在运行时的编译相应的class
+
+### 60 | JDK AopProxy实现 – JdkDynamicAopProxy
+
+* 实现 - org.springframework.aop.framework.JdkDynamicAopProxy
+  * 配置 - org.springframework.aop.framework.AdvisedSupport
+  * 来源 - org.springframework.aop.framework.DefaultAopProxyFactory
+
+### 61 | CGLIB AopProxy实现 – CglibAopProxy
+
+* 实现 - org.springframework.aop.framework.CglibAopProxy
+  * 配置 - org.springframework.aop.framework.AdvisedSupport
+  * 来源 - org.springframework.aop.framework.DefaultAopProxyFactory
 
 62 | AopProxyFactory配置管理器 – AdvisedSupport
 
