@@ -632,11 +632,37 @@ Advice和Advisor之间是一-对一的关系，Spring在我们说传输或者传
   * 激活事件触发 - ProxyCreatorSupport#createAopProxy
   * 变更事件触发 - 代理接口变化时、 Advisor 变化时、 配置复制
 
-67 | ProxyCreatorSupport标准实现 – ProxyFactory
+### 67 | ProxyCreatorSupport标准实现 – ProxyFactory
 
-68 | ProxyCreatorSupport IoC容器实现 – ProxyFactoryBean
+* 核心 API - org.springframework.aop.framework.ProxyFactory
+  * 基类 - org.springframework.aop.framework.ProxyCreatorSupport
+  * 特性增强
+    * 提供一些便利操作
 
-69 | ProxyCreatorSupport AspectJ实现 – AspectJProxyFactory
+### 68 | ProxyCreatorSupport IoC容器实现 – ProxyFactoryBean
+
+* 核心 API - org.springframework.aop.framework.ProxyFactoryBean
+  * 基类 - org.springframework.aop.framework.ProxyCreatorSupport
+  * 特点
+    * Spring IoC 容器整合
+      * org.springframework.beans.factory.BeanClassLoaderAware
+      * org.springframework.beans.factory.BeanFactoryAware
+  * 特性增强
+    * 实现 org.springframework.beans.factory.FactoryBean
+
+
+### 69 | ProxyCreatorSupport AspectJ实现 – AspectJProxyFactory
+
+* 核心 API - org.springframework.aop.aspectj.annotation.AspectJProxyFactory
+  * 基类 - org.springframework.aop.framework.ProxyCreatorSupport
+  * 特点
+    * AspectJ 注解整合
+  * 相关 API
+    * AspectJ 元数据 - org.springframework.aop.aspectj.annotation.AspectMetadata
+    * AspectJ Advisor 工厂 - org.springframework.aop.aspectj.annotation.AspectJAdvisorFactory
+
+Spring对Aspect的注解的支持，并不是对Aspect的编译器和语法的支持，这些东西实际上是AspectJ它目身本采就有的能力。
+Spring只是借助它部分的API来实现它的需要的一些流程，Aspect的原生语义和Spring里面它并不是完全对等的。
 
 70 | IoC容器自动代理抽象 – AbstractAutoProxyCreator
 
