@@ -602,13 +602,35 @@ Advice和Advisor之间是一-对一的关系，Spring在我们说传输或者传
   * 实现接口 - org.springframework.aop.framework.Advised
   * 使用场景 - org.springframework.aop.framework.AopProxy 实现
 
-63 | Advisor链工厂接口与实现 – AdvisorChainFactory
+### 63 | Advisor链工厂接口与实现 – AdvisorChainFactory
 
-64 | 目标对象来源接口与实现 – TargetSource
+* 核心 API - org.springframework.aop.framework.AdvisorChainFactory
+  * 特殊实现 - org.springframework.aop.framework.InterceptorAndDynamicMethodMatcher
+  * 默认实现 - org.springframework.aop.framework.DefaultAdvisorChainFactory
 
-65 | 代理对象创建基础类 – ProxyCreatorSupport
+### 64 | 目标对象来源接口与实现 – TargetSource
 
-66 | AdvisedSupport事件监听器 – AdvisedSupportListener
+* 核心 API - org.springframework.aop.TargetSource
+  * 实现
+    * org.springframework.aop.target.HotSwappableTargetSource
+    * org.springframework.aop.target.AbstractPoolingTargetSource
+    * org.springframework.aop.target.PrototypeTargetSource
+    * org.springframework.aop.target.ThreadLocalTargetSource
+    * org.springframework.aop.target.SingletonTargetSource
+
+### 65 | 代理对象创建基础类 – ProxyCreatorSupport
+
+* 核心 API - org.springframework.aop.framework.ProxyCreatorSupport
+  * 语义 - 代理对象创建基类
+  * 基类 - org.springframework.aop.framework.AdvisedSupport
+
+### 66 | AdvisedSupport事件监听器 – AdvisedSupportListener
+
+* 核心 API - org.springframework.aop.framework.AdvisedSupportListener
+  * 事件对象 - org.springframework.aop.framework.AdvisedSupport
+  * 事件来源 - org.springframework.aop.framework.ProxyCreatorSupport
+  * 激活事件触发 - ProxyCreatorSupport#createAopProxy
+  * 变更事件触发 - 代理接口变化时、 Advisor 变化时、 配置复制
 
 67 | ProxyCreatorSupport标准实现 – ProxyFactory
 
