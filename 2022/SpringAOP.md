@@ -111,7 +111,7 @@ Spring Framework有诸多的特性与Spring AOP密切相关，比如Spring事务
   * Spring: Action taken by an aspect at a particular join point. Different types of advice include "around", before and after" advice. Many AOP frameworks, including Spring, model an advice as an interceptor and maintain a chain of interceptors around the join point.
 
 * Introduction 概念
-  * AspectJ: Inter- -type declarations in AspectJ are declarations that cut across classes and their hierarchies. They may declare members that cut across multiple classes, or change the inheritance relationship between classes.
+  * AspectJ: Inter-type declarations in AspectJ are declarations that cut across classes and their hierarchies. They may declare members that cut across multiple classes, or change the inheritance relationship between classes.
   * Spring: Declaring additional methods or fields on behalf of a type. Spring AOP lets you introduce new interfaces (and a corresponding implementation) to any advised object.
 
 Aspect是一个类似像一个Class一样的，Join point相当于就是一个方法，Action就相当于说这方法里面的具体的步骤
@@ -120,8 +120,8 @@ Aspect是一个类似像一个Class一样的，Join point相当于就是一个�
 ### 07 | Java AOP设计模式：代理、判断和拦截器模式
 
 * 代理模式:静态和动态代理
-* 判断模式:类、方法、注解、参数、昇常.
-* 拦截模式:前置、后置、返回、昇常
+* 判断模式:类、方法、注解、参数、异常.
+* 拦截模式:前置、后置、返回、异常
 
 ### 08 | Java AOP代理模式（Proxy）：Java静态代理和动态代理的区别是什么？
 
@@ -153,10 +153,10 @@ Aspect是一个类似像一个Class一样的，Join point相当于就是一个�
 ### 11 | Spring AOP 功能概述：核心特性、编程模型和使用限制
 
 * 核心特性
-  * 纯Java实现、无编译时特殊处理、不修改和控制ClassL oader
+  * 纯Java实现、无编译时特殊处理、不修改和控制ClassLoader
   * 仅支持方法级别的Join Points
   * 非完整AOP实现框架
-  * Spring loC容器整合
+  * Spring IoC容器整合
   * AspectJ注解驱动整合(非竞争关系)
 
 ### 12 | Spring AOP编程模型：注解驱动、XML配置驱动和底层API
