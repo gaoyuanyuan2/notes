@@ -664,99 +664,513 @@ Advice和Advisor之间是一-对一的关系，Spring在我们说传输或者传
 Spring对Aspect的注解的支持，并不是对Aspect的编译器和语法的支持，这些东西实际上是AspectJ它目身本采就有的能力。
 Spring只是借助它部分的API来实现它的需要的一些流程，Aspect的原生语义和Spring里面它并不是完全对等的。
 
-70 | IoC容器自动代理抽象 – AbstractAutoProxyCreator
+### 70 | IoC容器自动代理抽象 – AbstractAutoProxyCreator
 
-71 | IoC容器自动代理标准实现
+* API - org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator
+  * 基类 - org.springframework.aop.framework.ProxyProcessorSupport
+  * 特点
+    * 与 Spring Bean 生命周期整合
+      * org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor
 
-72 | IoC容器自动代理 AspectJ 实现 – AspectJAwareAdvisorAutoProxyCreator
+### 71 | IoC容器自动代理标准实现
 
-73 | AOP Infrastructure Bean接口 – AopInfrastructureBean
+* 基类 - org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator
+  * 默认实现 - DefaultAdvisorAutoProxyCreator
+  * Bean 名称匹配实现 - BeanNameAutoProxyCreator
+  * Infrastructure Bean 实现 - InfrastructureAdvisorAutoProxyCreator
 
-74 | AOP上下文辅助类 – AopContext
+### 72 | IoC容器自动代理 AspectJ 实现 – AspectJAwareAdvisorAutoProxyCreator
 
-75 | 代理工厂工具类 – AopProxyUtils
+* org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator
+  * 基类 - org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator
 
-76 | AOP工具类 – AopUtils
+### 73 | AOP Infrastructure Bean接口 – AopInfrastructureBean
 
-77 | AspectJ Enable模块驱动实现 – @EnableAspectJAutoProxy
+*  接口 - org.springframework.aop.framework.AopInfrastructureBean
+  *  语义 - Spring AOP 基础 Bean 标记接口
+  *  实现
+    *  org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator
+    *  org.springframework.aop.scope.ScopedProxyFactoryBean
+  *  判断逻辑
+    *  AbstractAutoProxyCreator#isInfrastructureClass
+    *  ConfigurationClassUtils#checkConfigurationClassCandidate
 
-78 | AspectJ XML配置驱动实现 –
+### 74 | AOP上下文辅助类 – AopContext
 
-79 | AOP配置Schema-based 实现 –
+*  API - org.springframework.aop.framework.AopContext
+  *  语义 - ThreadLocal 的扩展， 临时存储 AOP 对象
 
-80 | Aspect Schema-based实现 –
+### 75 | 代理工厂工具类 – AopProxyUtils
 
-81 | Pointcut Schema-based实现 –
+* API - org.springframework.aop.framework.AopProxyUtils
+  * 代表方法
+    * getSingletonTarget - 从实例中获取单例对象
+    * ultimateTargetClass - 从实例中获取最终目标类
+    * completeProxiedInterfaces - 计算 AdvisedSupport 配置中所有被代理的接口
+    * proxiedUserInterfaces - 从代理对象中获取代理接口
 
-82 | Around Advice Schema-based实现 –
+### 76 | AOP工具类 – AopUtils
 
-83 | Before Advice Schema-based实现 –
+* API - org.springframework.aop.support.AopUtils
+  * 代表方法
+    * isAopProxy- 判断对象是否为代理对象
+    * isJdkDynamicProxy - 判断对象是否为 JDK 动态代理对象
+    * isCglibProxy - 判断对象是否为 CGLIB 代理对象
+    * getTargetClass - 从对象中获取目标类型
+    * invokeJoinpointUsingReflection - 使用 Java 反射调用 Joinpoint（ 目标方法）
 
-84 | After Advice Schema-based实现 –
+代理对象是用于拦截，ointcut是继续去筛选，Advice是进行一个围绕，最终会被底层invokejoinpointUsingReflection这个方法来调用。
 
-85 | After Returning Advice Schema-based实现 –
 
-86 | After Throwing Advice Schema-based实现 –
+### 77 | AspectJ Enable模块驱动实现 – @EnableAspectJAutoProxy
 
-87 | Adviser Schema-based实现 –
+* 注解 - org.springframework.context.annotation.EnableAspectJAutoProxy
+  * 属性方法
+    * proxyTargetClass - 是否已类型代理
+    * exposeProxy - 是否将代理对象暴露在 AopContext 中
+  * 设计模式 - @Enable 模块驱动
+    * ImportBeanDefinitionRegistrar 实现 -org.springframework.context.annotation.AspectJAutoProxyRegistrar
+  * 底层实现
+    * org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator
 
-88 | Introduction Schema-based实现 –
+### 78 | AspectJ XML配置驱动实现 
 
-89 | 作用域代理Schema-based实现 –
+* XML 元素 - <aop:aspectj-autoproxy/>
+  * 属性
+    * proxy-target-class - 是否已类型代理
+    * expose-proxy - 是否将代理对象暴露在 AopContext 中
+  * 设计模式 - Extensible XML Authoring
+  * 底层实现
+   * org.springframework.aop.config.AspectJAutoProxyBeanDefinitionParser
 
-90 | 面试题精选
+### 79 | AOP配置Schema-based 实现 
 
-第四章：Spring AOP设计模式 (17讲)
+* XML 元素 - <aop:config/>
+  * 属性
+    * proxy-target-class - 是否已类型代理
+    * expose-proxy - 是否将代理对象暴露在 AopContext 中
+  * 嵌套元素
+    * pointcut
+    * advisor
+    * aspect
+  * 底层实现
+    * org.springframework.aop.config.ConfigBeanDefinitionParser
 
-91 | 抽象工厂模式（Abstract factory）实现
+### 80 | Aspect Schema-based实现
 
-92 | 构建器模式（Builder）实现
+* XML 元素 - <aop:aspect/>
+  * 父元素 - <aop:config/>
+  * 属性
+    * ref - Spring Bean 引用的名称
+    * order - Aspect 顺序数
+  * 嵌套元素
+    * pointcut
+    * declare-parents
+    * before
+    * after
+    * after-returning
+    * after-throwing
+    * around
 
-93 | 工厂方法模式（Factory method）实现
+### 81 | Pointcut Schema-based实现
 
-94 | 原型模式（Prototype）实现
+* XML 元素 - <aop:pointcut/>
+  * 父元素 - <aop:aspect/> 或 <aop:config/>
+  * 属性
+    * id - Pointcut ID
+    * expression - （ 必须） AspectJ 表达式
+  * 底层实现
+    * org.springframework.aop.Pointcut
 
-95 | 单例模式（Singleton）实现
 
-96 | 适配器模式（Adapter）实现
+### 82 | Around Advice Schema-based实现
 
-97 | 组合模式（Composite）实现
+* XML 元素 - <aop:around/>
+  * 父元素 - <aop:aspect/>
+  * 属性
+    * pointcut - AspectJ Pointcut 表达式
+    * pointcut-ref - 引用的 AspectJ Pointcut 名称
+    * method - 拦截目标方法
+    * arg-names - 目标方法参数名称
 
-98 | 装饰器模式（Decorator）实现
+### 83 | Before Advice Schema-based实现 
 
-99 | 享元模式（Flyweight）实现
+* XML 元素 - <aop:around/>
+  * 父元素 - <aop:aspect/>
+  * 属性
+    * pointcut - AspectJ Pointcut 表达式
+    * pointcut-ref - 引用的 AspectJ Pointcut 名称
+    * method - 拦截目标方法
+    * arg-names - 目标方法参数名称
 
-100 | 代理模式（Proxy）实现
+### 84 | After Advice Schema-based实现 
 
-101 | 模板方法模式（Template Method）实现
+* XML 元素 - <aop:after/>
+  * 父元素 - <aop:aspect/>
+  * 属性
+    * pointcut - AspectJ Pointcut 表达式
+    * pointcut-ref - 引用的 AspectJ Pointcut 名称
+    * method - 拦截目标方法
+    * arg-names - 目标方法参数名称
 
-102 | 责任链模式（Chain of Responsibility）实现
+### 85 | After Returning Advice Schema-based实现
 
-103 | 观察者模式（Observer）实现
+* XML 元素 - <aop:after-returning/>
+  * 父元素 - <aop:aspect/>
+  * 属性
+    * pointcut - AspectJ Pointcut 表达式
+    * pointcut-ref - 引用的 AspectJ Pointcut 名称
+    * method - 拦截目标方法
+    * arg-names - 目标方法参数名称
+    * returning - 方法参数名称
 
-104 | 策略模式（Strategy）实现
+### 86 | After Throwing Advice Schema-based实现
 
-105 | 命令模式（Command）实现
+* XML 元素 - <aop:after-throwing/>
+  * 父元素 - <aop:aspect/>
+  * 属性
+    * pointcut - AspectJ Pointcut 表达式
+    * pointcut-ref - 引用的 AspectJ Pointcut 名称
+    * method - 拦截目标方法
+    * arg-names - 目标方法参数名称
+    * throwing - 方法参数名称
 
-106 | 状态模式（State）实现
+### 87 | Adviser Schema-based实现
 
-107 | 面试题精选
+* XML 元素 - <aop:advisor/>
+  * 父元素 - <aop:config/>
+  * 属性
+    * advice-ref - Advice Bean 引用
+    * pointcut - AspectJ Pointcut 表达式
+    * pointcut-ref - AspectJ Pointcut Bean 引用
+    * order - Advisor 顺序数
 
-第五章：Spring AOP在Spring Framework内部应用 (7讲)
+### 88 | Introduction Schema-based实现
 
-108 | Spring AOP在 Spring 事件（Events）
+* XML 元素 - <aop:declare-parents/>
+  * 父元素 - <aop:aspect/>
+  * 属性
+    * types-matching - 是否已类型代理
+    * implement-interface - 实现接口全类名
+    * default-impl - 默认实现全类名
+    * delegate-ref - 委派实现 Bean 引用
 
-109 | Spring AOP在Spring 事务（Transactions）理论基础
+### 89 | 作用域代理Schema-based实现
 
-110 | Spring AOP在Spring 事务（Transactions）源码分析
+* XML 元素 - <aop:scoped-proxy/>
+  * 属性
+    * proxy-target-class - 是否已类型代理
 
-111 | Spring AOP在Spring 缓存（Caching）
+### 90 | 面试题精选
 
-112 | Spring AOP在Spring本地调度（Scheduling）
+沙雕面试题 - Spring AOP Advice XML 标签有哪些？
 
-113 | 面试题精选
+答：
+* Around Advice : <aop:around/>
+* Before Advice : <aop:before/>
+* After: <aop:after/>
+* AfterReturning : <aop:after-returning/>
+* AfterThrowing : <aop:after-throwing/>
 
-114 | 结束语
+
+996 面试题 - 请解释 Spring @EnableAspectJAutoProxy的原理？
+
+答： 参考 @EnableAspectJAutoProxy
+
+劝退面试题 - Spring Configuration Class CGLIB 提升与 AOP 类代理的关系?
+
+
+## 第四章：Spring AOP设计模式 (17讲)
+
+### 91 | 抽象工厂模式（Abstract factory）实现
+
+* 基本概念
+抽象工厂模式提供了一种方式， 可以将一组具有同一主题的单独的工厂封装起来。 在正常使用中， 客户端程序需要创建抽象工厂的具体实现， 然后使用抽象工厂作为接口来创建这一主题的具体对象。 客户端程序不需要知道（ 或关心） 它从这些内部的工厂方法中获得对象的具体类型， 因为客户端程序仅使用这些对象的通用接口。 抽象工厂模式将一组对象的实现细节与他们的一般使用分离开来。
+
+* Spring AOP 举例实现
+  * 接口 - org.springframework.aop.framework.AopProxyFactory
+  * 实现 - org.springframework.aop.framework.DefaultAopProxyFactory
+
+### 92 | 构建器模式（Builder）实现
+
+* 基本概念
+建造模式， 是一种对象构建模式。 它可以將複雜對象的建造過程抽象出來（ 抽象類別） ， 使这个抽象过程的不同实现方法可以构造出不同表现（ 属性） 的对象。
+
+* Spring AOP 举例实现
+  * 实现 -org.springframework.aop.aspectj.annotation.BeanFactoryAspectJAdvisorsBuilder
+
+### 93 | 工厂方法模式（Factory method）实现
+
+* 基本概念
+就像其他创建型模式一样， 它也是处理在不指定对象具体类型的情况下创建对象的问题。 工厂方法模式的实质是“ 定义一个创建对象的接口， 但让实现这个接口的类来决定实例化哪个类。 工厂方法让类的实例化推迟到子类中进行。 ”
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.framework.ProxyFactory
+
+### 94 | 原型模式（Prototype）实现
+
+* 基本概念
+创建型模式的一种， 其特点在于通过「 复制」 一个已经存在的实例来返回新的实例,而不是新建实例。被复制的实例就是我们所称的「 原型」 ， 这个原型是可定制的。
+原型模式多用于创建复杂的或者耗时的实例， 因为这种情况下， 复制一个已经存在的实例使程序运行更高效； 或者创建值相等， 只是命名不一样的同类数据。
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.target.PrototypeTargetSource
+
+### 95 | 单例模式（Singleton）实现
+
+* 基本概念
+属于创建型模式的一种。 在应用这个模式时， 单例对象的类必须保证只有一个实例存在。 许多时候整个系统只需要拥有一个的全局对象， 这样有利于我们协调系统整体的行为。 比如在某个服务器程序中， 该服务器的配置信息存放在一个文件中， 这些配置数据由一个单例对象统一读取， 然后服务进程中的其他对象再通过这个单例对象获取这些配置信息。 这种方式简化了在复杂环境下的配置管理。
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.target.SingletonTargetSource
+
+### 96 | 适配器模式（Adapter）实现
+
+* 基本概念
+有时候也称包装样式或者包装（ 英語： wrapper） 。 将一个类的接口轉接成用户所期待的。 一个适配使得因接口不兼容而不能在一起工作的类能在一起工作， 做法是将类自己的接口包裹在一个已存在的类中。
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.framework.adapter.AdvisorAdapter
+  * 适配对象 - org.aopalliance.aop.Advice
+  * 目标对象 - org.aopalliance.intercept.MethodInterceptor
+
+### 97 | 组合模式（Composite）实现
+
+* 基本概念
+The composite pattern describes a group of objects that are treated the same way as a single instance of the same type of object. The intent of a composite is to "compose" objects into tree structures to represent part-whole hierarchies. Implementing the composite pattern lets clients treat individual objects and compositions uniformly.
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.support.ComposablePointcut
+  * 接口 - org.springframework.aop.Pointcut
+  * 成员 - org.springframework.aop.Pointcut
+
+
+### 98 | 装饰器模式（Decorator）实现
+
+* 基本概念
+一种动态地往一个类中添加新的行为的设计模式。 就功能而言， 修饰模式相比生成子类更为灵活， 这样可以给某个对象而不是整个类添加一些功能。
+
+* Spring AOP 举例实现
+  * 实现 -org.springframework.aop.aspectj.annotation.LazySingletonAspectInstanceFactoryDecorator
+
+### 99 | 享元模式（Flyweight）实现
+
+ * 基本概念
+它使用物件用來尽可能減少内存使用量； 便于相似物件中分享更多的数据。 复杂对象缓存，数据共享。
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.framework.adapter.AdvisorAdapterRegistry
+
+
+### 100 | 代理模式（Proxy）实现
+
+* 基本概念
+所謂的代理者是指一個類別可以作為其它東西的介面。 代理者可以作任何東西的介面： 網路連接、 記憶體中的大物件、 檔案或其它昂貴或無法複製的資源。
+
+* Spring AOP 举例实现
+  * 实现 - org.springframework.aop.framework.AopProxy
+    * JDK - org.springframework.aop.framework.JdkDynamicAopProxy
+    * CGLIB - org.springframework.aop.framework.CglibAopProxy
+
+### 101 | 模板方法模式（Template Method）实现
+
+* 基本概念
+模板方法是一個定義在父類別的方法， 在模板方法中會呼叫多個定義在父類別的其他方法， 而這些方法有可能只是抽象方法並沒有實作， 模板方法僅決定這些抽象方法的執行順序， 這些抽象方法的實作由子類別負責， 並且子類別不允許覆寫模板方法。
+
+* Spring AOP 举例实现
+  * 模板类 - org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator
+  * 模板方法 - getAdvicesAndAdvisorsForBean(Class,String,TargatSource)
+  * 子类实现
+    * org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator(XML)
+    * org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator(注解）
+
+
+### 102 | 责任链模式（Chain of Responsibility）实现
+
+* 基本概念
+包含了一些命令对象和一系列的处理对象。 每一个处理对象决定它能处理哪些命令对象， 它也知道如何将它不能处理的命令对象传递给该链中的下一个处理对象。 该模式还描述了往该处理链的末尾添加新的处理对象的方法。
+
+* Spring AOP 举例实现
+  * 接口 - org.springframework.aop.framework.AdvisorChainFactory
+  * 实现 - org.springframework.aop.framework.DefaultAdvisorChainFactory
+
+### 103 | 观察者模式（Observer）实现
+
+* 基本概念
+一個目標物件管理所有相依於它的觀察者物件， 並且在它本身的狀態改變時主動發出通知。 這通常透過呼叫各觀察者所提供的方法來實現。 此種模式通常被用來實时事件處理系統。
+
+* Spring AOP 举例实现
+  * 观察者 - org.springframework.aop.framework.ProxyCreatorSupport
+  * 被观察者 - org.springframework.aop.framework.AdvisedSupportListener
+  * 通知对象 - org.springframework.aop.framework.AdvisedSupport
+
+### 104 | 策略模式（Strategy）实现
+
+* 基本概念
+指對象有某個行爲， 但是在不同的場景中， 該行爲有不同的實現算法。 比如每個人都要“ 交個人所得 稅” ， 但是每國交個人所得稅就有不同的算稅方法。
+
+* Spring AOP 举例实现
+  * org.springframework.aop.framework.DefaultAopProxyFactory#createAopProxy
+  * org.springframework.aop.config.ConfigBeanDefinitionParser#getAdviceClass
+
+### 105 | 命令模式（Command）实现
+
+
+* 基本概念
+  * 它嘗試以物件來代表實際行動。 命令物件可以把行動(action) 及其參數封裝起來， 於是這些行動可以被：
+    * 重複多次
+    * 取消（ 如果該物件有實作的話）
+    * 取消後又再重做
+    
+* Spring AOP 举例实现
+  * org.aopalliance.intercept.MethodInvocation
+  * org.aspectj.lang.ProceedingJoinPoint
+
+### 106 | 状态模式（State）实现
+
+* 基本概念
+允许对象在内部状态发生变化时更改其行为。 这种模式接近于有限状态机的概念。 状态模式可以解释为策略模式， 它能够通过调用模式接口中定义的方法来切换策略。
+
+* Spring AOP 举例实现
+  * 状态对象 - org.springframework.aop.framework.ProxyConfig
+  * 影响对象 - org.springframework.aop.framework.AopProxy
+    * org.springframework.aop.framework.JdkDynamicAopProxy
+    * org.springframework.aop.framework.CglibAopProxy
+
+### 107 | 面试题精选
+
+沙雕面试题 - GoF 23 设计模式和它的归类？
+
+答：
+* Creational（ 创建模式） ： Abstract factory、 Builder、 Factorymethod、 Prototype 和 Singleton
+* Structural（ 结构模式） ： Adapter、 Bridge、 Composite、Decorator、 Facade、 Flyweight 和 Proxy
+* Behavioral（ 行为模式） ： Chain of responsibility、 Command、Interpreter、 Iterator、 Mediator、 Memento、 Observer、 State、 Strategy、 Template method 和 Visitor
+
+
+996 面试题 - 举例介绍装饰器模式和代理模式的区别？
+
+答： 代理模式不要求和被代理对象存在层次关系装饰器模式则需要和被装饰者存在层次关系
+
+装饰器模式通常来说会生成或者会新建些扩展的行为，这个行为它并不隶属于被装饰者之间。
+比如说你要去实现一个比如说像ServletRequestWrapper这种东西， 也可能在那个方法里面增加一些新的关于这种行为的一个扩展。
+但是代理模式通常不会，代理模式它的功能是被代理者的子集或最多是全集，不会是什么不会是超集。
+通常来说代理模式它可以是比如说直接代理或者间接代理这种方式来进行操作，或者通过我们所说的静态代理和动态代理两种实现方式，而装饰器模式通常来说它只有静态方式来进行操作。
+也就是说它要通过编译的方式来生成相应的文件，比如说我们举个例子比如说像InputStream和BufferInputStream。
+比如说像我们说Java里面的动态代理，那么Proxy API里面就会有相应的对象。
+比如说InvocationHandler它其实也是一种类似像代理的方式操作。
+
+劝退面试题 - 请举例说明 Spring Framework 中使用设计模式的实现?
+
+
+## 第五章：Spring AOP在Spring Framework内部应用 (7讲)
+
+### 108 | Spring AOP    在 Spring 事件（Events）
+
+* 核心 API - org.springframework.context.event.EventPublicationInterceptor
+* 特性描述
+ * 当 Spring AOP 代理 Bean 中的 JoinPoint 方法执行后， Spring ApplicationContext 将发布一个自定义事件（ ApplicationEvent 子类）
+* 使用限制
+  * EventPublicationInterceptor 关联的 ApplicationEvent 子类必须存在单参数的构造器
+  * EventPublicationInterceptor 需要被声明为 Spring Bean
+
+### 109 | Spring AOP在Spring 事务（Transactions）理论基础
+
+* 核心 API
+  * Spring 事务 @Enable 模块驱动 -@EnableTransactionManagement
+  * Spring 事务注解 - @Transactional
+  * Spring 事务事件监听器 - @TransactionalEventListener
+  * Spring 事务定义 - TransactionDefinition
+  * Spring 事务状态 - TransactionStatus
+  * Spring 平台事务管理器 - PlatformTransactionManager
+  * Spring 事务代理配置 - ProxyTransactionManagementConfiguration
+  * Spring 事务 PointcutAdvisor 实现 - BeanFactoryTransactionAttributeSourceAdvisor
+  * Spring 事务 MethodInterceptor 实现 - TransactionInterceptor
+  * Spring 事务属性源 - TransactionAttributeSource
+
+
+Spring AOP 在 Spring 事务（ Transactions）
+
+* 理解 TransactionDefinition（ Spring 事务定义）
+  * 说明： Interface that defines Spring-compliant transaction properties. Based on the propagation behavior definitions analogous to EJB CMT attributes.
+  
+  * 核心方法
+    * getIsolationLevel() ： 获取隔离级别， 默认值 ISOLATION_DEFAULT 常量， 参考org.springframework.transaction.annotation.Isolation
+    * getPropagationBehavior()： 获取事务传播， 默认值： PROPAGATION_REQUIRED 常量， 参考org.springframework.transaction.annotation.Propagation
+    * getTimeout()： 获取事务执行超时时间， 默认值： TIMEOUT_DEFAULT 常量
+    * isReadOnly()： 是否为只读事务， 默认值： false
+
+* 理解 TransactionStatus（ Spring 事务状态）
+  * 说明： Interface that specifies an API to programmatically manage transaction savepoints in a generic fashion. Extended by TransactionStatus to expose savepoint management functionality for a specific transaction.
+  * 核心方法
+    * isNewTransaction() ： 当前事务执行是否在新的事务
+    * setRollbackOnly()： 将当前事务设置为只读
+    * isRollbackOnly()： 当前事务是否为只读
+    * isCompleted()： 当前事务是否完成
+    
+* 理解 PlatformTransactionManager（ 平台事务管理器）
+  * 说明： the central interface in Spring's transaction infrastructure. Applications can use this directly, but it is not primarily meant as API: Typically, applications will work with either TransactionTemplate or declarative transaction demarcation through AOP.
+  * 核心方法
+    * getTransaction(TransactionDefinition) ： 获取事务状态
+    * commit(TransactionStatus)： 提交事务
+    * rollback(TransactionStatus)： 回滚事务
+
+* 理解 Spring 事务传播（ Transaction Propagation）
+  * 官方文档： https://docs.spring.io/springframework/docs/current/reference/html/data-access.html#tx-propagation
+
+### 110 | Spring AOP在Spring 事务（Transactions）源码分析
+
+
+
+### 111 | Spring AOP在Spring 缓存（Caching）
+
+* 核心 API
+  * Spring 缓存 @Enable 模块驱动 - @EnableCaching
+  * 缓存操作注解 - @Caching、 @Cachable、 @CachePut、 @CacheEvict
+  * 缓存配置注解 - @CacheConfig
+  * 缓存注解操作数据源 - AnnotationCacheOperationSource
+  * Spring 缓存注解解析器 - SpringCacheAnnotationParser
+  * Spring 缓存管理器 - CacheManager
+  * Spring 缓存接口 - Cache
+  * Spring 缓存代理配置 - ProxyCachingConfiguration
+  * Spring 缓存 PointcutAdvisor 实现 - BeanFactoryCacheOperationSourceAdvisor
+  * Spring 缓存 MethodInterceptor 实现 - CacheInterceptor
+
+
+### 112 | Spring AOP在Spring本地调度（Scheduling）
+
+* 核心 API
+  * Spring 异步 @Enable 模块驱动 - @EnableAsync
+  * Spring 异步注解 - @Async
+  * Spring 异步配置器 - AsyncConfigurer
+  * Spring 异步代理配置 - ProxyAsyncConfiguration
+  * Spring 异步 PointcutAdvisor 实现 - AsyncAnnotationAdvisor
+  * Spring 异步 MethodInterceptor 实现 - AnnotationAsyncExecutionInterceptor
+
+### 113 | 面试题精选
+
+
+沙雕面试题 - 请举例说明 Spring AOP 在 Spring
+Framework 特性运用？
+
+答：
+* Spring 事件（ Events）
+* Spring 事务（ Transaction）
+* Spring 缓存（ Caching）
+* Spring 本地调度（ Scheduling）
+* Spring 远程（ Remoting）
+
+996 面试题 - 请解释 Spring 事务传播的原理？
+
+劝退面试题 - 请总结 Spring AOP 与 IoC 功能整合的设计模式？
+答：
+* 实现 Advice 或 MethodInterceptor
+* 实现 PointcutAdvisor
+* 实现 Spring AOP 代理配置类
+* （ 可选） 实现注解和注解元信息的解析以及处理
+* （ 可选） 实现 XML 与其元信息的解析以及处理
+
+
+### 114 | 结束语
 
 
 
