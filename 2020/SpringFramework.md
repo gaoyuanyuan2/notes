@@ -112,9 +112,8 @@ Maven: 3.2 +
 * O/R映射(O/R Mapping)
 * XML编列(XML Marshalling)
   * 类似序列化和反序列化
-
-# 必考 事务抽象
-
+  
+ 事务抽象来源是来自于EJB，Spring只不过在EJB的基础.上面做了一些简化工作。 
 
 3.Web技术(Web)
 
@@ -127,7 +126,7 @@ Maven: 3.2 +
   * WebClient
   * WebSocket
 
-当然Reactive它也是可以运用Spring MVC的，也可以运用到Servlet引擎来进行实现。
+Reactive通常默认情况下面是Netty的web server ，当然Reactive它也是可以运用Spring MVC的Servlet引擎来进行实现。
 
 在Spring框架5.0之前，有另外一个东西叫做RestTemplate，或者是有个叫做HttpClient，是这个同步的Http执行的客户端。那么WebClient引用之后，它把过去的同步执行变成异步回调的方式。
 
@@ -155,7 +154,6 @@ Maven: 3.2 +
 JMX 运维侧，查看CUP、磁盘利用率等。
 
 
-
 5.测试(Testing)
 
 * 模拟对象(Mock Objects)
@@ -166,11 +164,7 @@ JMX 运维侧，查看CUP、磁盘利用率等。
   * 服务端
 * Web 测试客户端(WebTestClient)
 
-
-
 Mock对象我们可以去动态的去生成它，比如说在Spring Framework里面，它生成的这么一个MockHttp这么一个接口。
-
-
 
 ### 05 | Spring版本特性：Spring各个版本引入了哪些新特性？
 
@@ -477,7 +471,7 @@ spring-expression: Spring 表达式语言模块
   * Spring Framework（https://spring.io/projects/spring-framework）
 
 
-Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Servlet去获取比如说像数据库源或者是比如说像线程池或者是消息服务，那么也是通过JNDI的方式在我的Servlet容器或者EJB容器或者Java EE容器里面来进行获取。
+Servlet容器：Servlet它是Web的一个标准的技术，Model2的设计模式，通过JavaEE或者是通过我们的Servlet去获取比如说像数据库源或者是比如说像线程池或者是消息服务，那么也是通过JNDI的方式在我的Servlet容器或者EJB容器或者Java EE容器里面来进行获取。
 
 ### 17 | 传统IoC容器实现：JavaBeans也是IoC容器吗？
 
@@ -513,6 +507,9 @@ Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Serv
 
 ### 18 | 轻量级IoC容器：如何界定IoC容器的“轻重”？
 
+
+### 19 | 依赖查找 VS. 依赖注入：为什么Spring总会强调后者，而选择性忽视前者？
+
 1.优劣对比
 
 |类型|依赖处理|实现便利性|代码侵入性|API依赖性|可读性|
@@ -526,8 +523,7 @@ Servlet容器：Model2的设计模式，通过JavaEE或者是通过我们的Serv
 
 不依赖API不依赖容器API，不代表没有侵入性
 
-
-### 19 | 依赖查找 VS. 依赖注入：为什么Spring总会强调后者，而选择性忽视前者？
+### 20 | 构造器注入 VS. Setter 注入：为什么Spring官方文档的解读会与作者的初心出现偏差？
 
 Spring团队通常提倡构造函数注入，因为它允许您将应用程序组件实现为不变的对象，并确保所需的依赖项不为空。
 
@@ -536,11 +532,6 @@ Spring团队通常提倡构造函数注入，因为它允许您将应用程序�
 Setter注入应该主要用于可选的依赖项，这些依赖项可以被分配合理的默认值在类。否则，必须在代码使用依赖项的任何地方执行非空检查。顺序无法确定。
 
 有个类叫ObjectProvider这个类，它是种类型安全的方式，如果你的依赖注入的方式或者依赖查找的方式，是一个单一类型的话，它会调用getIfAvailable的方法来进行示范性地去返回那么等于空的时候它就会返回空,这种方式在Spring Boot的场景经常用到。
-
-
-
-
-### 20 | 构造器注入 VS. Setter 注入：为什么Spring官方文档的解读会与作者的初心出现偏差？
 
 构造器注入避免状态不确定性地被修改，Bean初始化之后是不变的对象，对程序和维护性都会带来更多的便利。
 
@@ -621,6 +612,7 @@ BeanFactory接口提供了一种高级配置机制，能够管理任何类型的
 
 BeanFactory是一个底层的IoC容器,ApplicationContext组合了BeanFactory的实现，在这基础上面增加了一些它的特性。
 
+组合和继承关系
 
 ### 27 | Spring应用上下文：ApplicationContext除了IoC容器角色，还提供哪些特性？
 
@@ -665,6 +657,7 @@ BeanFactory 是 IoC 底层容器。
 
 FactoryBean 是 创建 Bean 的一种方式，帮助实现复杂的初始化逻辑。
 
+通过第三方来进行创建的Bean， 没办法通过反射的方式，可以通过BeanFactory的方式来进行操作
 
 * 劝退面试题 - Spring IoC 容器启动时做了哪些准备？
 
