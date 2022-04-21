@@ -821,13 +821,10 @@ Bean 初始化（Initialization）
     
 就是Bean的定义默认情况是可以覆盖的，之前定义的bean，后面用相同名称可以同时覆盖掉。
 
-我们通过命名接口可以学习到一些什么事情：就当你去表达单和复杂的时候，我们通常来说可以通过继承，那么你去得到我的复杂或者复合类型的时候，首先继承我们单一的接口，同时做一些扩展。
-
 BeanDefinition其实是在Bean定义的注册阶段。
 
 ListableBeanFactory,它是针对于某一个类型去查找一个集合列表,那么集合列表可能有两种情况,一种情况是查询Bean的名称，
-一种情况是查询Bean的实例。我们推荐你使用Bean的名称去判断这个Bean是否存在，当然重要的方式是判断BeanDefinition是否存在，这种方式会避免提早初始化你的Bean，
-产生一些不确定的因素。Why？
+一种情况是查询Bean的实例。我们推荐你使用Bean的名称去判断这个Bean是否存在，当然重要的方式是判断BeanDefinition是否存在，这种方式会避免提早初始化你的Bean，产生一些不确定的因素。
 
 
 ### 45 | 层次性依赖查找：依赖查找也有双亲委派？
@@ -964,9 +961,7 @@ AnnotationConfigUtils
 
 ### 52 | 自动绑定（Autowiring）：为什么Spring会引入Autowiring？
 
-The Spring container can autowire relationships between collaborating beans. You can let Spring
-resolve collaborators (other beans) automatically for your bean by inspecting the contents of the
-ApplicationContext.
+The Spring container can autowire relationships between collaborating beans. You can let Spring resolve collaborators (other beans) automatically for your bean by inspecting the contents of the ApplicationContext.
 
 优点：
 * 自动装配可以显著减少指定属性或构造函数参数的需要。
@@ -1197,6 +1192,7 @@ Setter 注入（多依赖，非强制性依赖）
 |Resolvable Dependency |否| 否| 无 |依赖注入|
 
 ### 74 | Spring Bean Definition作为依赖来源：Spring Bean的来源
+
 要素
 * 元数据：BeanDefinition
 * 注册：BeanDefinitionRegistry#registerBeanDefinition
@@ -1230,15 +1226,12 @@ Setter 注入（多依赖，非强制性依赖）
   * 无法实现延迟初始化 Bean
   * 无法通过依赖查找
 ### 78 | 面试题精选
+
 * 沙雕面试题 - 注入和查找的依赖来源是否相同？
-答：否，依赖查找的来源仅限于 Spring BeanDefinition 以及单例对
-象，而依赖注入的来源还包括 Resolvable Dependency 以及
-@Value 所标注的外部化配置
+答：否，依赖查找的来源仅限于 Spring BeanDefinition 以及单例对象，而依赖注入的来源还包括 Resolvable Dependency 以及@Value 所标注的外部化配置
 
 * 996 面试题 - 单例对象能在 IoC 容器启动后注册吗？
-答：可以的，单例对象的注册与 BeanDefinition 不同，BeanDefinition 会
-被 ConfigurableListableBeanFactory#freezeConfiguration() 方法影响，
-从而冻结注册，单例对象则没有这个限制。
+答：可以的，单例对象的注册与 BeanDefinition 不同，BeanDefinition 会被 ConfigurableListableBeanFactory#freezeConfiguration() 方法影响，从而冻结注册，单例对象则没有这个限制。
 
 * 劝退面试题 - Spring 依赖注入的来源有哪些？
 答：
