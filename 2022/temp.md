@@ -48,3 +48,12 @@ getConnection 方法是通过 JDBC URL 判断的，通过迭代多次，返回�
                 }
   ```
 ServiceLoader#next() 方法会主动触发 ClassLoader 加载。
+
+### 多数据库源（Multiple DataSources）
+
+* N 个 DataSources
+* DataSource 代理
+
+
+
+
