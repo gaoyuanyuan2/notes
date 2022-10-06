@@ -1,3 +1,56 @@
+# 项目
+
+## 第一节    Java EE
+
+### 第一节 Servlet
+
+#### Servlet 是否线程安全
+
+不仅是同步，而且可是是异步，不仅可能线程安全，有可能非线程安全。规范里面有说明。
+
+#### NIO在Web体系不一定有多大提升
+
+#### flushBuffer 读取文件写入缓冲区，然后刷新，防止内存溢出
+
+####  GenericServlet implements  Serializable
+
+可能把状态持久化到本地，重启重新初始化状态
+
+#### jsp性能较高，默认打包编译成 Servlet class文件
+
+development 模式，动态编译生产Servlet
+
+#### Servlet 处理静态内容
+
+Tomcat ：org.apache.catalina.servlets.DefaultServlet
+
+#### Java打包文件
+  
+基本通过jar命令或者相关实现类完成，类似于ZIP
+JAR: Java 归档文件
+WAR: Java Web归档文件
+EAR: Java 企业级归档文件
+FAT JAR:压缩率为0的JAR文件，-0仅存储;不使用任何ZIP压缩，扩展了URL协议
+
+### 第二节 数据存储之 JDBC
+
+#### 多数据库源（Multiple DataSources）
+
+* N 个 DataSources
+* DataSource 代理
+  * Druid
+  
+#### JDBC 核心 API 
+
+* 数据源接口 - javax.sql.DataSource 
+* JDBC 驱动接口 - java.sql.Driver 
+* 驱动管理器接口 - java.sql.DriverManager 
+* 数据连接接口 - java.sql.Connection 
+* SQL 命令接口 - java.sql.Statement 
+* SQL 执行结果接口 - java.sql.ResultSet 
+* ResultSet 元数据接口 - java.sql.ResultSetMetaData 
+* SQL 执行异常 - java.sql.SQLException 
+* 事务保护点接口 - java.sql.Savepoint
 
 
 ### MQTT大势所趋 
