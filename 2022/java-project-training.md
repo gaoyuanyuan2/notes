@@ -112,4 +112,18 @@ ServiceLoader#next() 方法会主动触发 ClassLoader 加载。
 Subscription是Subscriber对Publisher控制对象，也可以称之为"背压控制器"
 
 
+# 问题
 
+JNDI 
+
+SPI
+
+反射
+
+注解
+
+Spring 常用的模式
+
+泛型
+
+文件流，http
