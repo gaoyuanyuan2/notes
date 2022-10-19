@@ -127,3 +127,5 @@ Spring 常用的模式
 泛型
 
 文件流，http
+
+CompletableFuture
