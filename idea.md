@@ -16,7 +16,7 @@ Ant Build:用Ant构建的信息
 
 ## 2、快捷键
 
-* 1.ALT+1:项目文件的导航,工程的导航
+* ALT+1:项目文件的导航,工程的导航
 
 ALT+2:浏览源码做标记记录:标签,断点
 
@@ -24,13 +24,13 @@ ALT+4:Run
 
 ALT+6:TODO
 
-* 2.项目之间的跳转 
+* 项目之间的跳转 
 
 `Ctrl + Alt + [` 
 
 `Ctrl + Alt + ]`
 
-* 3.Find Action(查找操作) 
+* Find Action(查找操作) 
 
 Ctrl + Shift + A 最近浏览的文件 
 
@@ -38,7 +38,7 @@ Ctrl + E 最近修改的文件
 
 Ctrl + Shift + E 
 
-* 4.查找(搜索)类 Ctrl + N 
+* 查找(搜索)类 Ctrl + N 
 
 查找(搜索)文件 Ctrl + Shift + N 
 
@@ -46,7 +46,7 @@ Ctrl + Shift + E
 
 查找(搜索)字符串 Ctrl + Shift + F
 
-* 5.上次编辑位置 Ctrl + Shift + Backspace 
+* 上次编辑位置 Ctrl + Shift + Backspace 
 
 下一个编辑位置 Ctrl + Alt + Backspace 
 
@@ -68,13 +68,13 @@ Ctrl + F11(带数字或字母书签)再次按下取消
 
 使用查找操作输入Plugins 使用：Ctrl + J + 需要跳转的字母
 
-* 6.跳转到下一个单词 Move Caret to Next Word (Ctrl+) 配合shift可以选中下一个单词。 
+* 跳转到下一个单词 Move Caret to Next Word (Ctrl+) 配合shift可以选中下一个单词。 
 
 将选中字符串全部转换为大写或小写 菜单->Edit->Toggle Case （Ctrl+Shift+U） 
 
 找到所有，并且多光标选中 菜单->Edit->Find->Select All Occurrences
 
-* 7.alter + enter: 
+* alter + enter: 
 
 1)自动创建函数 
 
@@ -88,11 +88,11 @@ Ctrl + F11(带数字或字母书签)再次按下取消
 
 6)导包
 
-* 8.Shift + F6 Rename 
+* Shift + F6 Rename 
 
 Ctrl+F6 方法添加参数 或者 alt + enter
 
-* 9.抽取变量：ctrl + alt + v（refactor选项）
+* 抽取变量：ctrl + alt + v（refactor选项）
 
 抽取静态变量：ctrl + alt + c（refactor选项） 
 
@@ -102,11 +102,11 @@ Ctrl+F6 方法添加参数 或者 alt + enter
 
 抽取方法：ctrl + alt + m（refactor选项）
 
-* 10.Shift + F6 Rename 
+* Shift + F6 Rename 
 
 Ctrl+F6 方法添加参数 或者 alt + enter
 
-* 11.抽取变量：ctrl + alt + v（refactor选项）
+* 抽取变量：ctrl + alt + v（refactor选项）
 
 抽取静态变量：ctrl + alt + c（refactor选项） 
 
@@ -116,11 +116,11 @@ Ctrl+F6 方法添加参数 或者 alt + enter
 
 抽取方法：ctrl + alt + m（refactor选项）
 
-* 12.Ctrl + Shift + F9 debug configuration 上下文运行，用在单元测试中会非常方便
+* Ctrl + Shift + F9 debug configuration 上下文运行，用在单元测试中会非常方便
 
 Shift + Alt + F9 debug最近运行的
 
-* 13.新建文件 Ctrl + Alt + Insert
+* 新建文件 Ctrl + Alt + Insert
 
 复制文件 F5
 
@@ -132,7 +132,7 @@ Shift + Alt + F9 debug最近运行的
 
 批量复制——调用剪切板，shift+Ctrl+V。
 
-* 14.Ctrl+F12，查看结构图
+* Ctrl+F12，查看结构图
 
 Ctrl+alt+shift+u 查看类图 maven 
 
@@ -143,7 +143,7 @@ Ctrl+H，查看类的继承关系
 Ctrl+Alt+H，查看方法的调用和被调用关系
 
 
-
+* 转换为大写 Ctrl,Shift 和 u
 
 
 
