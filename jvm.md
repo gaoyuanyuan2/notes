@@ -14,6 +14,4 @@ V  [jvm.dll+0x116c80]
 Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
 
 
-“EXCEPTION_ACCESS_VIOLATION ”意味着Java应用Crash的时候
 
-https://www.cnblogs.com/shiyangxt/archive/2009/01/06/1370627.html
