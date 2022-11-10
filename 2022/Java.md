@@ -236,6 +236,8 @@ clone比new 更高效
 * 多界限
 * 泛型方法和有界类型参数
 
+如果是读职泛型数据时,可以运用extends。如果是操作数据,使用super来修饰。
+
 ### 问答
 
 如果泛型参数实在属性可以通过字节码的方式获取字符描述 ，然后反推；
@@ -250,3 +252,7 @@ clone比new 更高效
 * 转换类型- Function<T,R>
 * 断定类型- Predicate<T>
 * 隐藏类型- Action
+
+`::` 方法引用
+
+是否为并行Stream: Stream#isParallel()
