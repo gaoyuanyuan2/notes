@@ -198,6 +198,8 @@ clone比new 更高效
 * 对团队要求极高,容易出现互喷的情况
 * Java 9之前采用jar文件管理, Java 9模块化之后,编程了module-info.java管理,还需要考虑与Maven依赖管理组件如何配合。
 
+
+
 ## 问答
 
 静态方法没有办法被interface替换,因为interface不允许出现static修饰方法；
