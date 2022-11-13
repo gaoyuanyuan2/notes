@@ -258,3 +258,7 @@ clone比new 更高效
 `::` 方法引用
 
 是否为并行Stream: Stream#isParallel()
+
+## 集合
+
+()[https://www.digitalocean.com/community/tutorials/java-collections-interview-questions-and-answers!]
