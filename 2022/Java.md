@@ -262,3 +262,41 @@ clone比new 更高效
 ## 集合
 
 ()[https://www.digitalocean.com/community/tutorials/java-collections-interview-questions-and-answers!]
+
+
+## 线程
+
+* Java 线程编程模型
+ * < Java 5：Thread、Runnable
+ * Java 5：Executor、Future、Callable
+ * Java 7：ForkJoin
+ * Java 8：CompletionStage、CompletableFuture
+ * Java 9：Flow（Publisher、Subscriber、Subscription、Processor）
+
+
+* Java 并发框架
+ * Java 5：Java Util Concurrent
+ * Java 7：Fork/Join
+ * Java 8：CompletableFuture、RxJava、Reactor
+ * Java 9：Flow API、Reactive Streams
+
+### Java 线程状态
+
+* API - java.lang.Thread.State（Since 1.5）  * NEW：线程已创建 ，尚未启动
+ * RUNNABLE：表示线程处于可运⾏状态，不代表⼀定运⾏
+ * BLOCKED：被 Monitor 锁阻塞，表示当前线程在同步锁的场景运作
+ * WAITTING：线程处于等待状态，由 Object#wait()、Thread#join() 或 LockSupport#park() 引起
+ * TIMED_WAITTING：线程处于规定时间内的等待状态
+ * TERMINATED：线程执⾏结束
+
+
+### synchronized 和volatile
+
+synchronized 和volatile 都有锁，但是它们的范围不同，笼统而言。前者锁定一段代码，后者锁定的是变量。
+
+### Thread 和 Object
+
+Thread.suspend() 和 Thread.resume() 方法可以运用任意区域 suspend()：指定线程挂起，resume()：指定线程恢复
+
+Object.wait() 和 Object.notify() 只能用在 synchronized 方法或块通过对象 Monitor 控制线程状态
+
