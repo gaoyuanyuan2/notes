@@ -300,3 +300,12 @@ Thread.suspend() 和 Thread.resume() 方法可以运用任意区域 suspend()：
 
 Object.wait() 和 Object.notify() 只能用在 synchronized 方法或块通过对象 Monitor 控制线程状态
 
+join()
+
+Thread#interrupt() 
+并不能中止线程，但是可以传递 interrupt 状态
+thread.interrupt() 方法在 start() 调用之前是没有效果
+调用 wait /join / sleep 抛出InterruptedException异常， 当前 interrupted 状态被清除 == false
+
+Thread#isInterrupted() 不清除
+Thread#isInterrupted(true) 清除
