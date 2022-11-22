@@ -309,3 +309,6 @@ thread.interrupt() 方法在 start() 调用之前是没有效果
 
 Thread#isInterrupted() 不清除
 Thread#isInterrupted(true) 清除
+
+Object.wait() 与 Thread.join() 看起来效果类似
+实际上 Thread.join() 方法就是调用了 Thread 对象 wait(int) 方法
