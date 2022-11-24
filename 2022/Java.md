@@ -312,3 +312,7 @@ Thread#isInterrupted(true) 清除
 
 Object.wait() 与 Thread.join() 看起来效果类似
 实际上 Thread.join() 方法就是调用了 Thread 对象 wait(int) 方法
+
+### 偏向锁
+
+大多数对象在同一个线程中使用，使用偏向锁可以减少开销，第一次获取锁才有cas操作，轻量级锁。多线程使用同一个对象，会升级为重量级锁。
