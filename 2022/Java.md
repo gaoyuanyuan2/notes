@@ -300,3 +300,7 @@ Thread.suspend() 和 Thread.resume() 方法可以运用任意区域 suspend()：
 
 Object.wait() 和 Object.notify() 只能用在 synchronized 方法或块通过对象 Monitor 控制线程状态
 
+
+
+偏向锁是Java 6幵始默人激活,使得synchronized 吾乂与ReentrantLock是性能接近,在Java 5时候，
+ReentrantLock > synchronized
