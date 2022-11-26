@@ -300,6 +300,7 @@ Thread.suspend() 和 Thread.resume() 方法可以运用任意区域 suspend()：
 
 Object.wait() 和 Object.notify() 只能用在 synchronized 方法或块通过对象 Monitor 控制线程状态
 
+<<<<<<< HEAD
 join()
 
 Thread#interrupt() 
@@ -316,3 +317,9 @@ Object.wait() 与 Thread.join() 看起来效果类似
 ### 偏向锁
 
 大多数对象在同一个线程中使用，使用偏向锁可以减少开销，第一次获取锁才有cas操作，轻量级锁。多线程使用同一个对象，会升级为重量级锁。
+=======
+
+
+偏向锁是Java 6幵始默人激活,使得synchronized 吾乂与ReentrantLock是性能接近,在Java 5时候，
+ReentrantLock > synchronized
+
