@@ -294,6 +294,10 @@ clone比new 更高效
 
 synchronized 和volatile 都有锁，但是它们的范围不同，笼统而言。前者锁定一段代码，后者锁定的是变量。
 
+### synchronized
+ 
+synchronized原语是没有读写锁实现，有可能操作系统会实现。但是Java API。ReentrantReadWriteLock对于应用是透明，不依赖于底层实现。
+
 ### Thread 和 Object
 
 Thread.suspend() 和 Thread.resume() 方法可以运用任意区域 suspend()：指定线程挂起，resume()：指定线程恢复
@@ -319,3 +323,4 @@ Object.wait() 与 Thread.join() 看起来效果类似
 
 偏向锁是Java 6幵始默人激活,使得synchronized 吾乂与ReentrantLock是性能接近,在Java 5时候，ReentrantLock > synchronized
 
+CAS 是一种相对（MB）较重的比较，轻量级的锁（标量）
