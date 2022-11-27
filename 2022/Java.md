@@ -324,3 +324,18 @@ Object.wait() 与 Thread.join() 看起来效果类似
 偏向锁是Java 6幵始默人激活,使得synchronized 吾乂与ReentrantLock是性能接近,在Java 5时候，ReentrantLock > synchronized
 
 CAS 是一种相对（MB）较重的比较，轻量级的锁（标量）
+
+### Queue
+
+BlockingQueue 尽可能用 put，避免使用 offer，最好不要用 add。
+
+## Java 内存模型
+
+Memory that can be shared between threads is called shared memory or heap memory.
+
+All instance fields, static fields, and array elements are stored in heap memory.
+
+广义的锁和同步或互斥是相同的语义,只不过 狭义的锁是对临界区(代码)互斥,那么 volatile或者CAS操作是对单个变量互斥的。 
+
+如果一个程序没有数据竞争，那么该程序的所有执行都将出现顺序一致。
+
