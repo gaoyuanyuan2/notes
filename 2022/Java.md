@@ -304,6 +304,12 @@ Thread.suspend() 和 Thread.resume() 方法可以运用任意区域 suspend()：
 
 Object.wait() 和 Object.notify() 只能用在 synchronized 方法或块通过对象 Monitor 控制线程状态
 
+Object#wait获得的对象 ,释放锁,当前线程又被阻塞
+LockSupport#park() 类似
+
+Object#notify 已经获得锁,唤起一个被阻塞的线程
+LockSupport#unpark() 类似
+
 join()
 
 Thread#interrupt() 
@@ -339,3 +345,52 @@ All instance fields, static fields, and array elements are stored in heap memory
 
 如果一个程序没有数据竞争，那么该程序的所有执行都将出现顺序一致。
 
+## 问答
+
+### 有哪些方法创建线程? 
+
+只有Thread一种，Runnable是运行的一种方式。
+
+### 如何销毁一个线程? 
+
+Java 中执行线程Java 是没有办法销毁它的，
+但是当Thread.isAlive() 返回false 时，实际底层的Thread 已经被销毁了
+
+stop 可能导致正在锁的对象解锁， 可能导致状态不一致死锁
+
+### Thread interrupt()/ isInterrupted() 以及 interrupted()的区别以及意义?  
+
+interrupt() 设置状态
+isInterrupted() 判断状态不清除
+interrupted() 判断状态清除状态 
+
+### 线程异常 
+
+线程终止
+
+### Java线程有哪些状态,分别代表什么含义?
+
+
+### 如何获取当前JVM所有的线程状态?
+
+jps
+
+jstack
+
+### 如何获取线程的资源消费情况?
+
+### 请说明synchronized关键字与ReentrantLock之间的区别?
+
+### 请解释偏向锁对synchronized与ReentrantLock 的价值?
+
+偏向锁对synchronized 有影响，对ReentrantLock无影响
+
+### 当主线程退出时，守候子线程会执行完毕吗?
+
+不一定
+
+   
+
+### 请说明Shutdown Hook线程的使用场景,以及如何触发执行?
+
+### 如何确保在主线程退出前,所有线程执行完毕?
