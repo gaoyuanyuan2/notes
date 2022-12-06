@@ -388,9 +388,69 @@ jstack
 ### 当主线程退出时，守候子线程会执行完毕吗?
 
 不一定
-
-   
-
+ 
 ### 请说明Shutdown Hook线程的使用场景,以及如何触发执行?
 
 ### 如何确保在主线程退出前,所有线程执行完毕?
+
+### 请在Java集合框架以及J.U.C框架中各举出List、 Set以及Map的实现?
+
+### 如何将普通List、 Set以及Map转化为线程安全对象?
+
+### 如何在Java 9+实现以上问题?
+
+### 请说明List、 Vector 以及CopyOnWriteArrayList的相同点和不同点?
+
+Vector List实现，同步，iterator：fail-fast
+
+CopyOnWriteArrayList List实现，读不加锁，写加锁 ，iterator：弱一致性的实现，不报错。
+
+### 请说明Collections#synchronizedList(List) 与Vector的相同点和不同点?
+
+相同点：都是synchronized 
+不同点：一个是包装了
+
+### Arrays#asList(Object...)方法是线程安全的吗?如果不是的话,如何实现替代方案?
+
+Java < 5 , Collections#synchronizedList
+Java 5+ , CopyOnWriteArrayList
+Java 9+ List.of(...) 只读
+
+### 请至少举出三种线程安全的Set实现?
+
+SynchronizedSet
+CopyOnWriteArraySet
+ConcurrentSkipListSet
+
+### 在J.U.C框架中,存在HashSet的线程安全实现?如果不存在的话,要如何实现?
+
+### 当Set#iterator() 方法返回Iterator对象后,能否在其迭代中,给Set对象添加新的元素?
+
+不一定，传统实现的确是，juc是弱一致性
+
+### 请说明Hashtable、HashMap 以及ConcurrentHashMap的区别
+
+Hashtable k v 不能为空
+HashMap k v 都不能为空
+ConcurrentHashMap  k v 不能为空
+
+### 请说明ConcurrentHashMap在不同的JDK中的实现?
+
+6 分离锁，读部分锁，写完全锁；7 读不要锁，写要锁； 8 读不要锁，写要锁 ，红黑树
+
+### 请说明ConcurrentHashMap与ConcurrentSkipListMap各自的优势与不足?
+
+ConcurrentSkipListMap 写不加锁，内存大，空间换时间，读写稳定 log n
+
+### 请说明BlockingQueue与Queue的区别?
+
+put 队列满了，put被阻塞
+
+### 请说明LinkedBlockingQueue与ArrayBlockingQueue的区别?
+
+一个链表，一个数组
+一个无边界，一个有边界
+
+### 请说明LinkedTransferQueue与LinkedBlockingQueue的区别?
+
+LinkedTransferQueue java7提供，性能更高
