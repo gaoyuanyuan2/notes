@@ -4,7 +4,7 @@
 
 ### 文件系统
 
-* File
+*  
 * Path
 
 #### ServiceLoader<S> 
@@ -331,6 +331,8 @@ Object.wait() 与 Thread.join() 看起来效果类似
 
 CAS 是一种相对（MB）较重的比较，轻量级的锁（标量）
 
+同一个线程，不需要锁对象
+
 ### Queue
 
 BlockingQueue 尽可能用 put，避免使用 offer，最好不要用 add。
@@ -454,3 +456,30 @@ put 队列满了，put被阻塞
 ### 请说明LinkedTransferQueue与LinkedBlockingQueue的区别?
 
 LinkedTransferQueue java7提供，性能更高
+
+### 请说明 ReentrantLock 与 ReentrantReadWriteLock 的区别？
+
+ReentrantLock 互斥
+
+ReentrantReadWriteLock 写互斥，读共享 
+
+
+### 请说明 Lock#lock() 与 Lock#lockInterruptibly() 的区别？ 
+
+### 请解释 ReentrantLock 为什么命名为重进入？
+
+### ReentrantLockQuestion
+
+抛出InterruptedException状态会被清除
+
+
+### 请举例说明 Condition 使用场景？ 
+
+CyclicBarrier
+CountDownLatch
+阻塞队列
+
+### 请使用 Condition 实现“生产者-消费者问题”？
+
+
+### 请解释 Condition await() 和 signal() 与 Object wait() 和 notify() 的相同与差异？ 
