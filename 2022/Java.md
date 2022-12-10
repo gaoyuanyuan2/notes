@@ -481,5 +481,43 @@ CountDownLatch
 
 ### 请使用 Condition 实现“生产者-消费者问题”？
 
-
 ### 请解释 Condition await() 和 signal() 与 Object wait() 和 notify() 的相同与差异？ 
+
+### CountDownLatch 与 CyclicBarrier 的区别？
+
+### Java 1.4 的语法实现一个 CountDownLatch ？
+
+### Semaphore 的使用场景？
+
+### 请问 J.U.C 中内建了几种 ExecutorSer vi ce 实现？
+
+### 请分别解释 ThreadPoolExecutor 构造器参数在运行时的作用？
+
+### 如何获取ThreadPoolExecutor 正在运行的线程？
+
+### 如何获取 Future 对象？
+
+### 请举例 Future get() 以及 get(long,TimeUnit) 方法的使用场景？
+
+### 如何利用Future 优雅地取消一个任务的执行？
+
+### 在 Java 中，volatile 保证的是可见性还是原子性？
+
+### 在 Java 中，volatile 的底层实现是基于什么机制？
+
+### 在 Java 中，volatile long 和 double 是线程安全的吗？
+
+### 为什么 AtomicBoolean 内部变量使用 int 实现，而非 boolean？
+
+### 在变量原子操作时，Atomic* CAS 操作比 synchronized 关键字那个更重？
+
+### Atomic* CAS 的底层是如何实现的？
+
+
+
+
+
+
+
+
+
