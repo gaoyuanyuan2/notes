@@ -1,6 +1,6 @@
 # 学习笔记
 
-* service-oriented architectures (SOA)
+* service-oriented architectures (SOA) 面向服务的体系结构
 
 * Deferred  adj. 延期的   DeferredImportSelector
 
