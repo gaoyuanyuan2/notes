@@ -471,7 +471,7 @@ SpringApplicationRuntListener监听多个运行状态方法:
 
 #### 监听Spring Boot事件Spring事件
 
-Spring Boot通过Spr ingApplicationRunListener的实现类EventPublishingRunListener 
+Spring Boot通过SpringApplicationRunListener的实现类EventPublishingRunListener 
 利用Spring Framework事件API , 广播SpringBoot事件。
 
 #### Spring Framework事件/监听器编程模型
