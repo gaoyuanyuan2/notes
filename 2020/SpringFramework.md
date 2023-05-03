@@ -3005,6 +3005,7 @@ Spring 3.1条件配置
 ### 225 | Spring內建的配置属性源
 
 * 內建PropertySource
+
 |PropertySource类型|说明|
 |---|---|
 |org.springframework.core.env.Command inePropertySource|命令行配置属性源|
